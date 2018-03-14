@@ -10,6 +10,7 @@ W projekcie będzie istniało trzech interesariuszy:
 * Szef koła naukowego - Również posiada on takie prawa ja Student i ponadto odpowiada za konta użytkowników. Może tworzyć nowe konta użytkowników oraz usuwać już istniejące konta użytkowników.
 Każdy z wyżej wymienionych użytkowników, aby korzystać z systemu musi przejść proces logowania.
 
+## 3.Schematy UML
 
 
 ## 4.Przechowywane dane
