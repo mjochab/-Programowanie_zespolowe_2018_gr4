@@ -64,12 +64,13 @@ public class LogowanieController {
         StudentController studentController = loader.getController();
         studentController.setMainController(mainController);
         mainController.setScreen(pane);
-
+        
     }
-     @FXML
-    public void RegistrationBoss() throws IOException {
+    
+    @FXML
+    public void registrationAdmin() throws IOException {
 
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("LogowanieSzef.fxml"));
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("RegistrationAdmin.fxml"));
 
         Pane pane = null;
 
@@ -79,8 +80,8 @@ public class LogowanieController {
             e.printStackTrace();
         }
 
-        LogowanieSzef logowanieSzef = loader.getController();
-        logowanieSzef.setMainController(mainController);
+        RegistrationAdminController RegistrationAdminController = loader.getController();
+        RegistrationAdminController.setMainController(mainController);
         mainController.setScreen(pane);
 
     }
