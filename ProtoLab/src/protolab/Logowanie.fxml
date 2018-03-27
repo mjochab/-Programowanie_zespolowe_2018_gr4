@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="protolab.LogowanieController">
+   <children>
+      <Button layoutX="146.0" layoutY="344.0" mnemonicParsing="false" onAction="#Loguj" text="Zaloguj" />
+      <Button layoutX="288.0" layoutY="344.0" mnemonicParsing="false" onAction="#exit" text="Wyjście" />
+      <Label layoutX="123.0" layoutY="175.0" text="Login" />
+      <Label layoutX="122.0" layoutY="242.0" text="Hasło" />
+      <TextField fx:id="TextLogin" layoutX="202.0" layoutY="171.0" promptText="Login" />
+      <TextField fx:id="TextHaslo" layoutX="202.0" layoutY="238.0" promptText="Hasło" />
+      <Button layoutX="151.0" layoutY="382.0" mnemonicParsing="false" onAction="#LogujSzefa" text="Szef" />
+      <Button layoutX="141.0" layoutY="427.0" mnemonicParsing="false" onAction="#LogujStudenta" text="Student" />
+   </children>
+</Pane>
