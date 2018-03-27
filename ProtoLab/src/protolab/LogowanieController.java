@@ -11,7 +11,7 @@ public class LogowanieController {
     private FXMLDocumentController mainController;
 
     @FXML
-    public void Loguj() throws IOException {
+    public void signIn() throws IOException {
         
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("Admin.fxml"));
 
@@ -30,7 +30,7 @@ public class LogowanieController {
     
 
     @FXML
-    public void LogujSzefa() throws IOException {
+    public void signInBoss() throws IOException {
 
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("Szef.fxml"));
 
@@ -49,7 +49,7 @@ public class LogowanieController {
     }
     
     @FXML
-    public void LogujStudenta() throws IOException {
+    public void signInStudent() throws IOException {
 
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("Student.fxml"));
 
