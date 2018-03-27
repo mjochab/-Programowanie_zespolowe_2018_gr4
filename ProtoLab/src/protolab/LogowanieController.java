@@ -66,6 +66,24 @@ public class LogowanieController {
         mainController.setScreen(pane);
 
     }
+     @FXML
+    public void RegistrationBoss() throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("LogowanieSzef.fxml"));
+
+        Pane pane = null;
+
+        try {
+            pane = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        LogowanieSzef logowanieSzef = loader.getController();
+        logowanieSzef.setMainController(mainController);
+        mainController.setScreen(pane);
+
+    }
 
     public void exit() {
         Platform.exit();
