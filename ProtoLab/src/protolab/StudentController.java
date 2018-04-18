@@ -52,7 +52,7 @@ public class StudentController  {
        listaPrzedmioty = FXCollections.observableArrayList();
        ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM przedmioty");
        while(rs.next()){
-           listaPrzedmioty.add(new przedmioty(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5)));
+           listaPrzedmioty.add(new przedmioty(rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5)));
        }
      }catch(SQLException ex){
             System.out.println("Error"+ex);

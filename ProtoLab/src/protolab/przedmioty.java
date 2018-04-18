@@ -15,24 +15,18 @@ import javafx.beans.property.StringProperty;
  * @author Wojtek
  */
 public class przedmioty {
-    private final IntegerProperty ID;
+    
     private final StringProperty Nazwa;
     private final StringProperty Rodzaj;
     private final IntegerProperty Ilosc;
     private final StringProperty Status;
     
-    public przedmioty(int ID, String Nazwa, String Rodzaj, int Ilosc, String Status){
-        this.ID = new SimpleIntegerProperty(ID);
+    public przedmioty(String Nazwa, String Rodzaj, int Ilosc, String Status){
+        
         this.Nazwa = new SimpleStringProperty(Nazwa);
         this.Rodzaj = new SimpleStringProperty(Rodzaj);
         this.Ilosc = new SimpleIntegerProperty(Ilosc);
         this.Status = new SimpleStringProperty(Status);
-    }
-    public int getID(){
-         return ID.get();
-    }
-    public void setID(int value) {
-        ID.set(value);
     }
     public String getNumerPokoju(){
          return Nazwa.get();
@@ -57,9 +51,6 @@ public class przedmioty {
     }
      public void setStatus(String value) {
         Status.set(value);
-    }
-     public IntegerProperty getIDProperty() {
-        return ID;
     }
     public StringProperty getNazwaProperty() {
         return Nazwa;
