@@ -29,6 +29,10 @@ System będzie posiadał przyjazny i prosty w obsłudze interfejs z którego obs
 ## 6.Schematy
 
 <img src="uml/acivity.PNG">
+Diagram aktywności
 <img src="uml/class.PNG">
+Diagram klas
 <img src="uml/sequence.PNG">
+Diagram sekwencji
 <img src="uml/base.png">
+Schemat erd bazy danych
