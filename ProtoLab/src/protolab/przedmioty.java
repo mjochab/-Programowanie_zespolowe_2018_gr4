@@ -28,30 +28,39 @@ public class przedmioty {
         this.Ilosc = new SimpleIntegerProperty(Ilosc);
         this.Status = new SimpleStringProperty(Status);
     }
-    public String getNumerPokoju(){
+    
+    public String getNazwa(){
          return Nazwa.get();
     }
-     public void setNumerPokoju(String value) {
+    
+    public void setNazwa(String value) {
         Nazwa.set(value);
     }
+     
     public String getRodzaj(){
          return Rodzaj.get();
     }
-     public void setRodzaj(String value) {
+    
+    public void setRodzaj(String value) {
         Rodzaj.set(value);
-    } 
-     public int getIlosc(){
+    }
+     
+    public int getIlosc(){
          return Ilosc.get();
     }
+     
      public void setIlosc(int value) {
         Ilosc.set(value);
-    } 
+    }
+     
      public String getStatus(){
          return Status.get();
     }
+     
      public void setStatus(String value) {
         Status.set(value);
     }
+     
     public StringProperty getNazwaProperty() {
         return Nazwa;
     }
