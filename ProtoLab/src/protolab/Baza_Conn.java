@@ -19,7 +19,7 @@ public class Baza_Conn {
     public Connection baza_polacz() throws ClassNotFoundException{
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/protolab_db","root","Base123");
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/protolabdb","root","");
             System.out.println("connected");
             return conn;
         }catch (SQLException e){
