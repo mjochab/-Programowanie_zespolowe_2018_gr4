@@ -28,7 +28,7 @@ System będzie miał za zadanie udostępnienie użytkownikowi danego produktu. A
 System będzie posiadał przyjazny i prosty w obsłudze interfejs z którego obsługą użytkownicy nie powinni mieć problemów. Ponadto dostarczona zostanie dokumentacja dla użytkowników, która będzie miała za zadanie przekazać w jaki sposób korzystać z funkcjonalności programu. Program będzie pracował na systemie Windows. Będzie mogło z niego korzystać kilku użytkowników: student(użytkownik), administrator oraz szef koła naukowego. System będzie działał na wszystkich obecnie używanych komputerach ze względu na niewielkie wymagania sprzętowe. Ostatecznym terminem wykonania projektu jest 06.06.2018.
 ## 6.Schematy
 
-<img src="uml/acivity.png">
-<img src="uml/class.png">
-<img src="uml/sequence.png">
+<img src="uml/acivity.PNG">
+<img src="uml/class.PNG">
+<img src="uml/sequence.PNG">
 <img src="uml/base.png">
