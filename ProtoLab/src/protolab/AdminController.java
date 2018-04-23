@@ -27,6 +27,22 @@ public class AdminController {
         uzytkownicyController.setMainController(mainController);
         mainController.setScreen(pane);
     }
+    @FXML
+    public void DodajDoMagazynu() throws IOException {
+        
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("Sprzet.fxml"));
+
+        Pane pane = null;
+
+        try {
+            pane = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        SprzetController sprzetController = loader.getController();
+        sprzetController.setMainController(mainController);
+        mainController.setScreen(pane);
+    }
     
    @FXML
    public void backMenu(){

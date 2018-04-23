@@ -11,7 +11,7 @@
       <Button layoutX="248.0" layoutY="21.0" mnemonicParsing="false" text="Szukaj" />
       <TextField fx:id="WpisywanieProdukt" layoutX="36.0" layoutY="21.0" prefHeight="25.0" prefWidth="194.0" promptText="Wpisz nazwe produktu" />
       <TextArea fx:id="ListaProdukt" layoutX="34.0" layoutY="89.0" prefHeight="241.0" prefWidth="264.0" />
-      <Button layoutX="346.0" layoutY="21.0" mnemonicParsing="false" text="Dodaj do magazynu" />
+      <Button layoutX="346.0" layoutY="21.0" mnemonicParsing="false" onAction="#DodajDoMagazynu" text="Dodaj do magazynu" />
       <Button layoutX="120.0" layoutY="354.0" mnemonicParsing="false" text="Wydaj z magazynu" />
       <Button layoutX="346.0" layoutY="64.0" mnemonicParsing="false" text="Przeglądaj rezerwacje" />
       <Button layoutX="262.0" layoutY="354.0" mnemonicParsing="false" text="Sprawdz status w magazynie" />
