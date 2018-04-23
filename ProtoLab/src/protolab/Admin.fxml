@@ -16,7 +16,7 @@
       <Button layoutX="346.0" layoutY="64.0" mnemonicParsing="false" text="Przeglądaj rezerwacje" />
       <Button layoutX="262.0" layoutY="354.0" mnemonicParsing="false" text="Sprawdz status w magazynie" />
       <Button layoutX="322.0" layoutY="421.0" mnemonicParsing="false" onAction="#exit" text="Wyjdz" />
-      <Button layoutX="333.0" layoutY="108.0" mnemonicParsing="false" text="Zarządzaj użytkownikami" />
+      <Button layoutX="333.0" layoutY="108.0" mnemonicParsing="false" onAction="#oknouzyt" text="Zarządzaj użytkownikami" />
       <Button layoutX="34.0" layoutY="354.0" mnemonicParsing="false" text="Zarazerwuj" />
    </children>
 </Pane>
