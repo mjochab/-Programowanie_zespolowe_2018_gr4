@@ -3,7 +3,7 @@ package protolab;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 
-public class SzefController {
+public class BossPanelController {
 
     private FXMLDocumentController mainController;
 

@@ -15,7 +15,7 @@ import javafx.scene.layout.Pane;
  *
  * @author Pc
  */
-public class SprzetController  {
+public class AddItemController  {
 
    private FXMLDocumentController mainController;
     
@@ -24,9 +24,9 @@ public class SprzetController  {
         this.mainController = mainController;
     }
     @FXML
-    public void Back() throws IOException {
+    public void back() throws IOException {
         
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("Admin.fxml"));
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("AdminPanel.fxml"));
 
         Pane pane = null;
 
@@ -35,7 +35,7 @@ public class SprzetController  {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        AdminController adminController = loader.getController();
+        AdminPanelController adminController = loader.getController();
         adminController.setMainController(mainController);
         mainController.setScreen(pane);
     }

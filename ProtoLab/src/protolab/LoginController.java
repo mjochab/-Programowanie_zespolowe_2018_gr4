@@ -6,14 +6,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
 
-public class LogowanieController {
+public class LoginController {
 
     private FXMLDocumentController mainController;
 
     @FXML
     public void signIn() throws IOException {
         
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("Admin.fxml"));
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("AdminPanel.fxml"));
 
         Pane pane = null;
 
@@ -22,7 +22,7 @@ public class LogowanieController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        AdminController adminController = loader.getController();
+        AdminPanelController adminController = loader.getController();
         adminController.setMainController(mainController);
         mainController.setScreen(pane);
     }
@@ -32,7 +32,7 @@ public class LogowanieController {
     @FXML
     public void signInBoss() throws IOException {
 
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("Szef.fxml"));
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("BossPanel.fxml"));
 
         Pane pane = null;
 
@@ -42,7 +42,7 @@ public class LogowanieController {
             e.printStackTrace();
         }
 
-        SzefController szefController = loader.getController();
+        BossPanelController szefController = loader.getController();
         szefController.setMainController(mainController);
         mainController.setScreen(pane);
 
@@ -51,7 +51,7 @@ public class LogowanieController {
     @FXML
     public void signInStudent() throws IOException {
 
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("Student.fxml"));
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("StudentPanel.fxml"));
 
         Pane pane = null;
 
@@ -61,7 +61,7 @@ public class LogowanieController {
             e.printStackTrace();
         }
 
-        StudentController studentController = loader.getController();
+        StudentPanelController studentController = loader.getController();
         studentController.setMainController(mainController);
         mainController.setScreen(pane);
         
@@ -70,7 +70,7 @@ public class LogowanieController {
     @FXML
     public void registrationAdmin() throws IOException {
 
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("RegistrationAdmin.fxml"));
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("AdminPanel.fxml"));
 
         Pane pane = null;
 
@@ -80,8 +80,8 @@ public class LogowanieController {
             e.printStackTrace();
         }
 
-        RegistrationAdminController RegistrationAdminController = loader.getController();
-        RegistrationAdminController.setMainController(mainController);
+        AdminPanelController adminPanelController = loader.getController();
+        adminPanelController.setMainController(mainController);
         mainController.setScreen(pane);
 
     }

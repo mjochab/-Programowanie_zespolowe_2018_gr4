@@ -23,48 +23,48 @@ import javafx.scene.control.cell.PropertyValueFactory;
 /**
  * FXML Controller class
  *
- * @author Pc
+ * @author Wojciech Kozyra
  */
-public class StudentController  {
+public class StudentPanelController  {
 
-    Baza_Conn baza = new Baza_Conn();
+    BaseConnection base = new BaseConnection();
     private FXMLDocumentController mainController;
     @FXML
-    private TextField WpisywanieProdukt;
+    private TextField searchItem;
     @FXML
-    private TableView<przedmioty> tablePrzedmioty;
+    private TableView<Items> tablePrzedmioty;
     @FXML
-    private TableColumn<przedmioty, String> tabNazwa;
+    private TableColumn<Items, String> tabName;
     @FXML
-    private TableColumn<przedmioty, String> tabRodzaj;
+    private TableColumn<Items, String> tabType;
     @FXML
-    private TableColumn<przedmioty, Integer> tabIlosc;
+    private TableColumn<Items, Integer> tabQuantity;
     @FXML
-    private TableColumn<przedmioty, String> tabStatus;
+    private TableColumn<Items, String> tabStatus;
 
-    private ObservableList<przedmioty> listaPrzedmioty;
+    private ObservableList<Items> itemList;
     
      @FXML
-    public void wczytajPrzedmioty() throws ClassNotFoundException, SQLException{
+    public void loadItems() throws ClassNotFoundException, SQLException{
         try{
        
-       Connection conn = baza.baza_polacz();
-       listaPrzedmioty = FXCollections.observableArrayList();
+       Connection conn = base.baseConnection();
+       itemList = FXCollections.observableArrayList();
        ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM przedmioty");
        while(rs.next()){
-           listaPrzedmioty.add(new przedmioty(rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5)));
+           itemList.add(new Items(rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5)));
        }
      }catch(SQLException ex){
             System.out.println("Error"+ex);
     }
         
-        tabNazwa.setCellValueFactory(new PropertyValueFactory<>("Nazwa"));
-        tabRodzaj.setCellValueFactory(new PropertyValueFactory<>("Rodzaj"));
-        tabIlosc.setCellValueFactory(new PropertyValueFactory<>("Ilosc"));
+        tabName.setCellValueFactory(new PropertyValueFactory<>("Nazwa"));
+        tabType.setCellValueFactory(new PropertyValueFactory<>("Rodzaj"));
+        tabQuantity.setCellValueFactory(new PropertyValueFactory<>("Ilosc"));
         tabStatus.setCellValueFactory(new PropertyValueFactory<>("Status"));
         
         tablePrzedmioty.setItems(null);
-        tablePrzedmioty.setItems(listaPrzedmioty);
+        tablePrzedmioty.setItems(itemList);
     }
     @FXML
     public void backMenu() {

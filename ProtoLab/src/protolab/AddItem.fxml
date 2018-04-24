@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="protolab.SprzetController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="protolab.AddItemController">
    <children>
       <Label layoutX="126.0" layoutY="125.0" text="Nazwa" />
       <Label layoutX="126.0" layoutY="203.0" text="Rodzaj" />
@@ -15,6 +17,6 @@
       <TextField layoutX="186.0" layoutY="199.0" promptText="Rodzaj" />
       <TextField layoutX="186.0" layoutY="282.0" promptText="Ilość" />
       <Button layoutX="124.0" layoutY="364.0" mnemonicParsing="false" text="Dodaj" />
-      <Button layoutX="283.0" layoutY="364.0" mnemonicParsing="false" onAction="#Back" text="Powrót" />
+      <Button layoutX="283.0" layoutY="364.0" mnemonicParsing="false" onAction="#back" text="Powrót" />
    </children>
 </Pane>

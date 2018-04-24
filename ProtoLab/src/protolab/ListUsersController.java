@@ -15,7 +15,7 @@ import javafx.scene.layout.Pane;
  *
  * @author Pc
  */
-public class UzytkownicyController {
+public class ListUsersController {
 
     private FXMLDocumentController mainController;
     
@@ -27,7 +27,7 @@ public class UzytkownicyController {
      @FXML
     public void registrationAdmin() throws IOException {
 
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("RegistrationAdmin.fxml"));
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("AddAdmin.fxml"));
 
         Pane pane = null;
 
@@ -37,8 +37,8 @@ public class UzytkownicyController {
             e.printStackTrace();
         }
 
-        RegistrationAdminController RegistrationAdminController = loader.getController();
-        RegistrationAdminController.setMainController(mainController);
+        AddAdminController addAdminController = loader.getController();
+        addAdminController.setMainController(mainController);
         mainController.setScreen(pane);
 
     }
@@ -46,7 +46,7 @@ public class UzytkownicyController {
     @FXML
     public void registrationBoss() throws IOException {
 
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("LogowanieSzef.fxml"));
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("AddBoss.fxml"));
 
         Pane pane = null;
 
@@ -56,15 +56,15 @@ public class UzytkownicyController {
             e.printStackTrace();
         }
 
-        LogowanieSzef logowanieSzef = loader.getController();
-        logowanieSzef.setMainController(mainController);
+        AddBossController addBoss = loader.getController();
+        addBoss.setMainController(mainController);
         mainController.setScreen(pane);
 
     }
     @FXML
     public void Back() throws IOException {
         
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("Admin.fxml"));
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("AdminPanel.fxml"));
 
         Pane pane = null;
 
@@ -73,7 +73,7 @@ public class UzytkownicyController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        AdminController adminController = loader.getController();
+        AdminPanelController adminController = loader.getController();
         adminController.setMainController(mainController);
         mainController.setScreen(pane);
     }

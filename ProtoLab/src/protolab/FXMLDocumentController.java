@@ -22,7 +22,7 @@ public class FXMLDocumentController {
     }
 
     public void loadMenuScreen() {
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("Logowanie.fxml"));
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("Login.fxml"));
 
         Pane pane = null;
 
@@ -32,7 +32,7 @@ public class FXMLDocumentController {
             e.printStackTrace();
         }
 
-        LogowanieController logowanieController = loader.getController();
+        LoginController logowanieController = loader.getController();
         logowanieController.setMainController(this);
         setScreen(pane);
     }
