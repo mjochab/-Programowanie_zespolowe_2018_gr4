@@ -67,24 +67,7 @@ public class LoginController {
         
     }
     
-    @FXML
-    public void registrationAdmin() throws IOException {
-
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("AdminPanel.fxml"));
-
-        Pane pane = null;
-
-        try {
-            pane = loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        AdminPanelController adminPanelController = loader.getController();
-        adminPanelController.setMainController(mainController);
-        mainController.setScreen(pane);
-
-    }
+    
 
     public void exit() {
         Platform.exit();
