@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.paint.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="protolab.LoginController">
+<Pane depthTest="DISABLE" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="357.0" prefWidth="329.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="protolab.LoginController">
    <children>
-      <Button layoutX="146.0" layoutY="344.0" mnemonicParsing="false" onAction="#signIn" text="Zaloguj" />
-      <Button layoutX="288.0" layoutY="344.0" mnemonicParsing="false" onAction="#exit" text="Wyjście" />
-      <Label layoutX="123.0" layoutY="175.0" text="Login" />
-      <Label layoutX="122.0" layoutY="242.0" text="Hasło" />
-      <TextField fx:id="TextLogin" layoutX="202.0" layoutY="171.0" promptText="Login" />
-      <TextField fx:id="TextHaslo" layoutX="202.0" layoutY="238.0" promptText="Hasło" />
-      <Button layoutX="151.0" layoutY="384.0" mnemonicParsing="false" onAction="#signInBoss" text="Szef" />
-      <Button layoutX="145.0" layoutY="427.0" mnemonicParsing="false" onAction="#signInStudent" text="Student" />
+      <Button alignment="TOP_LEFT" defaultButton="true" layoutX="230.0" layoutY="191.0" mnemonicParsing="false" onAction="#signIn" text="Zaloguj" />
+      <Button fx:id="cancelBT" cancelButton="true" layoutX="230.0" layoutY="230.0" mnemonicParsing="false" onAction="#exit" text="Wyjście" textFill="#393939" />
+      <Label layoutX="77.0" layoutY="116.0" text="Login" />
+      <Label layoutX="76.0" layoutY="158.0" text="Hasło" />
+      <TextField fx:id="TextLogin" layoutX="137.0" layoutY="112.0" promptText="Login" />
+      <TextField fx:id="TextHaslo" layoutX="137.0" layoutY="154.0" promptText="Hasło" />
+      <Button layoutX="58.0" layoutY="287.0" mnemonicParsing="false" onAction="#signInBoss" text="Szef" />
+      <Button layoutX="108.0" layoutY="287.0" mnemonicParsing="false" onAction="#signInStudent" text="Student" />
    </children>
 </Pane>
