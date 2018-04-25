@@ -62,6 +62,24 @@ public class ListUsersController {
 
     }
     @FXML
+    public void registrationStudent() throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("AddStudent.fxml"));
+
+        Pane pane = null;
+
+        try {
+            pane = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        AddStudentController addStudentController = loader.getController();
+        addStudentController.setMainController(mainController);
+        mainController.setScreen(pane);
+
+    }
+    @FXML
     public void Back() throws IOException {
         
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("AdminPanel.fxml"));
