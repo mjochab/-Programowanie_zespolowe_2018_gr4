@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -15,8 +16,15 @@
       <Button layoutX="26.0" layoutY="370.0" mnemonicParsing="false" onAction="#registrationAdmin" text="Dodaj Admina" />
       <Button layoutX="136.0" layoutY="370.0" mnemonicParsing="false" onAction="#registrationBoss" text="Dodaj Szefa" />
       <Button fx:id="addStudent" layoutX="242.0" layoutY="370.0" mnemonicParsing="false" text="Dodaj Studenta" />
-      <Button fx:id="delStudent" layoutX="358.0" layoutY="370.0" mnemonicParsing="false" onAction="#enableKey" text="Usuń zaznaczonego" />
+      <Button fx:id="delStudent" layoutX="358.0" layoutY="370.0" mnemonicParsing="false" text="Usuń zaznaczonego" />
       <Button layoutX="149.0" layoutY="433.0" mnemonicParsing="false" onAction="#Back" text="Powrót" />
       <Button layoutX="306.0" layoutY="433.0" mnemonicParsing="false" onAction="#exit" text="Wyjscie" />
    </children>
+   <effect>
+      <InnerShadow blurType="TWO_PASS_BOX" color="#34782d">
+         <input>
+            <Glow />
+         </input>
+      </InnerShadow>
+   </effect>
 </Pane>

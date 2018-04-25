@@ -23,8 +23,8 @@ public class AdminPanelController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        ListUsersController uzytkownicyController = loader.getController();
-        uzytkownicyController.setMainController(mainController);
+        ListUsersController userController = loader.getController();
+        userController.setMainController(mainController);
         mainController.setScreen(pane);
     }
     @FXML
@@ -39,8 +39,8 @@ public class AdminPanelController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        AddItemController sprzetController = loader.getController();
-        sprzetController.setMainController(mainController);
+        AddItemController addItemController = loader.getController();
+        addItemController.setMainController(mainController);
         mainController.setScreen(pane);
     }
     

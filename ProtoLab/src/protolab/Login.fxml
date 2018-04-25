@@ -22,4 +22,11 @@
       <Button layoutX="58.0" layoutY="287.0" mnemonicParsing="false" onAction="#signInBoss" text="Szef" />
       <Button layoutX="108.0" layoutY="287.0" mnemonicParsing="false" onAction="#signInStudent" text="Student" />
    </children>
+   <effect>
+      <InnerShadow blurType="TWO_PASS_BOX" color="#34782d">
+         <input>
+            <Glow />
+         </input>
+      </InnerShadow>
+   </effect>
 </Pane>

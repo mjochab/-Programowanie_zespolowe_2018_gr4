@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -26,4 +27,11 @@
         </columns>
       </TableView>
    </children>
+   <effect>
+      <InnerShadow blurType="TWO_PASS_BOX" color="#34782d">
+         <input>
+            <Glow />
+         </input>
+      </InnerShadow>
+   </effect>
 </AnchorPane>

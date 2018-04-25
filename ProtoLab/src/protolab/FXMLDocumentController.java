@@ -32,8 +32,8 @@ public class FXMLDocumentController {
             e.printStackTrace();
         }
 
-        LoginController logowanieController = loader.getController();
-        logowanieController.setMainController(this);
+        LoginController loginController = loader.getController();
+        loginController.setMainController(this);
         setScreen(pane);
     }
 

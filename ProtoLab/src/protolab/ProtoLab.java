@@ -16,7 +16,7 @@ public class ProtoLab extends Application {
         Scene scene = new Scene(root);
 
         stage.setScene(scene);
-        stage.setTitle("Testowe okno");
+        stage.setTitle("Aplikacja ProtoLab");
         stage.show();
     }
 

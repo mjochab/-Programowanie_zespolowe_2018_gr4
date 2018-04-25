@@ -17,6 +17,7 @@ public class AddBossController {
     @FXML
     public void backMenu() {
         mainController.loadMenuScreen();
+        
     }
 
     public void setMainController(FXMLDocumentController mainController) {

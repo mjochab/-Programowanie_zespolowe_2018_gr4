@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -19,4 +20,11 @@
       <Button layoutX="124.0" layoutY="364.0" mnemonicParsing="false" text="Dodaj" />
       <Button layoutX="283.0" layoutY="364.0" mnemonicParsing="false" onAction="#back" text="Powrót" />
    </children>
+   <effect>
+      <InnerShadow blurType="TWO_PASS_BOX" color="#34782d">
+         <input>
+            <Glow />
+         </input>
+      </InnerShadow>
+   </effect>
 </Pane>
