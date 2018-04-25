@@ -27,6 +27,24 @@ public class AdminPanelController {
         userController.setMainController(mainController);
         mainController.setScreen(pane);
     }
+    
+            
+    @FXML
+    public void ListReservations() throws IOException {
+        
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("ListReservation.fxml"));
+
+        Pane pane = null;
+
+        try {
+            pane = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ListReservationController listReservationController = loader.getController();
+        listReservationController.setMainController(mainController);
+        mainController.setScreen(pane);
+    }
     @FXML
     public void addToTheWarehouse() throws IOException {
         
