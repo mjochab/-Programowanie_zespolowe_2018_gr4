@@ -36,7 +36,10 @@ public class BossPanelController {
     
     private ObservableList<Users> UsersList;
 
-    
+    /**
+     * metoda otwierająca okno listy studentów
+     * @throws IOException 
+     */
     @FXML
     public void loadStudents() throws IOException{
        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("ListStudents.fxml"));
@@ -76,7 +79,10 @@ public class BossPanelController {
 //        tableUsers.setItems(null);
 //        tableUsers.setItems(UsersList);
 //    }
-    
+    /**
+     * metoda otwierajaca okno listy rezerwacji
+     * @throws IOException 
+     */
     @FXML
     public void ListReservations() throws IOException {
         
@@ -93,6 +99,9 @@ public class BossPanelController {
         listReservationController.setMainController(mainController);
         mainController.setScreen(pane);
     }
+    /**
+     * metoda odpowiadajaca za wylogowanie
+     */
     @FXML
     public void backMenu() {
         mainController.loadMenuScreen();
@@ -101,6 +110,9 @@ public class BossPanelController {
     public void setMainController(FXMLDocumentController mainController) {
         this.mainController = mainController;
     }
+    /**
+     * metoda zamykajaca aplikacje
+     */
     @FXML
      public void exit() {
         Platform.exit();
