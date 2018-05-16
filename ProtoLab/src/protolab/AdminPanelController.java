@@ -59,7 +59,10 @@ public class AdminPanelController {
         tablePrzedmioty.setItems(null);
         tablePrzedmioty.setItems(itemList);
     }
-    
+    /**
+     * metoda uruchamiajaca okno listy użytkowników
+     * @throws IOException 
+     */
     @FXML
     public void windowListUsers() throws IOException {
         
@@ -76,7 +79,10 @@ public class AdminPanelController {
         userController.setMainController(mainController);
         mainController.setScreen(pane);
     }
-    
+    /**
+     * metoda otwierajaca okno listy rezerwacji
+     * @throws IOException 
+     */
             
     @FXML
     public void ListReservations() throws IOException {
@@ -94,6 +100,10 @@ public class AdminPanelController {
         listReservationController.setMainController(mainController);
         mainController.setScreen(pane);
     }
+    /**
+     * metoda otwierająca okno dodawania urządzeń
+     * @throws IOException 
+     */
     @FXML
     public void addToTheWarehouse() throws IOException {
         
@@ -110,7 +120,9 @@ public class AdminPanelController {
         addItemController.setMainController(mainController);
         mainController.setScreen(pane);
     }
-    
+    /**
+     * metoda powrotu do logowania
+     */
    @FXML
    public void backMenu(){
        mainController.loadMenuScreen();
@@ -119,6 +131,9 @@ public class AdminPanelController {
     public void setMainController(FXMLDocumentController mainController) {
         this.mainController = mainController;
     }
+    /**
+     * metoda zamkniecia aplikacji
+     */
     public void exit() {
         Platform.exit();
     }
