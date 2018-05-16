@@ -8,7 +8,7 @@ import javafx.scene.layout.StackPane;
 
 /**
  *
- * @author Mateusz
+ * @author Winnicki Kamil
  */
 public class FXMLDocumentController {
 
