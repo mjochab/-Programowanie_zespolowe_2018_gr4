@@ -10,12 +10,19 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- *
- * @author Wojtek
+ * Klasa odpowiadająca za połączenie się z bazą danych.
+ * 
+ * @author WKozyra
  */
 public class BaseConnection {
      private Connection conn = null;
     
+     /**
+      * Załączony zostaje odpowiedni sterownik JDBC.
+      * Następnie podajemy ścieżkę połączenia do bazy, jej nazwę, nazwę użytkownika oraz hasło.
+      * W razie problemów z połączeniem z bazą lub problemów z sterownikiem JDBC, zostanie wyświetlony odpowiedni wyjątek z opisem.
+      * @throws ClassNotFoundException 
+      */
     public Connection baseConnection() throws ClassNotFoundException{
         try{
             Class.forName("com.mysql.jdbc.Driver");

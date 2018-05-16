@@ -21,8 +21,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
- * FXML Controller class
- *
+ * Kontroler klasy FXML.
+ * Klasa zawiera metody obsługujące konkretne akcje w tym oknie GUI.
+ * 
  * @author Wojciech Kozyra
  */
 public class StudentPanelController  {
@@ -44,6 +45,15 @@ public class StudentPanelController  {
 
     private ObservableList<Items> itemList;
     
+    /**
+     * Klasa odpowiadająca za wczytanie danych o przedmiotach z bazy danych.
+     * Łączymy się z bazą danych.
+     * tworzymy zapytanie SQL, które wyciągnie odpowiednie dane z bazy.
+     * Wstawiamy pobrane dane do listy itemList.
+     * Na koniec kompletną listę wstawiamy do tabeli w GUI.
+     * @throws ClassNotFoundException
+     * @throws SQLException 
+     */
      @FXML
     public void loadItems() throws ClassNotFoundException, SQLException{
         try{
@@ -66,6 +76,9 @@ public class StudentPanelController  {
         tablePrzedmioty.setItems(null);
         tablePrzedmioty.setItems(itemList);
     }
+    /**
+     * Metoda służąca do powrotu do poprzedniego okna.
+     */
     @FXML
     public void backMenu() {
         mainController.loadMenuScreen();
@@ -74,6 +87,9 @@ public class StudentPanelController  {
     public void setMainController(FXMLDocumentController mainController) {
         this.mainController = mainController;
     }
+    /**
+     * Metoda zamykająca aplikację.
+     */
     @FXML
      public void exit() {
         Platform.exit();
