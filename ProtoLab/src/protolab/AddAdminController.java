@@ -1,6 +1,7 @@
 package protolab;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +16,7 @@ public class AddAdminController  {
  * metoda powracajaca do listy studentów
  */
     @FXML
-    public void backMenu() {
+    public void backMenu() throws ClassNotFoundException, SQLException {
        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("ListUsers.fxml"));
 
         Pane pane = null;

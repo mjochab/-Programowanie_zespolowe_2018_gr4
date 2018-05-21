@@ -7,6 +7,7 @@ package protolab;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -24,7 +25,7 @@ public class AddStudentController  {
    private FXMLDocumentController mainController;
 
     @FXML
-    public void backMenu() {
+    public void backMenu() throws ClassNotFoundException, SQLException {
        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("ListUsers.fxml"));
 
         Pane pane = null;

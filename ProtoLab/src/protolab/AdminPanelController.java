@@ -69,7 +69,7 @@ public class AdminPanelController {
      * @throws IOException 
      */
     @FXML
-    public void windowListUsers() throws IOException {
+    public void windowListUsers() throws IOException, ClassNotFoundException, SQLException {
         
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("ListUsers.fxml"));
 
