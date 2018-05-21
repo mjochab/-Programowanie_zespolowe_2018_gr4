@@ -2,8 +2,11 @@ package protolab;
 
 import java.io.IOException;
 import java.sql.SQLException;
+<<<<<<< HEAD
 import java.util.logging.Level;
 import java.util.logging.Logger;
+=======
+>>>>>>> f218f4d72419c948bf5d781405124a43b22b5220
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
