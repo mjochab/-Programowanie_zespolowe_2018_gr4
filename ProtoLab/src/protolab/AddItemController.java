@@ -40,7 +40,7 @@ public class AddItemController  {
     }
     @FXML
     /** metoda odpowaiadając za powrót do poprzedniego okna */
-    public void back() throws IOException {
+    public void back() throws IOException, ClassNotFoundException, SQLException {
         
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("AdminPanel.fxml"));
 

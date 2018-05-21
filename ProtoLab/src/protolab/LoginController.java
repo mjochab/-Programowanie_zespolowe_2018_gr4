@@ -1,6 +1,7 @@
 package protolab;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +12,7 @@ public class LoginController {
     private FXMLDocumentController mainController;
 
     @FXML
-    public void signIn() throws IOException {
+    public void signIn() throws IOException, ClassNotFoundException, SQLException {
         
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("AdminPanel.fxml"));
 
