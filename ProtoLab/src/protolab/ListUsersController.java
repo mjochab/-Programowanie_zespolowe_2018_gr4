@@ -22,7 +22,7 @@ import javafx.scene.layout.Pane;
 /**
  * FXML Controller class
  *
- * @author Pc
+ * @author Winnicki Kamil
  */
 public class ListUsersController {
     BaseConnection base = new BaseConnection();
@@ -108,7 +108,7 @@ public class ListUsersController {
 
     }
     @FXML
-    public void Back() throws IOException {
+    public void Back() throws IOException, ClassNotFoundException, SQLException {
         
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("AdminPanel.fxml"));
 

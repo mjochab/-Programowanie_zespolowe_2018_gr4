@@ -20,28 +20,50 @@ public class BossPanelController {
     BaseConnection base = new BaseConnection();
     private FXMLDocumentController mainController;
     @FXML
-    private TextField WpisywanieProdukt;
+    private TextField searchItem;
     @FXML
-    private TableView<Users> tableUsers;
+    private TableView<Items> tablePrzedmioty;
     @FXML
-    private TableColumn<Users, String> tabName;
+    private TableColumn<Items, String> tabName;
     @FXML
-    private TableColumn<Users, String> tabSurname;
+    private TableColumn<Items, String> tabType;
     @FXML
-    private TableColumn<Users, Integer> tabTel;
+    private TableColumn<Items, Integer> tabQuantity;
     @FXML
-    private TableColumn<Users, String> tabEmail;
-    @FXML
-    private TableColumn<Users, Long> tabPesel;
-    
-    private ObservableList<Users> UsersList;
+    private TableColumn<Items, String> tabStatus;
 
+    private ObservableList<Items> itemList;
+
+    
+    @FXML
+    public void loadItems() throws ClassNotFoundException, SQLException{
+        
+        try{
+       
+       Connection conn = base.baseConnection();
+       itemList = FXCollections.observableArrayList();
+       ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM przedmioty");
+       while(rs.next()){
+           itemList.add(new Items(rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5)));
+       }
+     }catch(SQLException ex){
+            System.out.println("Error"+ex);
+    }
+        
+        tabName.setCellValueFactory(new PropertyValueFactory<>("Nazwa"));
+        tabType.setCellValueFactory(new PropertyValueFactory<>("Rodzaj"));
+        tabQuantity.setCellValueFactory(new PropertyValueFactory<>("Ilosc"));
+        tabStatus.setCellValueFactory(new PropertyValueFactory<>("Status"));
+        
+        tablePrzedmioty.setItems(null);
+        tablePrzedmioty.setItems(itemList);
+    }
     /**
      * metoda otwierająca okno listy studentów
      * @throws IOException 
      */
     @FXML
-    public void loadStudents() throws IOException{
+    public void loadStudents() throws IOException, ClassNotFoundException, SQLException{
        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("ListStudents.fxml"));
 
         Pane pane = null;
@@ -56,29 +78,7 @@ public class BossPanelController {
         mainController.setScreen(pane);
     }
     
-//    @FXML
-//    public void loadUsers() throws ClassNotFoundException, SQLException{
-//        try{
-//       
-//       Connection conn = base.baseConnection();
-//       UsersList = FXCollections.observableArrayList();
-//       ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM uzytkownicy");
-//       while(rs.next()){
-//           UsersList.add(new Users(rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6), rs.getLong(7)));
-//       }
-//     }catch(SQLException ex){
-//            System.out.println("Error"+ex);
-//    }
-//        
-//        tabName.setCellValueFactory(new PropertyValueFactory<>("Name"));
-//        tabSurname.setCellValueFactory(new PropertyValueFactory<>("Surname"));
-//        tabTel.setCellValueFactory(new PropertyValueFactory<>("TelNumber"));
-//        tabEmail.setCellValueFactory(new PropertyValueFactory<>("Email"));
-//        tabPesel.setCellValueFactory(new PropertyValueFactory<>("Pesel"));
-//        
-//        tableUsers.setItems(null);
-//        tableUsers.setItems(UsersList);
-//    }
+
     /**
      * metoda otwierajaca okno listy rezerwacji
      * @throws IOException 
@@ -99,6 +99,7 @@ public class BossPanelController {
         listReservationController.setMainController(mainController);
         mainController.setScreen(pane);
     }
+     
     /**
      * metoda odpowiadajaca za wylogowanie
      */
@@ -107,8 +108,10 @@ public class BossPanelController {
         mainController.loadMenuScreen();
     }
 
-    public void setMainController(FXMLDocumentController mainController) {
+    public void setMainController(FXMLDocumentController mainController) throws ClassNotFoundException, SQLException {
         this.mainController = mainController;
+        loadItems();
+        
     }
     /**
      * metoda zamykajaca aplikacje

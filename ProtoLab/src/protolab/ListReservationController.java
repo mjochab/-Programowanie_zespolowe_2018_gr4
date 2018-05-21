@@ -7,6 +7,7 @@ package protolab;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -29,7 +30,7 @@ public class ListReservationController  {
     }
 
  @FXML
-    public void Back() throws IOException {
+    public void Back() throws IOException, ClassNotFoundException, SQLException {
         
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("AdminPanel.fxml"));
 
