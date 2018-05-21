@@ -69,6 +69,14 @@ public class AddItemController  {
         String type = textType.getText();
         /** przechwycenie z pola tekstowego wartośc numeryczną o id=textNumber i przypisanie do int number*/
         int number = Integer.valueOf(textNumber.getText());
+        
+        String item = textName.getText();
+        int result=0;
+        ResultSet rs = conn.createStatement().executeQuery("SELECT COUNT(Nazwa) FROM przedmioty WHERE Nazwa= '"+item+"'");
+        while(rs.next()){
+        result = rs.getInt(1);
+        }
+        if(result == 0){
         /** przypisanie do obiektu zapytania SQL do dodania przedmiotu do bazy */ 
         PreparedStatement prstm = conn.prepareStatement("INSERT INTO przedmioty(Nazwa, Rodzaj, Ilosc, Status) VALUES (?, ?, ?, ?)");
         /**kolejno przekazywane parametry do zapytania */
@@ -78,7 +86,9 @@ public class AddItemController  {
         prstm.setString(4, "w magazynie");
         prstm.executeUpdate();
         prstm.close();
-                
+        }else{
+            PreparedStatement prstm = conn.prepareStatement("UPDATEINTO przedmioty(Nazwa, Rodzaj, Ilosc, Status) VALUES (?, ?, ?, ?)");
+        }      
         
         }catch(SQLException ex){
             System.out.println("Error"+ex);
