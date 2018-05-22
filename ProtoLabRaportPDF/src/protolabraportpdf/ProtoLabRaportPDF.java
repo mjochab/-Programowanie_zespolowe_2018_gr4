@@ -2,7 +2,6 @@ package protolabraportpdf;
 
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -10,16 +9,16 @@ import com.itextpdf.text.Font;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.BaseFont;
-import com.itextpdf.text.pdf.ICC_Profile;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.*;
 import java.time.LocalDate;
 
@@ -49,8 +48,11 @@ public class ProtoLabRaportPDF {
         font14 = new Font(bf, 14);
         font14b = new Font(bfb, 14);
     }
-    public static ResultSet executeQuery() throws ClassNotFoundException, SQLException {
-        String query = "Select * From przedmioty";
+    public static ResultSet executeDefaultQuery() throws ClassNotFoundException, SQLException {
+        String query = ""
+                + "SELECT uzytkownicy.imie, uzytkownicy.nazwisko, przedmioty.Nazwa, rezerwacje.od_kiedy, rezerwacje.do_kiedy, rezerwacje.ilosc "
+                + "FROM uzytkownicy,przedmioty,rezerwacje "
+                + "WHERE uzytkownicy.ID_uzytkownika=rezerwacje.ID_uzytkownika and przedmioty.ID_przedmiotu = rezerwacje.ID_przedmiotu";
         try {
             BaseConnection base = new BaseConnection();
             Connection conn;
@@ -63,13 +65,48 @@ public class ProtoLabRaportPDF {
         }
         return rs;
     }
-    public static void savePdf() throws DocumentException {
+        public static ResultSet executeStudentQuery(int idStudent) throws ClassNotFoundException, SQLException {
+        String query = ""
+                + "SELECT uzytkownicy.imie, uzytkownicy.nazwisko, przedmioty.Nazwa, rezerwacje.od_kiedy, rezerwacje.do_kiedy, rezerwacje.ilosc "
+                + "FROM uzytkownicy,przedmioty,rezerwacje "
+                + "WHERE uzytkownicy.ID_uzytkownika=rezerwacje.ID_uzytkownika and przedmioty.ID_przedmiotu = rezerwacje.ID_przedmiotu AND uzytkownicy.ID_uzytkownika= "+idStudent;
+        try {
+            BaseConnection base = new BaseConnection();
+            Connection conn;
+            conn = base.baseConnection();
+            rs = conn.createStatement().executeQuery(query);
+        } catch (ClassNotFoundException e) {
+            System.out.println("nie znaleziono klasy(ClassNotFoundException)");
+        } catch (SQLException sqle) {
+            System.out.println("problem z zapytaniem" + query);
+        }
+        return rs;
+    }
+    public static void savePdf() throws DocumentException, IOException {
         document = new Document(PageSize.A4);
         String nazwaRaportu = "raport " + LocalDate.now();
         nazwaRaportu = nazwaRaportu + ".pdf";
         System.out.println(nazwaRaportu);
         try {
+            if(!Files.exists(Paths.get("raports"))){
+                Files.createDirectory(Paths.get("raports"));
+            }
             writer = PdfWriter.getInstance(document, new FileOutputStream("raports/" + nazwaRaportu));
+            writer.setPdfVersion(PdfWriter.VERSION_1_7);
+        } catch (FileNotFoundException e) {
+            System.out.println("Proces nie może uzyskać dostępu do pliku, ponieważ jest on używany przez inny proces");
+        }
+    }
+    
+        public static void savePdfStudent(ResultSet rs) throws DocumentException, SQLException, IOException {
+        document = new Document(PageSize.A4);
+        String nazwaRaportu = "raport " +rs.getString(1)+" "+rs.getString(2)+" "+LocalDate.now();
+        nazwaRaportu = nazwaRaportu + ".pdf";
+        try {
+            if(!Files.exists(Paths.get("raports/students"))){
+                Files.createDirectory(Paths.get("raports/students"));
+            }
+            writer = PdfWriter.getInstance(document, new FileOutputStream("raports/students/" + nazwaRaportu));
             writer.setPdfVersion(PdfWriter.VERSION_1_7);
         } catch (FileNotFoundException e) {
             System.out.println("Proces nie może uzyskać dostępu do pliku, ponieważ jest on używany przez inny proces");
@@ -114,7 +151,7 @@ public class ProtoLabRaportPDF {
         return cell;
     }
     public static PdfPTable setItemTable() throws SQLException{
-        PdfPTable iTable = new PdfPTable(5);
+        PdfPTable iTable = new PdfPTable(howManyColumns(rs));
         iTable.setWidthPercentage(100);
         iTable.setSpacingAfter(10);
         iTable.setSpacingBefore(10);  
@@ -123,11 +160,12 @@ public class ProtoLabRaportPDF {
         return iTable;
     }
     public static PdfPTable setItemTableInfo(PdfPTable infoRecord) throws SQLException{
-        infoRecord.addCell(new Paragraph("ID", font12b));
+        infoRecord.addCell(new Paragraph("Imie",font12b));
+        infoRecord.addCell(new Paragraph("Nazwisko", font12b));
         infoRecord.addCell(new Paragraph("Nazwa przedmiotu", font12b));
-        infoRecord.addCell(new Paragraph("Rodzaj przedmiotu", font12b));
-        infoRecord.addCell(new Paragraph("Ile", font12b));
-        infoRecord.addCell(new Paragraph("Stan", font12b));
+        infoRecord.addCell(new Paragraph("od kiedy", font12b));
+        infoRecord.addCell(new Paragraph("do kiedy", font12b));
+        infoRecord.addCell(new Paragraph("ilsc", font12b));
         return infoRecord;
     }
     public static PdfPTable setItemRecords(ResultSet rs,PdfPTable p) throws SQLException{
@@ -138,6 +176,7 @@ public class ProtoLabRaportPDF {
             p.addCell("" + rs.getString(3));
             p.addCell("" + rs.getString(4));
             p.addCell("" + rs.getString(5));
+            p.addCell("" + rs.getString(6));
             rs.next();
         }
         return p;
@@ -164,12 +203,12 @@ public class ProtoLabRaportPDF {
         return headerTab;
     }
 
-    public static void createDocument(ResultSet rs) throws ClassNotFoundException, SQLException, FileNotFoundException, DocumentException, IOException {
-       
+    public static void createDefaultDocument(ResultSet rs) throws BadElementException, IOException, DocumentException, SQLException, ClassNotFoundException  {
+//        rs =executeQuery();
         document=setDocumentInfo(document,"Protolab","raport z wypożyczonych przedmiotów z dnia ","pl-PL","protolabAdmin");
         document.open();
         document.add(setHeaderTab());
-        document.add(setInfoTable(setInfoCell("Nadawca", "Dominik Maga", "Zam"),setInfoCell("odbiorca","UR", "Sp.z o.o.")));
+        document.add(setInfoTable(setInfoCell("Nadawca", "Grupa projektu zespołowego", "Numer 4"),setInfoCell("Odbiorca","UR", "Sp.z o.o.")));
         document.add(setItemTable());
         document.close();
     }
