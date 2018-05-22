@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -8,7 +12,7 @@
 <?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="protolab.ListReservationController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="protolab.ListReservationController">
    <children>
       <Label layoutX="153.0" layoutY="28.0" text="Lista zarezerwowanych przedmiotów" />
       <Button fx:id="delStudent" layoutX="118.0" layoutY="345.0" mnemonicParsing="false" text="Usuń rezerwacje" />
@@ -24,6 +28,8 @@
             <TableColumn fx:id="resTo" prefWidth="82.0" text="Do" />
         </columns>
       </TableView>
+      <Button fx:id="BTgeneratePDF" layoutX="23.0" layoutY="388.0" mnemonicParsing="false" onAction="#generatePDF" text="Generuj raport PDF" />
+      <Button fx:id="BTgeneratePdfStudent" layoutX="23.0" layoutY="422.0" mnemonicParsing="false" onAction="#generatePdfStudent" text="Generuj raport PDF dla zaznaczonego studenta" />
    </children>
    <effect>
       <InnerShadow blurType="TWO_PASS_BOX" color="#34782d">

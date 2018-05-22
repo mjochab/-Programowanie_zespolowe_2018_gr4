@@ -78,6 +78,14 @@ public class ListReservationController  {
          
     }
     @FXML
+    public void generatePDF(){
+        
+    }
+    @FXML
+    public void generatePdfStudent(){
+        
+    }
+    @FXML
     public void Back() throws IOException, ClassNotFoundException, SQLException {
         
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("AdminPanel.fxml"));
