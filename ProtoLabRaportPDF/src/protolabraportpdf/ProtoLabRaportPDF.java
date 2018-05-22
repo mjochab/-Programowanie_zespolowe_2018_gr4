@@ -21,6 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.*;
 import java.time.LocalDate;
+import static javafx.application.Application.launch;
 
 
 public class ProtoLabRaportPDF {
@@ -202,14 +203,15 @@ public class ProtoLabRaportPDF {
         headerTab.addCell(cell);
         return headerTab;
     }
-
     public static void createDefaultDocument(ResultSet rs) throws BadElementException, IOException, DocumentException, SQLException, ClassNotFoundException  {
-//        rs =executeQuery();
         document=setDocumentInfo(document,"Protolab","raport z wypożyczonych przedmiotów z dnia ","pl-PL","protolabAdmin");
         document.open();
         document.add(setHeaderTab());
         document.add(setInfoTable(setInfoCell("Nadawca", "Grupa projektu zespołowego", "Numer 4"),setInfoCell("Odbiorca","UR", "Sp.z o.o.")));
         document.add(setItemTable());
         document.close();
+    }
+    public static void main(String[] args) {
+        
     }
 }
