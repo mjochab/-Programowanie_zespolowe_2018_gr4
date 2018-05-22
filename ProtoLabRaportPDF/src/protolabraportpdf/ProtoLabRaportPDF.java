@@ -35,9 +35,10 @@ public class ProtoLabRaportPDF {
     protected static Font font12b;
     protected static Font font14;
     protected static Font font14b;
-    static ResultSet rs;
+    public static ResultSet rs;
+    public static Document document;
     static PdfWriter writer;
-    static Document document;
+   
     
     public ProtoLabRaportPDF() throws DocumentException, IOException {
         BaseFont bf = BaseFont.createFont(FONT, BaseFont.WINANSI, BaseFont.EMBEDDED);
