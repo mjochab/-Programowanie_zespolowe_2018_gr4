@@ -17,7 +17,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
-import protolabraportpdf.*;
+import protolabpdf.*;
+
+import com.itextpdf.text.*;
+
 
 /**
 @ -20,16 +29,62 @@ import javafx.scene.layout.Pane;
@@ -79,22 +82,21 @@ public class ListReservationController  {
          
     }
     @FXML
-    public void generatePDF() throws ClassNotFoundException, SQLException, IOException{
+    public void generatePDF() throws ClassNotFoundException, SQLException, IOException, DocumentException{
 //        cos jest jeszcze nie tak jak powinno 
         
-//        ProtoLabRaportPDF asd=new ProtoLabRaportPDF();
-//        ProtoLabRaportPDF.rs=ProtoLabRaportPDF.executeDefaultQuery();
-//        ProtoLabRaportPDF.rs.first();
-//        ProtoLabRaportPDF.savePdf();
-//        
-//        ProtoLabRaportPDF.document=protolabraportpdf.ProtoLabRaportPDF.setDocumentInfo( protolabraportpdf.ProtoLabRaportPDF.setDocumentInfo(protolabraportpdf.ProtoLabRaportPDF.document, "autor", "cos ", "cos", "cos")) ;
-//        ProtoLabRaportPDF.document.open();
-//        ProtoLabRaportPDF.document.add(protolabraportpdf.ProtoLabRaportPDF.setHeaderTab());
-//        ProtoLabRaportPDF.document.add(protolabraportpdf.ProtoLabRaportPDF.setInfoTable(protolabraportpdf.ProtoLabRaportPDF.setInfoCell("Nadawca", "Zespół programistyczny", "Numer 4")
-//                , ProtoLabRaportPDF.setInfoCell("Nadawca", "Zespół programistyczny", "Numer 4")));
-//        ProtoLabRaportPDF.document.add(protolabraportpdf.ProtoLabRaportPDF.setItemTable());
-//        ProtoLabRaportPDF.document.close();
-//        
+        ProtoLabRaportPDF pdf=new ProtoLabRaportPDF();
+        
+        pdf.rs=pdf.executeDefaultQuery();
+        pdf.rs.first();
+        pdf.savePdf();
+        pdf.document=pdf.setDocumentInfo( pdf.document, "autor", "cos ", "cos", "cos") ;
+        pdf.document.open();
+        pdf.document.add(pdf.setHeaderTab());
+        pdf.document.add(ProtoLabRaportPDF.setInfoTable(ProtoLabRaportPDF.setInfoCell("Nadawca", "Zespół programistyczny", "Numer 4") , ProtoLabRaportPDF.setInfoCell("Nadawca", "Zespół programistyczny", "Numer 4")));
+        pdf.document.add(pdf.setItemTable());
+        pdf.document.close();
+        
     }
     @FXML
     public void generatePdfStudent(){
