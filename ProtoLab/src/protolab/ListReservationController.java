@@ -17,6 +17,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import protolabraportpdf.*;
 
 /**
 @ -20,16 +29,62 @@ import javafx.scene.layout.Pane;
@@ -78,8 +79,22 @@ public class ListReservationController  {
          
     }
     @FXML
-    public void generatePDF(){
+    public void generatePDF() throws ClassNotFoundException, SQLException, IOException{
+//        cos jest jeszcze nie tak jak powinno 
         
+//        ProtoLabRaportPDF asd=new ProtoLabRaportPDF();
+//        ProtoLabRaportPDF.rs=ProtoLabRaportPDF.executeDefaultQuery();
+//        ProtoLabRaportPDF.rs.first();
+//        ProtoLabRaportPDF.savePdf();
+//        
+//        ProtoLabRaportPDF.document=protolabraportpdf.ProtoLabRaportPDF.setDocumentInfo( protolabraportpdf.ProtoLabRaportPDF.setDocumentInfo(protolabraportpdf.ProtoLabRaportPDF.document, "autor", "cos ", "cos", "cos")) ;
+//        ProtoLabRaportPDF.document.open();
+//        ProtoLabRaportPDF.document.add(protolabraportpdf.ProtoLabRaportPDF.setHeaderTab());
+//        ProtoLabRaportPDF.document.add(protolabraportpdf.ProtoLabRaportPDF.setInfoTable(protolabraportpdf.ProtoLabRaportPDF.setInfoCell("Nadawca", "Zespół programistyczny", "Numer 4")
+//                , ProtoLabRaportPDF.setInfoCell("Nadawca", "Zespół programistyczny", "Numer 4")));
+//        ProtoLabRaportPDF.document.add(protolabraportpdf.ProtoLabRaportPDF.setItemTable());
+//        ProtoLabRaportPDF.document.close();
+//        
     }
     @FXML
     public void generatePdfStudent(){
