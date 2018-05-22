@@ -1,4 +1,3 @@
-
 package protolab;
 
 import java.io.IOException;
@@ -23,7 +22,6 @@ import javafx.scene.layout.Pane;
 
 public class AdminPanelController {
     
-   // private FXMLDocumentController mainController;
     
      BaseConnection base = new BaseConnection();
     private FXMLDocumentController mainController;
@@ -44,6 +42,7 @@ public class AdminPanelController {
     
      @FXML
     public void loadItems() throws ClassNotFoundException, SQLException{
+        
         try{
        
        Connection conn = base.baseConnection();
@@ -69,7 +68,7 @@ public class AdminPanelController {
      * @throws IOException 
      */
     @FXML
-    public void windowListUsers() throws IOException {
+    public void windowListUsers() throws IOException, ClassNotFoundException, SQLException {
         
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("ListUsers.fxml"));
 
@@ -90,7 +89,7 @@ public class AdminPanelController {
      */
             
     @FXML
-    public void ListReservations() throws IOException {
+    public void ListReservations() throws IOException, ClassNotFoundException, SQLException {
         
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("ListReservation.fxml"));
 
@@ -133,8 +132,9 @@ public class AdminPanelController {
        mainController.loadMenuScreen();
    }
 
-    public void setMainController(FXMLDocumentController mainController) {
+    public void setMainController(FXMLDocumentController mainController) throws ClassNotFoundException, SQLException {
         this.mainController = mainController;
+        loadItems();
     }
     /**
      * metoda zamkniecia aplikacji

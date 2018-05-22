@@ -15,18 +15,17 @@
       <TextField fx:id="WpisywanieProdukt" layoutX="44.0" layoutY="56.0" prefHeight="25.0" prefWidth="205.0" promptText="Wpisz nazwe produktu" />
       <Button layoutX="133.0" layoutY="413.0" mnemonicParsing="false" text="Wydaj z magazynu" />
       <Button layoutX="346.0" layoutY="56.0" mnemonicParsing="false" onAction="#ListReservations" text="Przeglądaj rezerwacje" />
-      <Button layoutX="284.0" layoutY="413.0" mnemonicParsing="false" text="Sprawdz status w magazynie" />
+      <Button fx:id="loadItems" layoutX="284.0" layoutY="413.0" mnemonicParsing="false" text="Sprawdz status w magazynie" />
       <Button layoutX="147.0" layoutY="450.0" mnemonicParsing="false" onAction="#exit" text="Wyjdz" />
       <Button layoutX="32.0" layoutY="413.0" mnemonicParsing="false" text="Zarezerwuj" />
       <Button layoutX="314.0" layoutY="105.0" mnemonicParsing="false" onAction="#loadStudents" text="Zarządzaj kontami studentów" />
-      <TableView fx:id="tableUsers" layoutX="14.0" layoutY="163.0" prefHeight="237.0" prefWidth="468.0">
-        <columns>
-          <TableColumn fx:id="tabName" prefWidth="84.0" text="Imie" />
-          <TableColumn fx:id="tabSurname" prefWidth="83.0" text="Nazwisko" />
-            <TableColumn fx:id="tabTel" prefWidth="91.0" text="Tel." />
-            <TableColumn fx:id="tabEmail" prefWidth="97.0" text="Email" />
-            <TableColumn fx:id="tabPesel" prefWidth="112.0" text="Pesel" />
-        </columns>
+      <TableView fx:id="tablePrzedmioty" layoutX="49.0" layoutY="162.0" prefHeight="200.0" prefWidth="403.0">
+         <columns>
+            <TableColumn fx:id="tabName" prefWidth="75.0" text="Nazwa" />
+            <TableColumn fx:id="tabType" prefWidth="108.0" text="Rodzaj" />
+            <TableColumn fx:id="tabQuantity" prefWidth="82.0" text="Ilosc" />
+            <TableColumn fx:id="tabStatus" prefWidth="137.0" text="Status" />
+         </columns>
       </TableView>
    </children>
    <effect>

@@ -84,8 +84,9 @@ public class StudentPanelController  {
         mainController.loadMenuScreen();
     }
 
-    public void setMainController(FXMLDocumentController mainController) {
+    public void setMainController(FXMLDocumentController mainController) throws ClassNotFoundException, SQLException {
         this.mainController = mainController;
+        loadItems();
     }
     /**
      * Metoda zamykająca aplikację.

@@ -1,6 +1,9 @@
 package protolab;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +14,7 @@ public class LoginController {
     private FXMLDocumentController mainController;
 
     @FXML
-    public void signIn() throws IOException {
+    public void signIn() throws IOException, ClassNotFoundException, SQLException {
         
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("AdminPanel.fxml"));
 
@@ -30,7 +33,7 @@ public class LoginController {
     
 
     @FXML
-    public void signInBoss() throws IOException {
+    public void signInBoss() throws IOException, ClassNotFoundException, SQLException {
 
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("BossPanel.fxml"));
 
@@ -49,7 +52,7 @@ public class LoginController {
     }
     
     @FXML
-    public void signInStudent() throws IOException {
+    public void signInStudent() throws IOException, ClassNotFoundException {
 
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("StudentPanel.fxml"));
 
@@ -62,7 +65,11 @@ public class LoginController {
         }
 
         StudentPanelController studentController = loader.getController();
-        studentController.setMainController(mainController);
+        try {
+            studentController.setMainController(mainController);
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         mainController.setScreen(pane);
         
     }
