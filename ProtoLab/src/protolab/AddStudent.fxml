@@ -12,6 +12,7 @@
    <children>
        <Button layoutX="72.0" layoutY="451.0" mnemonicParsing="false" onAction="#backMenu" text="Anuluj" />
        <Button layoutX="35.0" layoutY="451.0" mnemonicParsing="false" text="OK" />
+      <Button layoutX="409.0" layoutY="451.0" mnemonicParsing="false" onAction="#exit" text="Wyjście" />
       <Label layoutX="35.0" layoutY="107.0" text="Login" />
       <Label layoutX="36.0" layoutY="141.0" text="Hasło" />
       <TextField fx:id="TextLogin" layoutX="102.0" layoutY="103.0" promptText="Login" text="Login" />

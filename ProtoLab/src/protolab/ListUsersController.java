@@ -6,19 +6,26 @@
 package protolab;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 /**
  * FXML Controller class
  *
@@ -45,6 +52,8 @@ public class ListUsersController {
     private TableColumn<Users, Integer> userPesel;
     
     private ObservableList<Users> usersList;
+    @FXML
+    private Button editUser;
     
     
     public void setMainController(FXMLDocumentController mainController) throws ClassNotFoundException, SQLException {
@@ -149,6 +158,36 @@ public class ListUsersController {
         
         tableUsers.setItems(null);
         tableUsers.setItems(usersList);
+    }
+
+    @FXML
+    private void editUser(ActionEvent event) throws ClassNotFoundException, SQLException, IOException {
+          FXMLLoader loader = new FXMLLoader();
+          
+         Users user = null;
+          loader.setLocation(getClass().getResource("EditUser.fxml"));
+          try{
+              user = tableUsers.getSelectionModel().getSelectedItem();
+              loader.load();
+          }
+          
+          catch(IOException ex){
+             System.out.println(ex.getMessage());
+          }
+          if(user != null){
+             
+          EditUserController editUser = loader.getController();
+          editUser.setUser(user);
+          Parent p = loader.getRoot();
+          Stage stage = new Stage();
+          stage.setScene(new Scene(p));
+          stage.showAndWait();
+           
+          }
+          else{
+               JOptionPane.showMessageDialog(null,"Nie wybrano użytkownika do edycji","info",JOptionPane.INFORMATION_MESSAGE);
+          }
+         
     }
     
 }
