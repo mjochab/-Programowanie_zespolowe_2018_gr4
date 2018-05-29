@@ -16,7 +16,6 @@
       <Button fx:id="addStudent" layoutX="242.0" layoutY="370.0" mnemonicParsing="false" onAction="#registrationStudent" text="Dodaj Studenta" />
       <Button fx:id="delStudent" layoutX="358.0" layoutY="370.0" mnemonicParsing="false" text="Usuń zaznaczonego" />
       <Button layoutX="271.0" layoutY="433.0" mnemonicParsing="false" onAction="#Back" text="Powrót" />
-      <Button layoutX="373.0" layoutY="433.0" mnemonicParsing="false" onAction="#exit" text="Wyjscie" />
       <TableView fx:id="tableUsers" layoutX="15.0" layoutY="80.0" prefHeight="259.0" prefWidth="471.0">
         <columns>
           <TableColumn fx:id="userName" prefWidth="75.0" text="Imie" />
