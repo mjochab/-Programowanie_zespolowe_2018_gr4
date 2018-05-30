@@ -60,7 +60,9 @@ public class StudentPanelController  {
      @FXML
     public void loadItems() throws ClassNotFoundException, SQLException{
         try{
-       
+//
+            System.out.println(SessionService.getInstance());
+//
        Connection conn = base.baseConnection();
        itemList = FXCollections.observableArrayList();
        ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM przedmioty");
@@ -99,6 +101,7 @@ public class StudentPanelController  {
      */
     @FXML
     public void backMenu() {
+        SessionService.resetSession();
         mainController.loadMenuScreen();
     }
 

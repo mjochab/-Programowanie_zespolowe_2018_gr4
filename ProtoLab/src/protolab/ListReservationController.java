@@ -30,6 +30,7 @@ import javax.swing.JOptionPane;
 public class ListReservationController  {
     BaseConnection base = new BaseConnection();
     
+    
      private FXMLDocumentController mainController;
     @FXML
     private Button delStudent;
@@ -57,10 +58,10 @@ public class ListReservationController  {
         pdf.rs=pdf.executeDefaultQuery();
         pdf.rs.first();
         pdf.savePdf();
-        pdf.document=pdf.setDocumentInfo( pdf.document, "autor", "cos ", "cos", "cos") ;
+        pdf.document=pdf.setDocumentInfo( pdf.document, "autor", SessionService.getUsername()+" "+SessionService.getUserSurname(), "cos", "cos") ;
         pdf.document.open();
         pdf.document.add(pdf.setHeaderTab());
-        pdf.document.add(ProtoLabRaportPDF.setInfoTable(ProtoLabRaportPDF.setInfoCell("Nadawca", "Zespół programistyczny", "Numer 4") , ProtoLabRaportPDF.setInfoCell("Nadawca", "Zespół programistyczny", "Numer 4")));
+        pdf.document.add(ProtoLabRaportPDF.setInfoTable(ProtoLabRaportPDF.setInfoCell("Nadawca", SessionService.getUsername()+" "+SessionService.getUserSurname(), " ") , ProtoLabRaportPDF.setInfoCell("Odbiorca", "Prowadzący zajęcia", "M.O.")));
         pdf.document.add(pdf.setItemTable());
         pdf.document.close();
         
@@ -81,10 +82,10 @@ public class ListReservationController  {
         pdf.rs=pdf.executeStudentQuery(idStudent);
         pdf.rs.first();
         pdf.savePdfStudent(pdf.rs);
-        pdf.document=pdf.setDocumentInfo( pdf.document, "autor", "cos ", "cos", "cos") ;
+        pdf.document=pdf.setDocumentInfo( pdf.document, SessionService.getUsername()+" "+SessionService.getUserSurname(), "cos ", "cos", "cos") ;
         pdf.document.open();
         pdf.document.add(pdf.setHeaderTab());
-        pdf.document.add(ProtoLabRaportPDF.setInfoTable(ProtoLabRaportPDF.setInfoCell("Nadawca", "Zespół programistyczny", "Numer 4") , ProtoLabRaportPDF.setInfoCell("Nadawca", "Zespół programistyczny", "Numer 4")));
+        pdf.document.add(ProtoLabRaportPDF.setInfoTable(ProtoLabRaportPDF.setInfoCell("Nadawca", SessionService.getUsername()+" "+SessionService.getUserSurname(), " ") , ProtoLabRaportPDF.setInfoCell("Nadawca", "Zespół programistyczny", "Numer 4")));
         pdf.document.add(pdf.setItemTable());
         pdf.document.close();}
         

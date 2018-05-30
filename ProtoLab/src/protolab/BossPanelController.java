@@ -39,6 +39,9 @@ public class BossPanelController {
     public void loadItems() throws ClassNotFoundException, SQLException{
         
         try{
+            //
+            System.out.println(SessionService.getInstance());
+            //
        
        Connection conn = base.baseConnection();
        itemList = FXCollections.observableArrayList();
@@ -105,6 +108,7 @@ public class BossPanelController {
      */
     @FXML
     public void backMenu() {
+        SessionService.resetSession();
         mainController.loadMenuScreen();
     }
 
