@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 /**
@@ -87,7 +88,16 @@ public class AddItemController  {
         prstm.executeUpdate();
         prstm.close();
         }else{
-            PreparedStatement prstm = conn.prepareStatement("UPDATEINTO przedmioty(Nazwa, Rodzaj, Ilosc, Status) VALUES (?, ?, ?, ?)");
+            PreparedStatement prstm = conn.prepareStatement("UPDATE przedmioty SET Ilosc = Ilosc + ? WHERE Nazwa = ?");
+            prstm.setInt(1, number);
+            prstm.setString(2, name);
+            prstm.executeUpdate();
+            
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("");
+                alert.setHeaderText("Dodano "+number+" przedmiotów: "+name+".");
+                alert.showAndWait();
+            prstm.close();
         }      
         
         }catch(SQLException ex){

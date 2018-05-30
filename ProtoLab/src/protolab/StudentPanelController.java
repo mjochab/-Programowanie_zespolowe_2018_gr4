@@ -5,6 +5,7 @@
  */
 package protolab;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -14,11 +15,13 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
 
 /**
  * Kontroler klasy FXML.
@@ -75,6 +78,21 @@ public class StudentPanelController  {
         
         tablePrzedmioty.setItems(null);
         tablePrzedmioty.setItems(itemList);
+    }
+    @FXML
+    public void doReservation() throws IOException, ClassNotFoundException, SQLException{
+       FXMLLoader loader = new FXMLLoader(this.getClass().getResource("MakeReservation.fxml"));
+
+        Pane pane = null;
+
+        try {
+            pane = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        MakeReservationController reservationController = loader.getController();
+        reservationController.setMainController(mainController);
+        mainController.setScreen(pane);
     }
     /**
      * Metoda służąca do powrotu do poprzedniego okna.

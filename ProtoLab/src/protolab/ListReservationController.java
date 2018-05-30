@@ -17,6 +17,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import protolabpdf.*;
+
+import com.itextpdf.text.*;
+import javax.swing.JOptionPane;
+
 
 /**
 @ -20,16 +29,62 @@ import javafx.scene.layout.Pane;
@@ -45,7 +50,52 @@ public class ListReservationController  {
     
     private ObservableList<Reservations> ResList;
     
-    
+      public void generatePDF() throws ClassNotFoundException, SQLException, IOException, DocumentException{
+        
+        ProtoLabRaportPDF pdf=new ProtoLabRaportPDF();
+        
+        pdf.rs=pdf.executeDefaultQuery();
+        pdf.rs.first();
+        pdf.savePdf();
+        pdf.document=pdf.setDocumentInfo( pdf.document, "autor", "cos ", "cos", "cos") ;
+        pdf.document.open();
+        pdf.document.add(pdf.setHeaderTab());
+        pdf.document.add(ProtoLabRaportPDF.setInfoTable(ProtoLabRaportPDF.setInfoCell("Nadawca", "Zespół programistyczny", "Numer 4") , ProtoLabRaportPDF.setInfoCell("Nadawca", "Zespół programistyczny", "Numer 4")));
+        pdf.document.add(pdf.setItemTable());
+        pdf.document.close();
+        
+    }
+    @FXML
+    public void generatePdfStudent() throws DocumentException, IOException, ClassNotFoundException, SQLException{
+                ProtoLabRaportPDF pdf=new ProtoLabRaportPDF();
+         try{    
+        Connection conn = base.baseConnection();
+        Reservations res= tableReservations.getSelectionModel().getSelectedItem();
+        String name=res.getName();
+        String surname= res.getSurname();
+        String querry="SELECT uzytkownicy.ID_uzytkownika FROM uzytkownicy WHERE uzytkownicy.imie = '"+name+"' AND uzytkownicy.nazwisko= '"+surname+"'";
+        ResultSet rc=conn.createStatement().executeQuery(querry);
+        int idStudent;
+        rc.first();
+        idStudent=rc.getInt(1);
+        pdf.rs=pdf.executeStudentQuery(idStudent);
+        pdf.rs.first();
+        pdf.savePdfStudent(pdf.rs);
+        pdf.document=pdf.setDocumentInfo( pdf.document, "autor", "cos ", "cos", "cos") ;
+        pdf.document.open();
+        pdf.document.add(pdf.setHeaderTab());
+        pdf.document.add(ProtoLabRaportPDF.setInfoTable(ProtoLabRaportPDF.setInfoCell("Nadawca", "Zespół programistyczny", "Numer 4") , ProtoLabRaportPDF.setInfoCell("Nadawca", "Zespół programistyczny", "Numer 4")));
+        pdf.document.add(pdf.setItemTable());
+        pdf.document.close();}
+        
+         catch(NullPointerException ne){
+             JOptionPane.showMessageDialog(null, "Nie wybrano elementu!", "info", JOptionPane.INFORMATION_MESSAGE);
+         }
+          catch(Exception e){
+             System.out.println(e);
+         }
+    }
+    @FXML
     public void setMainController(FXMLDocumentController mainController) throws ClassNotFoundException, SQLException {
         this.mainController = mainController;
         loadReservations();
