@@ -19,7 +19,7 @@ public class Items {
     private final StringProperty Nazwa;
     private final StringProperty Rodzaj;
     private final IntegerProperty Ilosc;
-    private final StringProperty Status;
+//    private final StringProperty Status;
     /**
      * konstruktor klasy Items
      * @param Nazwa
@@ -27,12 +27,12 @@ public class Items {
      * @param Ilosc
      * @param Status 
      */
-    public Items(String Nazwa, String Rodzaj, int Ilosc, String Status){
+    public Items(String Nazwa, String Rodzaj, int Ilosc){
         
         this.Nazwa = new SimpleStringProperty(Nazwa);
         this.Rodzaj = new SimpleStringProperty(Rodzaj);
         this.Ilosc = new SimpleIntegerProperty(Ilosc);
-        this.Status = new SimpleStringProperty(Status);
+//        this.Status = new SimpleStringProperty(Status);
     }
     /**
      * metoda pobierajaca pole nazwa
@@ -80,16 +80,16 @@ public class Items {
       * metoda pobierajaca pole status
       * @return 
       */
-     public String getStatus(){
-         return Status.get();
-    }
-     /**
-      * metoda przypisujaca wartosc do pola status
-      * @param value 
-      */
-     public void setStatus(String value) {
-        Status.set(value);
-    }
+//     public String getStatus(){
+//         return Status.get();
+//    }
+//     /**
+//      * metoda przypisujaca wartosc do pola status
+//      * @param value 
+//      */
+//     public void setStatus(String value) {
+//        Status.set(value);
+//    }
      /**
       * metoda zwracajaca nazwa
       * @return 
@@ -116,7 +116,7 @@ public class Items {
  * metoda zwracajaca status
  * @return 
  */
-    public StringProperty getStatusProperty() {
-        return Status;
-    }      
+//    public StringProperty getStatusProperty() {
+//        return Status;
+//    }      
 }

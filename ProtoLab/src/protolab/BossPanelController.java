@@ -29,8 +29,8 @@ public class BossPanelController {
     private TableColumn<Items, String> tabType;
     @FXML
     private TableColumn<Items, Integer> tabQuantity;
-    @FXML
-    private TableColumn<Items, String> tabStatus;
+//    @FXML
+//    private TableColumn<Items, String> tabStatus;
 
     private ObservableList<Items> itemList;
 
@@ -45,9 +45,12 @@ public class BossPanelController {
        
        Connection conn = base.baseConnection();
        itemList = FXCollections.observableArrayList();
-       ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM przedmioty");
+            ResultSet rs = conn.createStatement().executeQuery(""
+                    + "SELECT przedmioty.ID_przedmiotu,przedmioty.Nazwa, rodzaj_przedmiotu.nazwa_typu, przedmioty.Ilosc "
+                    + "FROM przedmioty, rodzaj_przedmiotu "
+                    + "WHERE rodzaj_przedmiotu.id_rodzaj=przedmioty.id_rodzaj");
        while(rs.next()){
-           itemList.add(new Items(rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5)));
+           itemList.add(new Items(rs.getString(2), rs.getString(3), rs.getInt(4)));
        }
      }catch(SQLException ex){
             System.out.println("Error"+ex);
@@ -56,7 +59,7 @@ public class BossPanelController {
         tabName.setCellValueFactory(new PropertyValueFactory<>("Nazwa"));
         tabType.setCellValueFactory(new PropertyValueFactory<>("Rodzaj"));
         tabQuantity.setCellValueFactory(new PropertyValueFactory<>("Ilosc"));
-        tabStatus.setCellValueFactory(new PropertyValueFactory<>("Status"));
+//        tabStatus.setCellValueFactory(new PropertyValueFactory<>("Status"));
         
         tablePrzedmioty.setItems(null);
         tablePrzedmioty.setItems(itemList);
@@ -124,10 +127,13 @@ public class BossPanelController {
        String szuk = WpisywanieProdukt.getText().toLowerCase();
        Connection conn = base.baseConnection();
        itemList = FXCollections.observableArrayList();
-       ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM przedmioty");
+            ResultSet rs = conn.createStatement().executeQuery(""
+                    + "SELECT przedmioty.ID_przedmiotu,przedmioty.Nazwa, rodzaj_przedmiotu.nazwa_typu, przedmioty.Ilosc "
+                    + "FROM przedmioty, rodzaj_przedmiotu "
+                    + "WHERE rodzaj_przedmiotu.id_rodzaj=przedmioty.id_rodzaj");
        while(rs.next()){
           if(rs.getString(2).toLowerCase().startsWith(szuk)){
-           itemList.add(new Items(rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5)));
+           itemList.add(new Items(rs.getString(2), rs.getString(3), rs.getInt(4)));
        }}
      }catch(SQLException ex){
             System.out.println("Error"+ex);
@@ -136,7 +142,7 @@ public class BossPanelController {
         tabName.setCellValueFactory(new PropertyValueFactory<>("Nazwa"));
         tabType.setCellValueFactory(new PropertyValueFactory<>("Rodzaj"));
         tabQuantity.setCellValueFactory(new PropertyValueFactory<>("Ilosc"));
-        tabStatus.setCellValueFactory(new PropertyValueFactory<>("Status"));
+//        tabStatus.setCellValueFactory(new PropertyValueFactory<>("Status"));
         
         tablePrzedmioty.setItems(null);
         tablePrzedmioty.setItems(itemList);

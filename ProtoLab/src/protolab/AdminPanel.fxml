@@ -22,10 +22,9 @@
       <Button layoutX="34.0" layoutY="354.0" mnemonicParsing="false" text="Zarazerwuj" />
       <TableView fx:id="tablePrzedmioty" layoutX="29.0" layoutY="150.0" prefHeight="200.0" prefWidth="403.0">
          <columns>
-            <TableColumn fx:id="tabName" prefWidth="75.0" text="Nazwa" />
-            <TableColumn fx:id="tabType" prefWidth="108.0" text="Rodzaj" />
+            <TableColumn fx:id="tabName" prefWidth="150.0" text="Nazwa" />
+            <TableColumn fx:id="tabType" prefWidth="150.0" text="Rodzaj" />
             <TableColumn fx:id="tabQuantity" prefWidth="82.0" text="Ilosc" />
-            <TableColumn fx:id="tabStatus" prefWidth="137.0" text="Status" />
          </columns>
       </TableView>
    </children>
