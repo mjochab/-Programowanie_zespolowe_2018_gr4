@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 21 Maj 2018, 17:56
+-- Czas generowania: 30 Maj 2018, 17:45
 -- Wersja serwera: 10.1.31-MariaDB
 -- Wersja PHP: 7.2.4
 
@@ -64,7 +64,7 @@ INSERT INTO `dane_logowania` (`ID_konta`, `Login`, `Haslo`) VALUES
 CREATE TABLE `przedmioty` (
   `ID_przedmiotu` int(11) NOT NULL,
   `Nazwa` varchar(45) COLLATE utf8_polish_ci NOT NULL,
-  `Rodzaj` varchar(45) COLLATE utf8_polish_ci DEFAULT NULL,
+  `id_rodzaj` int(11) NOT NULL,
   `Ilosc` int(11) NOT NULL,
   `Status` varchar(45) COLLATE utf8_polish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
@@ -73,14 +73,15 @@ CREATE TABLE `przedmioty` (
 -- Zrzut danych tabeli `przedmioty`
 --
 
-INSERT INTO `przedmioty` (`ID_przedmiotu`, `Nazwa`, `Rodzaj`, `Ilosc`, `Status`) VALUES
-(1, 'monitor', 'sprzęt komputerowy', 40, 'w magazynie'),
-(2, 'klawiatura', 'sprzęt komputerowy', 30, 'w magazynie'),
-(3, 'mysz komputerowa', 'sprzęt komputerowy', 15, 'w magazynie'),
-(4, 'głośniki', 'sprzęt komputerowy', 25, 'w magazynie'),
-(5, 'drukarka', 'sprz?t komputerowy', 20, 'w magazynie'),
-(6, 'skaner', 'sprz?t komputerowy', 35, 'w magazynie'),
-(7, 'fax', 'sprzet komputerowy', 50, 'w magazynie');
+INSERT INTO `przedmioty` (`ID_przedmiotu`, `Nazwa`, `id_rodzaj`, `Ilosc`, `Status`) VALUES
+(1, 'monitor', 1, 40, 'w magazynie'),
+(2, 'klawiatura', 1, 30, 'w magazynie'),
+(3, 'mysz komputerowa', 1, 15, 'w magazynie'),
+(4, 'głośniki', 1, 25, 'w magazynie'),
+(5, 'drukarka', 1, 20, 'w magazynie'),
+(6, 'skaner', 1, 35, 'w magazynie'),
+(7, 'fax', 1, 50, 'w magazynie'),
+(8, 'drukarka3d', 1, 2, 'w magazynie');
 
 -- --------------------------------------------------------
 
@@ -102,7 +103,29 @@ CREATE TABLE `rezerwacje` (
 --
 
 INSERT INTO `rezerwacje` (`idRezerwacji`, `ID_uzytkownika`, `ID_przedmiotu`, `od_kiedy`, `do_kiedy`, `ilosc`) VALUES
-(2, 3, 7, '2018-05-22', '2018-05-25', 10);
+(2, 3, 7, '2018-05-22', '2018-05-25', 10),
+(3, 4, 2, '2018-05-22', '2018-05-23', 1),
+(4, 2, 4, '2018-05-22', '2018-05-23', 1),
+(5, 4, 6, '2018-05-22', '2018-05-23', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `rodzaj_przedmiotu`
+--
+
+CREATE TABLE `rodzaj_przedmiotu` (
+  `id_rodzaj` int(11) NOT NULL,
+  `nazwa_typu` varchar(45) COLLATE utf8_polish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+--
+-- Zrzut danych tabeli `rodzaj_przedmiotu`
+--
+
+INSERT INTO `rodzaj_przedmiotu` (`id_rodzaj`, `nazwa_typu`) VALUES
+(1, 'sprzet komputerowy'),
+(2, 'elektro-narzedzia');
 
 -- --------------------------------------------------------
 
@@ -120,8 +143,8 @@ CREATE TABLE `uprawnienia` (
 --
 
 INSERT INTO `uprawnienia` (`ID_uprawnienia`, `rodzajUprawnienia`) VALUES
-(2, 'admin'),
 (1, 'student'),
+(2, 'admin'),
 (3, 'szef kola');
 
 -- --------------------------------------------------------
@@ -147,7 +170,9 @@ CREATE TABLE `uzytkownicy` (
 INSERT INTO `uzytkownicy` (`ID_uzytkownika`, `ID_uprawnienia`, `imie`, `nazwisko`, `numerTel`, `email`, `pesel`) VALUES
 (2, 2, 'Jan', 'Kowalski', 874136899, 'kowalski@gmail.com', 45213654874),
 (3, 3, 'Anna', 'Woźniak', 789654123, 'awozniak@op.pl', 74533216549),
-(4, 1, 'Marek', 'Nowak', 745861234, 'aads@op.pl', 59234851346);
+(4, 1, 'Marek', 'Nowak', 745861234, 'aads@op.pl', 59234851346),
+(6, 1, 'Dominik', 'Maga', 794848885, 'dm@wp.pl', 74447582215),
+(9, 1, 'asd343', 'asd343', 45634563, 'wp.pl', 12345678);
 
 --
 -- Indeksy dla zrzutów tabel
@@ -164,7 +189,8 @@ ALTER TABLE `dane_logowania`
 -- Indeksy dla tabeli `przedmioty`
 --
 ALTER TABLE `przedmioty`
-  ADD PRIMARY KEY (`ID_przedmiotu`);
+  ADD PRIMARY KEY (`ID_przedmiotu`),
+  ADD KEY `Rodzaj` (`id_rodzaj`);
 
 --
 -- Indeksy dla tabeli `rezerwacje`
@@ -176,11 +202,16 @@ ALTER TABLE `rezerwacje`
   ADD KEY `ID_przedmiotu_idx` (`ID_przedmiotu`);
 
 --
+-- Indeksy dla tabeli `rodzaj_przedmiotu`
+--
+ALTER TABLE `rodzaj_przedmiotu`
+  ADD PRIMARY KEY (`id_rodzaj`);
+
+--
 -- Indeksy dla tabeli `uprawnienia`
 --
 ALTER TABLE `uprawnienia`
-  ADD PRIMARY KEY (`ID_uprawnienia`),
-  ADD UNIQUE KEY `rodzajUprawnienia_UNIQUE` (`rodzajUprawnienia`);
+  ADD PRIMARY KEY (`ID_uprawnienia`);
 
 --
 -- Indeksy dla tabeli `uzytkownicy`
@@ -190,8 +221,8 @@ ALTER TABLE `uzytkownicy`
   ADD UNIQUE KEY `pesel_UNIQUE` (`pesel`),
   ADD UNIQUE KEY `email_UNIQUE` (`email`),
   ADD UNIQUE KEY `numerTel_UNIQUE` (`numerTel`),
-  ADD UNIQUE KEY `ID_uprawnienia_UNIQUE` (`ID_uprawnienia`),
-  ADD UNIQUE KEY `ID_uzytkownika_UNIQUE` (`ID_uzytkownika`);
+  ADD UNIQUE KEY `ID_uzytkownika_UNIQUE` (`ID_uzytkownika`),
+  ADD KEY `ID_uprawnienia_UNIQUE` (`ID_uprawnienia`) USING BTREE;
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -207,19 +238,25 @@ ALTER TABLE `dane_logowania`
 -- AUTO_INCREMENT dla tabeli `przedmioty`
 --
 ALTER TABLE `przedmioty`
-  MODIFY `ID_przedmiotu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `ID_przedmiotu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT dla tabeli `rezerwacje`
 --
 ALTER TABLE `rezerwacje`
-  MODIFY `idRezerwacji` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idRezerwacji` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT dla tabeli `rodzaj_przedmiotu`
+--
+ALTER TABLE `rodzaj_przedmiotu`
+  MODIFY `id_rodzaj` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT dla tabeli `uzytkownicy`
 --
 ALTER TABLE `uzytkownicy`
-  MODIFY `ID_uzytkownika` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID_uzytkownika` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Ograniczenia dla zrzutów tabel
