@@ -17,21 +17,23 @@
       <Button layoutX="407.0" layoutY="440.0" mnemonicParsing="false" onAction="#exit" text="Wyjście" />
       <Label layoutX="52.0" layoutY="83.0" text="Login" />
       <Label layoutX="51.0" layoutY="126.0" text="Hasło" />
-      <TextField fx:id="TextLogin" layoutX="122.0" layoutY="79.0" promptText="Login" />
-      <TextField fx:id="TextHaslo" layoutX="122.0" layoutY="122.0" promptText="Hasło" />
-      <Button layoutX="47.0" layoutY="440.0" mnemonicParsing="false" onAction="#backMenu" text="Ok" />
-      <TextField fx:id="TextLogin1" layoutX="122.0" layoutY="163.0" promptText="Imię" />
-      <TextField fx:id="TextLogin2" layoutX="122.0" layoutY="203.0" promptText="Nazwisko" />
-      <TextField fx:id="TextLogin3" layoutX="122.0" layoutY="244.0" promptText="Telefon" />
-      <TextField fx:id="TextLogin4" layoutX="122.0" layoutY="283.0" promptText="E-mail" />
+      <TextField fx:id="login" layoutX="122.0" layoutY="79.0" promptText="Login" />
+      <TextField fx:id="haslo" layoutX="122.0" layoutY="122.0" promptText="Hasło" />
+      <Button layoutX="47.0" layoutY="440.0" mnemonicParsing="false" onAction="#addNewUser" text="Ok" />
+      <TextField fx:id="name" layoutX="122.0" layoutY="163.0" promptText="Imię" />
+      <TextField fx:id="lastName" layoutX="122.0" layoutY="203.0" promptText="Nazwisko" />
+      <TextField fx:id="phone" layoutX="122.0" layoutY="244.0" promptText="Telefon" />
+      <TextField fx:id="email" layoutX="122.0" layoutY="283.0" promptText="E-mail" />
+      <TextField fx:id="pesel" layoutX="122.0" layoutY="324.0" promptText="PESEL" />
       <Label layoutX="52.0" layoutY="167.0" text="Imię" />
       <Label layoutX="51.0" layoutY="207.0" text="Nazwisko" />
       <Label layoutX="51.0" layoutY="248.0" text="Telefon" />
       <Label layoutX="51.0" layoutY="287.0" text="E-mail" />
-      <ComboBox layoutX="121.0" layoutY="330.0" prefWidth="150.0" promptText="Uczelnia" />
-      <ComboBox layoutX="142.0" layoutY="371.0" prefWidth="150.0" promptText="Uprawnienia" />
-      <Label layoutX="53.0" layoutY="334.0" text="Uczelnia" />
-      <Label layoutX="56.0" layoutY="375.0" text="Uprawnienia" />
+      <Label layoutX="51.0" layoutY="327.0" text="PESEL" />
+      <ComboBox layoutX="121.0" layoutY="355.0" prefWidth="150.0" promptText="Uczelnia" />
+      <ComboBox layoutX="142.0" layoutY="395.0" prefWidth="150.0" promptText="Uprawnienia" />
+      <Label layoutX="53.0" layoutY="355.0" text="Uczelnia" />
+      <Label layoutX="56.0" layoutY="395.0" text="Uprawnienia" />
       <Label layoutX="200.0" layoutY="28.0" text="Rejestracja admina">
          <font>
             <Font size="14.0" />

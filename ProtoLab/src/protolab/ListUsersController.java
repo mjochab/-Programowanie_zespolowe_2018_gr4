@@ -8,8 +8,10 @@ package protolab;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -37,7 +39,7 @@ public class ListUsersController {
     @FXML
     private Button addStudent;
     @FXML
-    private Button delStudent;
+    private Button delUser;
     @FXML
     private TableView<Users> tableUsers;
     @FXML
@@ -188,6 +190,30 @@ public class ListUsersController {
                JOptionPane.showMessageDialog(null,"Nie wybrano użytkownika do edycji","info",JOptionPane.INFORMATION_MESSAGE);
           }
          
+    }
+    
+    @FXML
+    public void deleteUser() throws IOException, ClassNotFoundException{
+        try{
+        
+        Connection conn = base.baseConnection();
+        Statement stmnt = conn.createStatement();
+        long pesel = tableUsers.getSelectionModel().getSelectedItem().getPesel();
+        int selectedIndex = tableUsers.getSelectionModel().getSelectedIndex();
+                
+        String query = "delete from uzytkownicy where pesel ='" +pesel+"';";
+        PreparedStatement ps = conn.prepareStatement(query);
+        int deleteUser = stmnt.executeUpdate(query);
+        deleteUser = ps.executeUpdate();
+        this.loadUsers();
+        } 
+        catch(NullPointerException ex){
+              JOptionPane.showMessageDialog(null,"Nie wybrano użytkownika do usunięcia","info",JOptionPane.INFORMATION_MESSAGE);
+        }
+        catch (Exception ex){
+            System.out.println(ex.getMessage());
+        }
+      
     }
     
 }
