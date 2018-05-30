@@ -91,6 +91,32 @@ public class StudentPanelController  {
     /**
      * Metoda zamykająca aplikację.
      */
+    
+    @FXML
+    public void searchItem2() throws ClassNotFoundException{
+    try{
+        
+       String szuk = searchItem.getText().toLowerCase();
+       Connection conn = base.baseConnection();
+       itemList = FXCollections.observableArrayList();
+       ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM przedmioty");
+       while(rs.next()){
+          if(rs.getString(2).toLowerCase().startsWith(szuk)){
+           itemList.add(new Items(rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5)));
+       }}
+     }catch(SQLException ex){
+            System.out.println("Error"+ex);
+    }
+        
+        tabName.setCellValueFactory(new PropertyValueFactory<>("Nazwa"));
+        tabType.setCellValueFactory(new PropertyValueFactory<>("Rodzaj"));
+        tabQuantity.setCellValueFactory(new PropertyValueFactory<>("Ilosc"));
+        tabStatus.setCellValueFactory(new PropertyValueFactory<>("Status"));
+        
+        tablePrzedmioty.setItems(null);
+        tablePrzedmioty.setItems(itemList);
+    }
+    
     @FXML
      public void exit() {
         Platform.exit();
