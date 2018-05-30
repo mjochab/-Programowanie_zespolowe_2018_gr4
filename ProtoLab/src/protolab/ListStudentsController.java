@@ -14,20 +14,19 @@ import java.sql.Statement;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
-/**
- * FXML Controller class
- *
- * @author Pc
- */
 public class ListStudentsController {
     BaseConnection base = new BaseConnection();
     private FXMLDocumentController mainController;
@@ -49,6 +48,8 @@ public class ListStudentsController {
     private TableColumn<Users, Integer> userPesel;
     
     private ObservableList<Users> usersList;
+    @FXML
+    private Button editStudent;
 
   
     
@@ -140,6 +141,37 @@ public class ListStudentsController {
         bossController.setMainController(mainController);
         mainController.setScreen(pane);
     }
+    
+    @FXML
+    private void editStudent(ActionEvent event) throws ClassNotFoundException, SQLException, IOException {
+          FXMLLoader loader = new FXMLLoader();
+          
+         Users user = null;
+          loader.setLocation(getClass().getResource("EditStudent.fxml"));
+          try{
+              user = tableUsers.getSelectionModel().getSelectedItem();
+              loader.load();
+          }
+          
+          catch(IOException ex){
+             System.out.println(ex.getMessage());
+          }
+          if(user != null){
+             
+          EditStudentController editStudent = loader.getController();
+          editStudent.setStudent(user);
+          Parent p = loader.getRoot();
+          Stage stage = new Stage();
+          stage.setScene(new Scene(p));
+          stage.showAndWait();
+           
+          }
+          else{
+               JOptionPane.showMessageDialog(null,"Nie wybrano użytkownika do edycji","info",JOptionPane.INFORMATION_MESSAGE);
+          }
+         
+    }
+    
      public void exit() {
         Platform.exit();
     }
