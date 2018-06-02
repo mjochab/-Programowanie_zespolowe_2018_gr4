@@ -11,7 +11,7 @@
       <ComboBox fx:id="boxItem" layoutX="203.0" layoutY="130.0" prefWidth="150.0" promptText="Przedmiot" />
       <DatePicker fx:id="dateFrom" layoutX="191.0" layoutY="222.0" promptText="Od:" />
       <DatePicker fx:id="dateTo" layoutX="191.0" layoutY="260.0" promptText="Do" />
-      <Button layoutX="203.0" layoutY="325.0" mnemonicParsing="false" text="Zarezerwuj" />
+      <Button layoutX="203.0" layoutY="325.0" mnemonicParsing="false" onAction="#makeReservation" text="Zarezerwuj" />
       <Button layoutX="301.0" layoutY="325.0" mnemonicParsing="false" onAction="#toStudentPanel" text="Anuluj" />
       <TextField fx:id="TextNumber" layoutX="204.0" layoutY="175.0" promptText="Ilość" />
    </children>

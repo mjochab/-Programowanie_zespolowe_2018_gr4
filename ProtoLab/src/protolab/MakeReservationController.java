@@ -8,6 +8,8 @@ package protolab;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -21,6 +23,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
@@ -104,7 +107,7 @@ public class MakeReservationController implements Initializable {
         dateFrom.setValue(LocalDate.now());
         
         
-        final Callback<DatePicker, DateCell> dayCellFactory
+        final Callback<DatePicker, DateCell> dayCellfack
                 = new Callback<DatePicker, DateCell>() {
             @Override
             public DateCell call(final DatePicker datePicker) {
@@ -131,11 +134,61 @@ public class MakeReservationController implements Initializable {
                 };
             }
         };
-        dateTo.setDayCellFactory(dayCellFactory);
-        System.out.println(dateFrom.getValue());
+            final Callback<DatePicker, DateCell> dayCellfuck
+                = new Callback<DatePicker, DateCell>() {
+            @Override
+            public DateCell call(final DatePicker datePicker) {
+                return new DateCell() {
+                    @Override
+                    public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item.isBefore(
+                                LocalDate.now())) {
+                            setDisable(true);
+                            setStyle("-fx-background-color: #ffc0cb;");
+                        }
+                        
+                    }
+                };
+            }
+        };
+        dateFrom.setDayCellFactory(dayCellfuck);
+        dateTo.setDayCellFactory(dayCellfack);
         dateTo.setValue(dateFrom.getValue().plusDays(1));
-        System.out.println(dateTo.getValue());
 
+    }
+    @FXML
+    public void makeReservation() throws ClassNotFoundException, SQLException{
+        int idItem = 0;
+        String itemName = boxItem.getValue();
+        int maxItemNumber =0;
+        
+        Connection conn = base.baseConnection();
+        ResultSet rs1 = conn.createStatement().executeQuery("SELECT przedmioty.ID_przedmiotu FROM przedmioty WHERE Nazwa = '"+itemName+"'");
+       
+        while(rs1.next()){
+            idItem = rs1.getInt(1);
+        }
+        ResultSet rs2 = conn.createStatement().executeQuery("SELECT przedmioty.ilosc FROM przedmioty WHERE Nazwa = '"+itemName+"'");
+        while(rs2.next()){
+            maxItemNumber = rs2.getInt(1);
+        }
+        if(Integer.valueOf(TextNumber.getText()) < 0 || Integer.valueOf(TextNumber.getText()) > maxItemNumber){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setHeaderText("Niepoprawna ilość przedmiotów. Maksymalna ilość wybranych przedmiotów do wypożyczenia to: "+maxItemNumber+"");
+                alert.showAndWait();
+        }else{
+        PreparedStatement prstm = conn.prepareStatement("INSERT INTO rezerwacje(ID_uzytkownika, ID_przedmiotu, od_kiedy, do_kiedy, ilosc) VALUES(?,?,?,?,?)");
+        prstm.setInt(1, SessionService.getUserID());
+        prstm.setInt(2, idItem);
+        prstm.setDate(3, Date.valueOf(dateFrom.getValue()));
+        prstm.setDate(4, Date.valueOf(dateTo.getValue()));
+        prstm.setInt(5, Integer.valueOf(TextNumber.getText()));
+        prstm.executeUpdate();
+        prstm.close();
+        }
+        
     }
 
     public void setMainController(FXMLDocumentController mainController) {
