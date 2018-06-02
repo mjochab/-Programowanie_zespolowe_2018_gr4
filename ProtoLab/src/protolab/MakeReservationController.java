@@ -12,8 +12,11 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import static java.time.temporal.ChronoUnit.DAYS;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,8 +30,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
 import javafx.scene.layout.Pane;
 import javafx.util.Callback;
 
@@ -55,6 +58,10 @@ public class MakeReservationController implements Initializable {
     private  DatePicker dateTo;
     @FXML
     private TextField TextNumber;
+    @FXML
+    private Label labelFrom;
+    @FXML
+    private Label labelTo;
 
     /**
      * Initializes the controller class.
@@ -116,7 +123,7 @@ public class MakeReservationController implements Initializable {
                     public void updateItem(LocalDate item, boolean empty) {
                         super.updateItem(item, empty);
                         if (item.isBefore(
-                                dateFrom.getValue().plusDays(1))) {
+                                dateFrom.getValue())) {
                             setDisable(true);
                             setStyle("-fx-background-color: #ffc0cb;");
                         }
@@ -158,10 +165,17 @@ public class MakeReservationController implements Initializable {
 
     }
     @FXML
-    public void makeReservation() throws ClassNotFoundException, SQLException{
+    public void makeReservation() throws ClassNotFoundException, SQLException, ParseException{
+        LocalDate date1 = dateFrom.getValue();
+        LocalDate dateNow = LocalDate.now();
+        LocalDate date2 = dateTo.getValue();
+        long daysBetween = DAYS.between(date1, date2);
+        
         int idItem = 0;
         String itemName = boxItem.getValue();
         int maxItemNumber =0;
+        int howManyItems = Integer.valueOf(TextNumber.getText());
+        
         
         Connection conn = base.baseConnection();
         ResultSet rs1 = conn.createStatement().executeQuery("SELECT przedmioty.ID_przedmiotu FROM przedmioty WHERE Nazwa = '"+itemName+"'");
@@ -173,10 +187,25 @@ public class MakeReservationController implements Initializable {
         while(rs2.next()){
             maxItemNumber = rs2.getInt(1);
         }
-        if(Integer.valueOf(TextNumber.getText()) < 0 || Integer.valueOf(TextNumber.getText()) > maxItemNumber){
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        if(howManyItems <= 0 || howManyItems > maxItemNumber){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText("Niepoprawna ilość przedmiotów. Maksymalna ilość wybranych przedmiotów do wypożyczenia to: "+maxItemNumber+"");
+                alert.showAndWait();
+        }else if(date1.compareTo(dateNow) < 0){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("BŁAD. Data początkowa mniejsza od daty obecnej.");
+                alert.showAndWait();
+        }else if(date2.compareTo(date1) < 0){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("BŁAD. Data końcowa mniejsza od daty początkowej.");
+                alert.showAndWait();
+        }else if(daysBetween > 21){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("BŁAD. Podana data końcowa przekracza limit 3 tygodni wypożyczenia.");
                 alert.showAndWait();
         }else{
         PreparedStatement prstm = conn.prepareStatement("INSERT INTO rezerwacje(ID_uzytkownika, ID_przedmiotu, od_kiedy, do_kiedy, ilosc) VALUES(?,?,?,?,?)");
@@ -185,7 +214,7 @@ public class MakeReservationController implements Initializable {
         prstm.setDate(3, Date.valueOf(dateFrom.getValue()));
         prstm.setDate(4, Date.valueOf(dateTo.getValue()));
         prstm.setInt(5, Integer.valueOf(TextNumber.getText()));
-        prstm.executeUpdate();
+        prstm.executeUpdate();    
         prstm.close();
         }
         
