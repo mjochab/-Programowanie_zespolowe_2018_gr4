@@ -73,6 +73,7 @@ public class AddItemController  {
         
         String item = textName.getText();
         int result=0;
+        if(number > 0){
         ResultSet rs = conn.createStatement().executeQuery("SELECT COUNT(Nazwa) FROM przedmioty WHERE Nazwa= '"+item+"'");
         while(rs.next()){
         result = rs.getInt(1);
@@ -99,11 +100,16 @@ public class AddItemController  {
                 alert.showAndWait();
             prstm.close();
         }      
-        
+        }else{
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Ilość przedmiotów nie może być ujemna lub równa 0.");
+                alert.showAndWait();
+        }
         }catch(SQLException ex){
             System.out.println("Error"+ex);
         }
-       
+        
         textName.clear();
         textType.clear();
         textNumber.clear();
