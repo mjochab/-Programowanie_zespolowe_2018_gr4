@@ -178,15 +178,17 @@ public class MakeReservationController implements Initializable {
         
         
         Connection conn = base.baseConnection();
+        
         ResultSet rs1 = conn.createStatement().executeQuery("SELECT przedmioty.ID_przedmiotu FROM przedmioty WHERE Nazwa = '"+itemName+"'");
-       
         while(rs1.next()){
             idItem = rs1.getInt(1);
         }
+        
         ResultSet rs2 = conn.createStatement().executeQuery("SELECT przedmioty.ilosc FROM przedmioty WHERE Nazwa = '"+itemName+"'");
         while(rs2.next()){
             maxItemNumber = rs2.getInt(1);
         }
+        
         if(howManyItems <= 0 || howManyItems > maxItemNumber){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
@@ -215,7 +217,11 @@ public class MakeReservationController implements Initializable {
         prstm.setDate(4, Date.valueOf(dateTo.getValue()));
         prstm.setInt(5, Integer.valueOf(TextNumber.getText()));
         prstm.executeUpdate();    
+        
+        PreparedStatement prstm1 = conn.prepareStatement("UPDATE przedmioty SET Ilosc = "+(maxItemNumber - howManyItems)+" WHERE Nazwa = '"+itemName+"'");
+        prstm1.executeUpdate();
         prstm.close();
+        prstm1.close();
         }
         
     }
