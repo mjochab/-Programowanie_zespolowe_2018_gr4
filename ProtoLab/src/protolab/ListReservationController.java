@@ -129,7 +129,30 @@ public class ListReservationController  {
          
     }
     @FXML
-    public void Back() throws IOException, ClassNotFoundException, SQLException {
+   public void Back() throws ClassNotFoundException, SQLException, IOException {
+       getWindow(SessionService.getUserRights());
+               }
+
+    @FXML
+    
+    public void getWindow(int idRights) throws IOException, ClassNotFoundException, SQLException{
+        if(idRights==1){
+           BackStudentReservation();
+           
+        }
+        if(idRights==2){
+           
+           BackAdminReservation(); 
+        }
+        if(idRights==3){
+           
+           BackBossReservation();
+            
+        }
+    }
+        
+    @FXML
+    public void BackAdminReservation() throws IOException, ClassNotFoundException, SQLException {
         
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("AdminPanel.fxml"));
 
@@ -144,6 +167,40 @@ public class ListReservationController  {
         adminController.setMainController(mainController);
         mainController.setScreen(pane);
     }
+    @FXML
+    public void BackBossReservation() throws IOException, ClassNotFoundException, SQLException {
+        
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("BossPanel.fxml"));
+
+        Pane pane = null;
+
+        try {
+            pane = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        BossPanelController bossController = loader.getController();
+        bossController.setMainController(mainController);
+        mainController.setScreen(pane);
+    }
+    
+    @FXML
+    public void BackStudentReservation() throws IOException, ClassNotFoundException, SQLException {
+        
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("StudentPanel.fxml"));
+
+        Pane pane = null;
+
+        try {
+            pane = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        StudentPanelController studentController = loader.getController();
+        studentController.setMainController(mainController);
+        mainController.setScreen(pane);
+    }
+    
     @FXML
      public void exit() {
         Platform.exit();

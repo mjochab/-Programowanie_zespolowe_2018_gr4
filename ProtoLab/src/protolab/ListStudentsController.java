@@ -110,7 +110,7 @@ public class ListStudentsController {
     @FXML
     public void registrationStudent() throws IOException {
 
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("AddStudents1.fxml"));
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("AddStudent.fxml"));
 
         Pane pane = null;
 
@@ -120,8 +120,8 @@ public class ListStudentsController {
             e.printStackTrace();
         }
 
-        AddStudents1Controller addStudents1Controller = loader.getController();
-        addStudents1Controller.setMainController(mainController);
+        AddStudentController addStudentController = loader.getController();
+        addStudentController.setMainController(mainController);
         mainController.setScreen(pane);
 
     }
