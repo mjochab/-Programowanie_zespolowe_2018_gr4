@@ -20,6 +20,8 @@ import javafx.scene.layout.Pane;
 import protolabpdf.*;
 
 import com.itextpdf.text.*;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
 
 
@@ -50,7 +52,10 @@ public class ListReservationController  {
     private TableColumn<Reservations, String> resTo;
     
     private ObservableList<Reservations> ResList;
+    @FXML
+    private TableColumn<Reservations, Integer> resID;
     
+    @FXML
       public void generatePDF() throws ClassNotFoundException, SQLException, IOException, DocumentException{
         
         ProtoLabRaportPDF pdf=new ProtoLabRaportPDF();
@@ -96,23 +101,21 @@ public class ListReservationController  {
              System.out.println(e);
          }
     }
-    @FXML
     public void setMainController(FXMLDocumentController mainController) throws ClassNotFoundException, SQLException {
         this.mainController = mainController;
         loadReservations();
     }
 
-    @FXML
     public void loadReservations() throws ClassNotFoundException, SQLException{
         try{
-         String querry = "SELECT uzytkownicy.imie, uzytkownicy.nazwisko, przedmioty.Nazwa, rezerwacje.ilosc, rezerwacje.od_kiedy, rezerwacje.do_kiedy "
+         String querry = "SELECT uzytkownicy.imie, uzytkownicy.nazwisko, przedmioty.Nazwa, rezerwacje.ilosc, rezerwacje.od_kiedy, rezerwacje.do_kiedy, rezerwacje.idRezerwacji "
                 + "FROM rezerwacje, uzytkownicy, przedmioty "
                 + "WHERE uzytkownicy.ID_uzytkownika = rezerwacje.ID_uzytkownika and przedmioty.ID_przedmiotu = rezerwacje.ID_przedmiotu";
          Connection conn = base.baseConnection();
          ResList = FXCollections.observableArrayList();
          ResultSet rs = conn.createStatement().executeQuery(querry);
          while(rs.next()){
-           ResList.add(new Reservations(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6)));
+           ResList.add(new Reservations(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getInt(7)));
        }
          }catch(SQLException ex){
             System.out.println("Error"+ex);
@@ -123,6 +126,7 @@ public class ListReservationController  {
         resNumber.setCellValueFactory(new PropertyValueFactory<>("Number"));
         resFrom.setCellValueFactory(new PropertyValueFactory<>("From"));
         resTo.setCellValueFactory(new PropertyValueFactory<>("To"));
+        resID.setCellValueFactory(new PropertyValueFactory<>("IdRez"));
         
         tableReservations.setItems(null);
         tableReservations.setItems(ResList);
@@ -133,8 +137,6 @@ public class ListReservationController  {
        getWindow(SessionService.getUserRights());
                }
 
-    @FXML
-    
     public void getWindow(int idRights) throws IOException, ClassNotFoundException, SQLException{
         if(idRights==1){
            BackStudentReservation();
@@ -151,7 +153,6 @@ public class ListReservationController  {
         }
     }
         
-    @FXML
     public void BackAdminReservation() throws IOException, ClassNotFoundException, SQLException {
         
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("AdminPanel.fxml"));
@@ -167,7 +168,6 @@ public class ListReservationController  {
         adminController.setMainController(mainController);
         mainController.setScreen(pane);
     }
-    @FXML
     public void BackBossReservation() throws IOException, ClassNotFoundException, SQLException {
         
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("BossPanel.fxml"));
@@ -184,7 +184,6 @@ public class ListReservationController  {
         mainController.setScreen(pane);
     }
     
-    @FXML
     public void BackStudentReservation() throws IOException, ClassNotFoundException, SQLException {
         
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("StudentPanel.fxml"));
@@ -200,8 +199,23 @@ public class ListReservationController  {
         studentController.setMainController(mainController);
         mainController.setScreen(pane);
     }
-    
     @FXML
+    public void deleteReservation() throws ClassNotFoundException, SQLException{
+        
+       Connection conn = base.baseConnection();
+        Statement stmnt = conn.createStatement();
+        int idRes = tableReservations.getSelectionModel().getSelectedItem().getIdRez();
+        
+                
+        String query = "delete from rezerwacje where idRezerwacji ='" +idRes+"';";
+        PreparedStatement ps = conn.prepareStatement(query);
+        int deleteReservation = stmnt.executeUpdate(query);
+        deleteReservation = ps.executeUpdate();
+        this.loadReservations();
+             
+        
+    }
+    
      public void exit() {
         Platform.exit();
     }  
