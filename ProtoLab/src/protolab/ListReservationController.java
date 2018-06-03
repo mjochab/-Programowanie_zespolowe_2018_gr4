@@ -202,15 +202,27 @@ public class ListReservationController  {
     @FXML
     public void deleteReservation() throws ClassNotFoundException, SQLException{
         
-       Connection conn = base.baseConnection();
+        Connection conn = base.baseConnection();
         Statement stmnt = conn.createStatement();
         int idRes = tableReservations.getSelectionModel().getSelectedItem().getIdRez();
+        int itemNumber =0;
+        int itemNumberRes = tableReservations.getSelectionModel().getSelectedItem().getNumber();
         
-                
+        ResultSet rs1 = conn.createStatement().executeQuery("SELECT przedmioty.Ilosc FROM przedmioty WHERE Nazwa = '"+tableReservations.getSelectionModel().getSelectedItem().getItem()+"'");  
+        while(rs1.next()){
+            itemNumber = rs1.getInt(1);
+        }
         String query = "delete from rezerwacje where idRezerwacji ='" +idRes+"';";
+        String query2 = "UPDATE przedmioty SET Ilosc = "+(itemNumber+itemNumberRes)+" WHERE Nazwa = '"+tableReservations.getSelectionModel().getSelectedItem().getItem()+"'";
+        
         PreparedStatement ps = conn.prepareStatement(query);
         int deleteReservation = stmnt.executeUpdate(query);
         deleteReservation = ps.executeUpdate();
+        
+        PreparedStatement ps1 = conn.prepareStatement(query2);
+        int updateItems = stmnt.executeUpdate(query2);
+        updateItems = ps.executeUpdate(); 
+        
         this.loadReservations();
              
         
