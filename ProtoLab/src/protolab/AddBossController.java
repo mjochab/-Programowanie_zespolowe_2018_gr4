@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
@@ -62,9 +64,31 @@ public class AddBossController {
 
     public void addBoss(){
     try{
+        if(phone.getText().length() < 9 || phone.getText().length() > 9){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Numer telefonu musi składać się z 9 cyfr. Podaj poprawny numer.");
+            alert.showAndWait();
+        }else if(pesel.getText().length() < 11 || pesel.getText().length() > 11){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Numer PESEL musi składać się z 11 cyfr. Podaj poprawny numer PESEL.");
+            alert.showAndWait();
+        }else{
         
         Connection conn = base.baseConnection();
-       
+        int result = 0;
+        
+        ResultSet rs =  conn.createStatement().executeQuery("SELECT Count(pesel) FROM uzytkownicy WHERE pesel = '"+Long.valueOf(pesel.getText())+"'");
+        while(rs.next()){
+            result = rs.getInt(1);
+        }
+        if(result == 1){
+           Alert alert = new Alert(Alert.AlertType.ERROR);
+           alert.setTitle("Error");
+           alert.setHeaderText("Użytkownik o takim numerze Pesel juz istnieje.");
+           alert.showAndWait(); 
+        }else{
         
         /**kolejno przekazywane parametry do zapytania */
         try (PreparedStatement prstm = conn.prepareStatement("INSERT INTO uzytkownicy(imie, nazwisko, numerTel, email, pesel, ID_uprawnienia) VALUES (?, ?, ?, ?, ?, ?)")) {
@@ -77,7 +101,8 @@ public class AddBossController {
             prstm.setInt(6, 3);
             prstm.executeUpdate();
         }
-
+        }
+        }
         } 
         catch(Exception ex){
               System.out.println(ex.getMessage());

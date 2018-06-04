@@ -16,6 +16,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javax.swing.JOptionPane;
@@ -109,9 +110,30 @@ public class AddStudentController  {
     @FXML
     public void addStud(){
     try{
-        
+        if(phone.getText().length() < 9 || phone.getText().length() > 9){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Numer telefonu musi składać się z 9 cyfr. Podaj poprawny numer.");
+            alert.showAndWait();
+        }else if(pesel.getText().length() < 11 || pesel.getText().length() > 11){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Numer PESEL musi składać się z 11 cyfr. Podaj poprawny numer PESEL.");
+            alert.showAndWait();
+        }else{
         Connection conn = base.baseConnection();
-       
+        int result = 0;
+        
+        ResultSet rs =  conn.createStatement().executeQuery("SELECT Count(pesel) FROM uzytkownicy WHERE pesel = '"+Long.valueOf(pesel.getText())+"'");
+        while(rs.next()){
+            result = rs.getInt(1);
+        }
+        if(result == 1){
+           Alert alert = new Alert(Alert.AlertType.ERROR);
+           alert.setTitle("Error");
+           alert.setHeaderText("Użytkownik o takim numerze Pesel juz istnieje.");
+           alert.showAndWait(); 
+        }else{
         
         /**kolejno przekazywane parametry do zapytania */
         try (PreparedStatement prstm = conn.prepareStatement("INSERT INTO uzytkownicy(imie, nazwisko, numerTel, email, pesel, ID_uprawnienia) VALUES (?, ?, ?, ?, ?, ?)")) {
@@ -124,7 +146,8 @@ public class AddStudentController  {
             prstm.setInt(6, 1);
             prstm.executeUpdate();
         }
-
+        }
+        }
         } 
         catch(Exception ex){
               System.out.println(ex.getMessage());
