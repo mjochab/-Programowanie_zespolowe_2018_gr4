@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -28,12 +29,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
+
 /**
  * FXML Controller class
  *
  * @author Winnicki Kamil
  */
 public class ListUsersController {
+
     BaseConnection base = new BaseConnection();
     private FXMLDocumentController mainController;
     @FXML
@@ -52,18 +55,19 @@ public class ListUsersController {
     private TableColumn<Users, String> userEmail;
     @FXML
     private TableColumn<Users, Integer> userPesel;
-    
+    @FXML
+    private TableColumn<Users, String> userRank;
+
     private ObservableList<Users> usersList;
     @FXML
     private Button editUser;
-    
-    
+
     public void setMainController(FXMLDocumentController mainController) throws ClassNotFoundException, SQLException {
         this.mainController = mainController;
         loadUsers();
     }
-    
-     @FXML
+
+    @FXML
     public void registrationAdmin() throws IOException {
 
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("AddAdmin.fxml"));
@@ -81,7 +85,7 @@ public class ListUsersController {
         mainController.setScreen(pane);
 
     }
-    
+
     @FXML
     public void registrationBoss() throws IOException {
 
@@ -100,6 +104,7 @@ public class ListUsersController {
         mainController.setScreen(pane);
 
     }
+
     @FXML
     public void registrationStudent() throws IOException {
 
@@ -118,9 +123,10 @@ public class ListUsersController {
         mainController.setScreen(pane);
 
     }
+
     @FXML
     public void Back() throws IOException, ClassNotFoundException, SQLException {
-        
+
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("AdminPanel.fxml"));
 
         Pane pane = null;
@@ -134,86 +140,126 @@ public class ListUsersController {
         adminController.setMainController(mainController);
         mainController.setScreen(pane);
     }
+
     @FXML
-     public void exit() {
+    public void exit() {
         Platform.exit();
     }
-     @FXML
-    public void loadUsers() throws ClassNotFoundException, SQLException{
-        try{
-       
-       Connection conn = base.baseConnection();
-       usersList = FXCollections.observableArrayList();
-       ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM uzytkownicy");
-       while(rs.next()){
-           usersList.add(new Users(rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6), rs.getLong(7)));
-       }
-     }catch(SQLException ex){
-            System.out.println("Error"+ex);
-    }
-        
+
+    @FXML
+    public void loadUsers() throws ClassNotFoundException, SQLException {
+        try {
+
+            Connection conn = base.baseConnection();
+            usersList = FXCollections.observableArrayList();
+            ResultSet rs = conn.createStatement().executeQuery(""
+                    + "SELECT uzytkownicy.* ,uprawnienia.rodzajUprawnienia "
+                    + "FROM uzytkownicy, uprawnienia "
+                    + "WHERE uzytkownicy.ID_uprawnienia=uprawnienia.ID_uprawnienia ");
+            while (rs.next()) {
+                if (rs.getInt(2) != 2 && rs.getInt(1) != SessionService.getUserID()) {
+                    usersList.add(new Users(rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6), rs.getLong(7), rs.getString(8)));
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error" + ex);
+        }
+
         userName.setCellValueFactory(new PropertyValueFactory<>("Name"));
         userSurname.setCellValueFactory(new PropertyValueFactory<>("Surname"));
         userTel.setCellValueFactory(new PropertyValueFactory<>("TelNumber"));
         userEmail.setCellValueFactory(new PropertyValueFactory<>("Email"));
         userPesel.setCellValueFactory(new PropertyValueFactory<>("Pesel"));
-        
+        userRank.setCellValueFactory(new PropertyValueFactory<>("Rank"));
         tableUsers.setItems(null);
         tableUsers.setItems(usersList);
     }
 
     @FXML
     private void editUser(ActionEvent event) throws ClassNotFoundException, SQLException, IOException {
-          FXMLLoader loader = new FXMLLoader();
-          
-         Users user = null;
-          loader.setLocation(getClass().getResource("EditUser.fxml"));
-          try{
-              user = tableUsers.getSelectionModel().getSelectedItem();
-              loader.load();
-          }
-          
-          catch(IOException ex){
-             System.out.println(ex.getMessage());
-          }
-          if(user != null){
-             
-          EditUserController editUser = loader.getController();
-          editUser.setUser(user);
-          Parent p = loader.getRoot();
-          Stage stage = new Stage();
-          stage.setScene(new Scene(p));
-          stage.showAndWait();
-           
-          }
-          else{
-               JOptionPane.showMessageDialog(null,"Nie wybrano użytkownika do edycji","info",JOptionPane.INFORMATION_MESSAGE);
-          }
-         
-    }
-    
-    @FXML
-    public void deleteUser() throws IOException, ClassNotFoundException{
-        try{
-        
-        Connection conn = base.baseConnection();
-        Statement stmnt = conn.createStatement();
-        long pesel = tableUsers.getSelectionModel().getSelectedItem().getPesel();
-        int selectedIndex = tableUsers.getSelectionModel().getSelectedIndex();
-                
-        String query = "delete from uzytkownicy where pesel ='" +pesel+"';";
-        PreparedStatement ps = conn.prepareStatement(query);
-        int deleteUser = stmnt.executeUpdate(query);
-        deleteUser = ps.executeUpdate();
-        this.loadUsers();
-        } 
-        catch(NullPointerException ex){
-              JOptionPane.showMessageDialog(null,"Nie wybrano użytkownika do usunięcia","info",JOptionPane.INFORMATION_MESSAGE);
-        }
-        catch (Exception ex){
+        FXMLLoader loader = new FXMLLoader();
+
+        Users user = null;
+        loader.setLocation(getClass().getResource("EditUser.fxml"));
+        try {
+            user = tableUsers.getSelectionModel().getSelectedItem();
+            loader.load();
+        } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
-      
+        if (user != null) {
+
+            EditUserController editUser = loader.getController();
+            editUser.setUser(user);
+            Parent p = loader.getRoot();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(p));
+            stage.showAndWait();
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Nie wybrano użytkownika do edycji", "info", JOptionPane.INFORMATION_MESSAGE);
+        }
+
     }
-    
+
+    @FXML
+    public void passwdReset() throws ClassNotFoundException, SQLException {
+        try {
+            Connection conn = base.baseConnection();
+            Statement stmnt = conn.createStatement();
+            long pesel = tableUsers.getSelectionModel().getSelectedItem().getPesel();
+            String query = "select dane_logowania.ID_konta from dane_logowania,uzytkownicy WHERE dane_logowania.ID_konta=uzytkownicy.ID_uzytkownika AND uzytkownicy.pesel=" + pesel;
+            ResultSet rs = conn.createStatement().executeQuery(query);
+            rs.first();
+            String passwd = JOptionPane.showInputDialog("Podaj tymczasowe hasło: ");
+            int id = rs.getInt(1);
+//            System.out.println(rs.getString(1));
+            if (passwd != null) {
+                query = "UPDATE `dane_logowania` SET `Haslo` = '" + passwd
+                        + "', `Pass_Counter` = '1' WHERE `dane_logowania`.`ID_konta` ='" + id + "';";
+
+                PreparedStatement ps = conn.prepareStatement(query);
+                int editStudent = stmnt.executeUpdate(query);
+                editStudent = ps.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Udało się przypisać nowe tymczasowe hasło użytkownikowi:" + passwd, "Powodzenie", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        } catch (NullPointerException ex) {
+            JOptionPane.showMessageDialog(null, "Nie wybrano użytkownika", "info", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+
+    }
+
+    @FXML
+    public void deleteUser() throws IOException, ClassNotFoundException {
+        try {
+
+            Connection conn = base.baseConnection();
+            Statement stmnt = conn.createStatement();
+            long pesel = tableUsers.getSelectionModel().getSelectedItem().getPesel();
+//            int selectedIndex = tableUsers.getSelectionModel().getSelectedIndex();
+            String querry = "select dane_logowania.ID_konta from dane_logowania,uzytkownicy WHERE dane_logowania.ID_konta=uzytkownicy.ID_uzytkownika AND uzytkownicy.pesel=" + pesel;
+            ResultSet rs = conn.createStatement().executeQuery(querry);
+            rs.first();
+            int id = rs.getInt(1);
+            String query = "delete from uzytkownicy where uzytkownicy.ID_uzytkownika =" + id;
+            PreparedStatement ps = conn.prepareStatement(query);
+            int deleteUser = stmnt.executeUpdate(query);
+            deleteUser = ps.executeUpdate();
+            query = "delete from dane_logowania where dane_logowania.ID_konta =" + id;
+            ps = conn.prepareStatement(query);
+            deleteUser = stmnt.executeUpdate(query);
+            deleteUser = ps.executeUpdate();
+
+            this.loadUsers();
+        } catch (NullPointerException ex) {
+            JOptionPane.showMessageDialog(null, "Nie wybrano użytkownika do usunięcia", "info", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+
+    }
+
 }

@@ -8,6 +8,7 @@ package protolab;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  * Klasa odpowiadająca za połączenie się z bazą danych.
@@ -27,10 +28,9 @@ public class BaseConnection {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/protolabdb","root","");
-            System.out.println("Połączono pomyślnie");
             return conn;
         }catch (SQLException e){
-            System.err.println("Problem z otwarciem połączenia");
+            JOptionPane.showMessageDialog(null, "Problem z otwarciem połączenia", "error", JOptionPane.ERROR_MESSAGE);
         }catch(ClassNotFoundException e2){
             System.err.println("Niewłaściwy sterownik JDBC ");
             e2.printStackTrace();

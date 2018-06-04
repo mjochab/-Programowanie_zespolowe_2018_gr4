@@ -17,6 +17,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -24,12 +25,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 
 /**
- * Kontroler klasy FXML.
- * Klasa zawiera metody obsługujące konkretne akcje w tym oknie GUI.
- * 
+ * Kontroler klasy FXML. Klasa zawiera metody obsługujące konkretne akcje w tym
+ * oknie GUI.
+ *
  * @author Wojciech Kozyra
  */
-public class StudentPanelController  {
+public class StudentPanelController {
 
     BaseConnection base = new BaseConnection();
     private FXMLDocumentController mainController;
@@ -43,50 +44,54 @@ public class StudentPanelController  {
     private TableColumn<Items, String> tabType;
     @FXML
     private TableColumn<Items, Integer> tabQuantity;
+    @FXML
+    private Label lblWelcome;
 //    @FXML
 //    private TableColumn<Items, String> tabStatus;
 
     private ObservableList<Items> itemList;
-    
+
     /**
      * Klasa odpowiadająca za wczytanie danych o przedmiotach z bazy danych.
-     * Łączymy się z bazą danych.
-     * tworzymy zapytanie SQL, które wyciągnie odpowiednie dane z bazy.
-     * Wstawiamy pobrane dane do listy itemList.
-     * Na koniec kompletną listę wstawiamy do tabeli w GUI.
+     * Łączymy się z bazą danych. tworzymy zapytanie SQL, które wyciągnie
+     * odpowiednie dane z bazy. Wstawiamy pobrane dane do listy itemList. Na
+     * koniec kompletną listę wstawiamy do tabeli w GUI.
+     *
      * @throws ClassNotFoundException
-     * @throws SQLException 
+     * @throws SQLException
      */
-     @FXML
-    public void loadItems() throws ClassNotFoundException, SQLException{
-        try{
+    @FXML
+    public void loadItems() throws ClassNotFoundException, SQLException {
+        try {
 //
             System.out.println(SessionService.getInstance());
 //
-       Connection conn = base.baseConnection();
-       itemList = FXCollections.observableArrayList();
+            Connection conn = base.baseConnection();
+            itemList = FXCollections.observableArrayList();
             ResultSet rs = conn.createStatement().executeQuery(""
                     + "SELECT przedmioty.ID_przedmiotu,przedmioty.Nazwa, rodzaj_przedmiotu.nazwa_typu, przedmioty.Ilosc "
                     + "FROM przedmioty, rodzaj_przedmiotu "
                     + "WHERE rodzaj_przedmiotu.id_rodzaj=przedmioty.id_rodzaj");
-       while(rs.next()){
-           itemList.add(new Items(rs.getString(2), rs.getString(3), rs.getInt(4)));
-       }
-     }catch(SQLException ex){
-            System.out.println("Error"+ex);
-    }
-        
+            while (rs.next()) {
+                itemList.add(new Items(rs.getString(2), rs.getString(3), rs.getInt(4)));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error" + ex);
+        }
+
         tabName.setCellValueFactory(new PropertyValueFactory<>("Nazwa"));
         tabType.setCellValueFactory(new PropertyValueFactory<>("Rodzaj"));
         tabQuantity.setCellValueFactory(new PropertyValueFactory<>("Ilosc"));
 //        tabStatus.setCellValueFactory(new PropertyValueFactory<>("Status"));
-        
+
         tablePrzedmioty.setItems(null);
         tablePrzedmioty.setItems(itemList);
+        lblWelcome.setText("Witamy " + SessionService.getUsername());
     }
+
     @FXML
-    public void doReservation() throws IOException, ClassNotFoundException, SQLException{
-       FXMLLoader loader = new FXMLLoader(this.getClass().getResource("MakeReservation.fxml"));
+    public void doReservation() throws IOException, ClassNotFoundException, SQLException {
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("MakeReservation.fxml"));
 
         Pane pane = null;
 
@@ -99,6 +104,7 @@ public class StudentPanelController  {
         reservationController.setMainController(mainController);
         mainController.setScreen(pane);
     }
+
     /**
      * Metoda służąca do powrotu do poprzedniego okna.
      */
@@ -112,40 +118,58 @@ public class StudentPanelController  {
         this.mainController = mainController;
         loadItems();
     }
+
     /**
      * Metoda zamykająca aplikację.
      */
-    
+
     @FXML
-    public void searchItem2() throws ClassNotFoundException{
-    try{
-        
-       String szuk = searchItem.getText().toLowerCase();
-       Connection conn = base.baseConnection();
-       itemList = FXCollections.observableArrayList();
+    public void searchItem2() throws ClassNotFoundException {
+        try {
+
+            String szuk = searchItem.getText().toLowerCase();
+            Connection conn = base.baseConnection();
+            itemList = FXCollections.observableArrayList();
             ResultSet rs = conn.createStatement().executeQuery(""
                     + "SELECT przedmioty.ID_przedmiotu,przedmioty.Nazwa, rodzaj_przedmiotu.nazwa_typu, przedmioty.Ilosc "
                     + "FROM przedmioty, rodzaj_przedmiotu "
                     + "WHERE rodzaj_przedmiotu.id_rodzaj=przedmioty.id_rodzaj");
-       while(rs.next()){
-          if(rs.getString(2).toLowerCase().startsWith(szuk)){
-           itemList.add(new Items(rs.getString(2), rs.getString(3), rs.getInt(4)));
-       }}
-     }catch(SQLException ex){
-            System.out.println("Error"+ex);
-    }
-        
+            while (rs.next()) {
+                if (rs.getString(2).toLowerCase().startsWith(szuk)) {
+                    itemList.add(new Items(rs.getString(2), rs.getString(3), rs.getInt(4)));
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error" + ex);
+        }
+
         tabName.setCellValueFactory(new PropertyValueFactory<>("Nazwa"));
         tabType.setCellValueFactory(new PropertyValueFactory<>("Rodzaj"));
         tabQuantity.setCellValueFactory(new PropertyValueFactory<>("Ilosc"));
 //        tabStatus.setCellValueFactory(new PropertyValueFactory<>("Status"));
-        
+
         tablePrzedmioty.setItems(null);
         tablePrzedmioty.setItems(itemList);
     }
-    
+
     @FXML
-     public void exit() {
+    public void changeMyPasswd() {
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("ChangePasswd.fxml"));
+
+        Pane pane = null;
+
+        try {
+            pane = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ChangePasswdController changePass = loader.getController();
+        changePass.setMainController(mainController);
+        mainController.setScreen(pane);
+    }
+
+    @FXML
+    public void exit() {
         Platform.exit();
     }
 

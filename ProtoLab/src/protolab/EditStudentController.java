@@ -1,5 +1,6 @@
 package protolab;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,9 +9,11 @@ import java.sql.Statement;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 import javax.swing.JOptionPane;
 
 
@@ -59,8 +62,8 @@ public class EditStudentController implements Initializable {
                     + "', pesel = '" + pesel.getText()
                     + "' WHERE pesel = '" + this.user.getPesel() + "';";
         PreparedStatement ps = conn.prepareStatement(query);
-        int deleteStudent = stmnt.executeUpdate(query);
-        deleteStudent = ps.executeUpdate();
+        int editStudent = stmnt.executeUpdate(query);
+        editStudent = ps.executeUpdate();
 
         } 
         catch(Exception ex){
@@ -70,8 +73,20 @@ public class EditStudentController implements Initializable {
     }
 
     @FXML
-    private void back(ActionEvent event) {
-    } 
+    private void back() throws ClassNotFoundException, SQLException {
+       FXMLLoader loader = new FXMLLoader(this.getClass().getResource("ListStudents.fxml"));
+
+        Pane pane = null;
+
+        try {
+            pane = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ListStudentsController studentsController = loader.getController();
+        studentsController.setMainController(mainController);
+        mainController.setScreen(pane);
+    }
     public void setStudent(Users user){
         this.user = user;
         this.setData();

@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -34,6 +35,8 @@ public class AdminPanelController {
     private TableColumn<Items, String> tabType;
     @FXML
     private TableColumn<Items, Integer> tabQuantity;
+    @FXML
+    private Label lblWelcome;
 //    @FXML
 //    private TableColumn<Items, String> tabStatus;
     @FXML
@@ -67,6 +70,7 @@ public class AdminPanelController {
 
         tablePrzedmioty.setItems(null);
         tablePrzedmioty.setItems(itemList);
+        lblWelcome.setText("Witamy "+SessionService.getUsername());
     }
 
     /**
@@ -177,6 +181,22 @@ public class AdminPanelController {
         tablePrzedmioty.setItems(null);
         tablePrzedmioty.setItems(itemList);
     }
+    @FXML
+    public void changeMyPasswd(){
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("ChangePasswd.fxml"));
+
+        Pane pane = null;
+
+        try {
+            pane = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ChangePasswdController changePass = loader.getController();
+        changePass.setMainController(mainController);
+        mainController.setScreen(pane);
+    }
+
 
     /**
      * metoda zamkniecia aplikacji
