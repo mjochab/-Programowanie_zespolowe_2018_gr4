@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 30 Maj 2018, 17:45
+-- Czas generowania: 04 Cze 2018, 02:31
 -- Wersja serwera: 10.1.31-MariaDB
 -- Wersja PHP: 7.2.4
 
@@ -31,29 +31,29 @@ SET time_zone = "+00:00";
 CREATE TABLE `dane_logowania` (
   `ID_konta` int(11) NOT NULL,
   `Login` varchar(45) COLLATE utf8_polish_ci NOT NULL,
-  `Haslo` varchar(45) COLLATE utf8_polish_ci NOT NULL
+  `Haslo` varchar(45) COLLATE utf8_polish_ci NOT NULL,
+  `Pass_Counter` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
 -- Zrzut danych tabeli `dane_logowania`
 --
 
-INSERT INTO `dane_logowania` (`ID_konta`, `Login`, `Haslo`) VALUES
-(1, 'admin', 'admin'),
-(2, 'user1', 'aaa'),
-(3, 'user2', 'bbb'),
-(4, 'user3', 'ccc'),
-(5, 'user4', 'ddd'),
-(6, 'user5', 'eee'),
-(7, 'user6', 'fff'),
-(8, 'user7', 'ggg'),
-(9, 'user8', 'hhh'),
-(10, 'user9', 'iii'),
-(11, 'user10', 'jjj'),
-(12, 'user11', 'kkk'),
-(13, 'user12', 'lll'),
-(14, 'user13', 'mmm'),
-(15, 'user14', 'nnn');
+INSERT INTO `dane_logowania` (`ID_konta`, `Login`, `Haslo`, `Pass_Counter`) VALUES
+(1, 'admin', 'admin', 0),
+(2, 'user1', 'aaa', 0),
+(3, 'user2', 'bbb', 0),
+(4, 'user3', 'ccc', 0),
+(5, 'user4', 'ddd', 0),
+(7, 'user6', 'fff', 0),
+(8, 'user7', 'ggg', 0),
+(9, 'user8', 'Dominik01', 0),
+(10, 'user9', 'iii', 0),
+(11, 'user10', 'jjj', 0),
+(12, 'user11', 'kkk', 0),
+(13, 'user12', 'lll', 0),
+(14, 'user13', 'mmm', 0),
+(15, 'user14', 'nnn', 0);
 
 -- --------------------------------------------------------
 
@@ -125,7 +125,7 @@ CREATE TABLE `rodzaj_przedmiotu` (
 
 INSERT INTO `rodzaj_przedmiotu` (`id_rodzaj`, `nazwa_typu`) VALUES
 (1, 'sprzet komputerowy'),
-(2, 'elektro-narzedzia');
+(2, 'urzadzenia agd');
 
 -- --------------------------------------------------------
 
@@ -171,7 +171,6 @@ INSERT INTO `uzytkownicy` (`ID_uzytkownika`, `ID_uprawnienia`, `imie`, `nazwisko
 (2, 2, 'Jan', 'Kowalski', 874136899, 'kowalski@gmail.com', 45213654874),
 (3, 3, 'Anna', 'Woźniak', 789654123, 'awozniak@op.pl', 74533216549),
 (4, 1, 'Marek', 'Nowak', 745861234, 'aads@op.pl', 59234851346),
-(6, 1, 'Dominik', 'Maga', 794848885, 'dm@wp.pl', 74447582215),
 (9, 1, 'asd343', 'asd343', 45634563, 'wp.pl', 12345678);
 
 --
@@ -182,8 +181,7 @@ INSERT INTO `uzytkownicy` (`ID_uzytkownika`, `ID_uprawnienia`, `imie`, `nazwisko
 -- Indeksy dla tabeli `dane_logowania`
 --
 ALTER TABLE `dane_logowania`
-  ADD PRIMARY KEY (`ID_konta`),
-  ADD UNIQUE KEY `Haslo_UNIQUE` (`Haslo`);
+  ADD PRIMARY KEY (`ID_konta`);
 
 --
 -- Indeksy dla tabeli `przedmioty`
@@ -256,7 +254,7 @@ ALTER TABLE `rodzaj_przedmiotu`
 -- AUTO_INCREMENT dla tabeli `uzytkownicy`
 --
 ALTER TABLE `uzytkownicy`
-  MODIFY `ID_uzytkownika` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `ID_uzytkownika` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Ograniczenia dla zrzutów tabel
