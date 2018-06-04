@@ -24,14 +24,16 @@ public class Reservations {
     private final IntegerProperty Number;
     private final StringProperty From;
     private final StringProperty To;
+    private final IntegerProperty IdRez;
     
-    public Reservations(String Name, String Surname, String Item, int Number, String From, String To){
+    public Reservations(String Name, String Surname, String Item, int Number, String From, String To, int IdRez){
         this.Name = new SimpleStringProperty(Name);
         this.Surname = new SimpleStringProperty(Surname);
         this.Item = new SimpleStringProperty(Item);
         this.Number = new SimpleIntegerProperty(Number);
         this.From = new SimpleStringProperty(From);
         this.To = new SimpleStringProperty(To);
+        this.IdRez = new SimpleIntegerProperty(IdRez);
         
     }
     public String getName(){
@@ -52,6 +54,9 @@ public class Reservations {
     public String getTo(){
          return To.get();
     }
+    public int getIdRez(){
+         return IdRez.get();
+    }
     public void setName(String value) {
         Name.set(value);
     }
@@ -70,6 +75,9 @@ public class Reservations {
     public void setTo(String value) {
         To.set(value);
     }
+    public void setIdRez(int value) {
+        IdRez.set(value);
+    }
     public StringProperty getNameProperty() {
         return Name;
     }
@@ -87,5 +95,8 @@ public class Reservations {
     }
     public StringProperty getToProperty() {
         return To;
+    }
+    public IntegerProperty getIdRezProperty() {
+        return IdRez;
     }
 }

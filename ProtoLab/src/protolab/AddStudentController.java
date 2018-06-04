@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -17,6 +18,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+import javax.swing.JOptionPane;
+import protolab.SessionService;
 
 /**
  * FXML Controller class
@@ -43,7 +46,30 @@ public class AddStudentController  {
     public Users user;
 
    private FXMLDocumentController mainController;
+   
+   @FXML
+   public void back() throws ClassNotFoundException, SQLException, IOException {
+       getWindow(SessionService.getUserRights());
+               }
 
+    @FXML
+    
+    public void getWindow(int idRights) throws IOException, ClassNotFoundException, SQLException{
+        if(idRights==1){
+           
+           backMenu1();
+        }
+        if(idRights==2){
+           
+            backMenu(); 
+        }
+        if(idRights==3){
+           
+            backMenu1(); 
+        }
+        
+        
+    }
     @FXML
     public void backMenu() throws ClassNotFoundException, SQLException {
        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("ListUsers.fxml"));
@@ -59,6 +85,22 @@ public class AddStudentController  {
         userController.setMainController(mainController);
         mainController.setScreen(pane);
     }
+    @FXML
+    public void backMenu1() throws ClassNotFoundException, SQLException {
+       FXMLLoader loader = new FXMLLoader(this.getClass().getResource("ListStudents.fxml"));
+
+        Pane pane = null;
+
+        try {
+            pane = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ListStudentsController studentsController = loader.getController();
+        studentsController.setMainController(mainController);
+        mainController.setScreen(pane);
+    }
+    
 
     public void setMainController(FXMLDocumentController mainController) {
         this.mainController = mainController;
