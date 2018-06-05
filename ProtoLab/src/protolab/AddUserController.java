@@ -312,7 +312,7 @@ public class AddUserController {
     }
    private boolean checkIsSelectedRights()throws RightsNotSelectedExeception{
        try{
-           if(new String(boxRights.getSelectionModel().getSelectedItem()).equals("")){
+           if(boxRights.getSelectionModel().getSelectedItem().isEmpty()){
                throw new RightsNotSelectedExeception("nie wybrano uprawnień użytkownika");
            }
        }catch(RightsNotSelectedExeception re){

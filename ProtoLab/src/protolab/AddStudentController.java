@@ -62,7 +62,7 @@ public class AddStudentController {
 
     @FXML
     public void backMenu() throws ClassNotFoundException, SQLException {
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("ListUsers.fxml"));
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("ListStudents.fxml"));
 
         Pane pane = null;
 
@@ -71,8 +71,8 @@ public class AddStudentController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        ListUsersController userController = loader.getController();
-        userController.setMainController(mainController);
+        ListStudentsController userStudentController = loader.getController();
+        userStudentController.setMainController(mainController);
         mainController.setScreen(pane);
     }
 
@@ -149,7 +149,6 @@ public class AddStudentController {
             }
             JOptionPane.showMessageDialog(null, errorMsg, "", JOptionPane.ERROR_MESSAGE);
         }
-//////////////////////////////
 
     }
 

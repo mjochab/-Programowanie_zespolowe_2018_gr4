@@ -207,7 +207,7 @@ public class ListUsersController {
             Statement stmnt = conn.createStatement();
             long pesel = tableUsers.getSelectionModel().getSelectedItem().getPesel();
 //            int selectedIndex = tableUsers.getSelectionModel().getSelectedIndex();
-            String querry = "select dane_logowania.ID_konta from dane_logowania,uzytkownicy WHERE dane_logowania.ID_konta=uzytkownicy.ID_uzytkownika AND uzytkownicy.pesel=" + pesel;
+            String querry = "select uzytkownicy.ID_uzytkownika from uzytkownicy WHERE uzytkownicy.pesel=" + pesel;
             ResultSet rs = conn.createStatement().executeQuery(querry);
             rs.first();
             int id = rs.getInt(1);

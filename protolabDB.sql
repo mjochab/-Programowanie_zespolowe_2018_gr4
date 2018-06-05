@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 04 Cze 2018, 02:31
+-- Czas generowania: 05 Cze 2018, 03:11
 -- Wersja serwera: 10.1.31-MariaDB
 -- Wersja PHP: 7.2.4
 
@@ -43,17 +43,7 @@ INSERT INTO `dane_logowania` (`ID_konta`, `Login`, `Haslo`, `Pass_Counter`) VALU
 (1, 'admin', 'admin', 0),
 (2, 'user1', 'aaa', 0),
 (3, 'user2', 'bbb', 0),
-(4, 'user3', 'ccc', 0),
-(5, 'user4', 'ddd', 0),
-(7, 'user6', 'fff', 0),
-(8, 'user7', 'ggg', 0),
-(9, 'user8', 'Dominik01', 0),
-(10, 'user9', 'iii', 0),
-(11, 'user10', 'jjj', 0),
-(12, 'user11', 'kkk', 0),
-(13, 'user12', 'lll', 0),
-(14, 'user13', 'mmm', 0),
-(15, 'user14', 'nnn', 0);
+(4, 'user3', 'ccc', 0);
 
 -- --------------------------------------------------------
 
@@ -168,10 +158,10 @@ CREATE TABLE `uzytkownicy` (
 --
 
 INSERT INTO `uzytkownicy` (`ID_uzytkownika`, `ID_uprawnienia`, `imie`, `nazwisko`, `numerTel`, `email`, `pesel`) VALUES
-(2, 2, 'Jan', 'Kowalski', 874136899, 'kowalski@gmail.com', 45213654874),
-(3, 3, 'Anna', 'Woźniak', 789654123, 'awozniak@op.pl', 74533216549),
-(4, 1, 'Marek', 'Nowak', 745861234, 'aads@op.pl', 59234851346),
-(9, 1, 'asd343', 'asd343', 45634563, 'wp.pl', 12345678);
+(1, 2, 'Jan', 'Kowalski', 874136899, 'kowalski@gmail.com', 45213654874),
+(2, 2, 'Anna', 'Woźniak', 789654123, 'awozniak@op.pl', 74533216549),
+(3, 3, 'Marek', 'Nowak', 745861234, 'aads@op.pl', 59234851346),
+(4, 1, 'Arkadiusz', 'Nowak', 745834634, 'aa53s@op.pl', 59234853453);
 
 --
 -- Indeksy dla zrzutów tabel
@@ -230,7 +220,7 @@ ALTER TABLE `uzytkownicy`
 -- AUTO_INCREMENT dla tabeli `dane_logowania`
 --
 ALTER TABLE `dane_logowania`
-  MODIFY `ID_konta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `ID_konta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT dla tabeli `przedmioty`
@@ -254,7 +244,7 @@ ALTER TABLE `rodzaj_przedmiotu`
 -- AUTO_INCREMENT dla tabeli `uzytkownicy`
 --
 ALTER TABLE `uzytkownicy`
-  MODIFY `ID_uzytkownika` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `ID_uzytkownika` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Ograniczenia dla zrzutów tabel
