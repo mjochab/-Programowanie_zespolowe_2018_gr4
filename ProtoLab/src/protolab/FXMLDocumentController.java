@@ -42,4 +42,8 @@ public class FXMLDocumentController {
         mainStackPane.getChildren().add(pane);
     }
 
+    void setScreen(Users user) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

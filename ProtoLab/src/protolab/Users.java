@@ -56,6 +56,7 @@ public class Users {
     public String getName() {
         return Name.get();
     }
+    
 
     /**
      * Setter ustawiający wartość atrybutu obiektu.
@@ -129,7 +130,7 @@ public class Users {
      *
      * @param value
      */
-    public void setRnk(String value) {
+    public void setRank(String value) {
         Rank.set(value);
     }
 

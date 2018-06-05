@@ -1,26 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="protolab.EditUserController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="protolab.EditUserController">
    <children>
-      <TextField fx:id="name" layoutX="103.0" layoutY="104.0" />
-      <TextField fx:id="lastName" layoutX="103.0" layoutY="148.0" />
-      <TextField fx:id="pesel" layoutX="103.0" layoutY="187.0" />
-      <TextField fx:id="phone" layoutX="103.0" layoutY="231.0" />
-      <TextField fx:id="email" layoutX="103.0" layoutY="272.0" prefHeight="0.0" prefWidth="149.0" />
-      <Label layoutX="26.0" layoutY="109.0" text="Imie:" />
+      <TextField fx:id="name" layoutX="103.0" layoutY="104.0" promptText="Imię" />
+      <TextField fx:id="lastName" layoutX="103.0" layoutY="148.0" promptText="NAzwisko" />
+      <TextField fx:id="pesel" layoutX="103.0" layoutY="187.0" promptText="PESEL" />
+      <TextField fx:id="phone" layoutX="103.0" layoutY="231.0" promptText="Telefon" />
+      <TextField fx:id="email" layoutX="103.0" layoutY="272.0" prefHeight="0.0" prefWidth="149.0" promptText="E-mail" />
+      <Label layoutX="26.0" layoutY="109.0" text="Imię:" />
       <Label layoutX="24.0" layoutY="153.0" text="Nazwisko:" />
-      <Label layoutX="23.0" layoutY="192.0" text="Pesel:" />
-      <Label layoutX="23.0" layoutY="236.0" text="numer tel.:" />
-      <Label layoutX="23.0" layoutY="277.0" text="email:" />
-      <Button fx:id="save" layoutX="207.0" layoutY="337.0" mnemonicParsing="false" onAction="#saveChanges" text="Zapisz edycje" />
-      <Button fx:id="back" layoutX="341.0" layoutY="337.0" mnemonicParsing="false" onAction="#back" text="powrot" />
+      <Label layoutX="23.0" layoutY="192.0" text="PESEL:" />
+      <Label layoutX="23.0" layoutY="236.0" text="Telefon:" />
+      <Label layoutX="23.0" layoutY="277.0" text="E-mail:" />
+      <Button fx:id="save" layoutX="204.0" layoutY="414.0" mnemonicParsing="false" onAction="#saveChanges" text="Zapisz zmiany" />
+      <Button fx:id="back" layoutX="204.0" layoutY="448.0" mnemonicParsing="false" onAction="#backMenu" text="Wyjdź z edycji" />
+      <Label layoutX="192.0" layoutY="36.0" text="Edycja użytkownika">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      
+      <ComboBox fx:id="boxRights" layoutX="271.0" layoutY="315.0" prefWidth="150.0" promptText="Zmiana uprawnień" />
+      <TextField fx:id="uprawnienia" layoutX="103.0" layoutY="315.0" promptText="Uprawnienia" />
+      <Label layoutX="22.0" layoutY="319.0" text="Uprawnienia:" />
+      <TextField fx:id="Login_User" layoutX="103.0" layoutY="354.0" promptText="Login" />
+      <Label layoutX="24.0" layoutY="358.0" text="Login:" />
    </children>
+   
 </AnchorPane>

@@ -6,18 +6,14 @@
 package protolab;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -44,6 +40,8 @@ public class ListUsersController {
     @FXML
     private Button delUser;
     @FXML
+    private Button editUser;
+    @FXML
     private TableView<Users> tableUsers;
     @FXML
     private TableColumn<Users, String> userName;
@@ -59,8 +57,6 @@ public class ListUsersController {
     private TableColumn<Users, String> userRank;
 
     private ObservableList<Users> usersList;
-    @FXML
-    private Button editUser;
 
     public void setMainController(FXMLDocumentController mainController) throws ClassNotFoundException, SQLException {
         this.mainController = mainController;
@@ -85,9 +81,6 @@ public class ListUsersController {
         mainController.setScreen(pane);
 
     }
-
-   
-
 
     @FXML
     public void Back() throws IOException, ClassNotFoundException, SQLException {
@@ -125,11 +118,12 @@ public class ListUsersController {
                 if (rs.getInt(1) != SessionService.getUserID()) {
                     usersList.add(new Users(rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6), rs.getLong(7), rs.getString(8)));
                 }
+                
             }
         } catch (SQLException ex) {
             System.out.println("Error" + ex);
-        }catch(Exception e){
-            System.err.println("Error"+e);
+        } catch (Exception e) {
+            System.err.println("Error" + e);
         }
 
         userName.setCellValueFactory(new PropertyValueFactory<>("Name"));
@@ -141,16 +135,16 @@ public class ListUsersController {
         tableUsers.setItems(null);
         tableUsers.setItems(usersList);
     }
-
     @FXML
-    private void editUser(ActionEvent event) throws ClassNotFoundException, SQLException, IOException {
-        FXMLLoader loader = new FXMLLoader();
+    private void editUser() throws IOException, SQLException, ClassNotFoundException {
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("EditUser.fxml"));
+        Pane pane = null;
 
         Users user = null;
-        loader.setLocation(getClass().getResource("EditUser.fxml"));
+
         try {
             user = tableUsers.getSelectionModel().getSelectedItem();
-            loader.load();
+            pane = loader.load();
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
@@ -158,11 +152,8 @@ public class ListUsersController {
 
             EditUserController editUser = loader.getController();
             editUser.setUser(user);
-            Parent p = loader.getRoot();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(p));
-            stage.showAndWait();
-
+            editUser.setMainController(mainController);
+            mainController.setScreen(pane);
         } else {
             JOptionPane.showMessageDialog(null, "Nie wybrano użytkownika do edycji", "info", JOptionPane.INFORMATION_MESSAGE);
         }

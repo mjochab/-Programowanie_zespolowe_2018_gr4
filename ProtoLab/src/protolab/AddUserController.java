@@ -55,11 +55,14 @@ public class AddUserController {
     private Button back;
     @FXML
     private Label loginLabel;
-     @FXML
+    @FXML
     private ComboBox<String> boxRights = new ComboBox<>();
+     
     BaseConnection base = new BaseConnection();
     public Users user;
+    
     String errorMsg = "<html><body width=300><h2>Błąd</h2>";
+    
     public void loadRights() throws SQLException, ClassNotFoundException{
         Connection conn = base.baseConnection();
         rights = FXCollections.observableArrayList();

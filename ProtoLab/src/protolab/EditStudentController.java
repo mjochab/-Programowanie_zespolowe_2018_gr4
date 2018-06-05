@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ResourceBundle;
@@ -87,6 +88,7 @@ public class EditStudentController implements Initializable {
         studentsController.setMainController(mainController);
         mainController.setScreen(pane);
     }
+    
     public void setStudent(Users user){
         this.user = user;
         this.setData();
@@ -98,4 +100,5 @@ public class EditStudentController implements Initializable {
         this.lastName.setText(user.getSurname());
         this.pesel.setText(String.valueOf(user.getPesel()));
     }
+  
 }
