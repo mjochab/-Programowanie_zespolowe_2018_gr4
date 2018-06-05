@@ -26,7 +26,7 @@ import protolab.exceptions.LoginAlreadyExistsException;
 import protolab.exceptions.NameInvalidValueException;
 import protolab.exceptions.PeselLengthException;
 import protolab.exceptions.PeselSumControlNumberException;
-import protolab.exceptions.RightsNotSelectedExeception;
+import protolab.exceptions.ComboBoxNotSelectedExeception;
 
 public class AddUserController {
 
@@ -107,7 +107,7 @@ public class AddUserController {
         }
     }
 
-    public void addNewUser() throws ClassNotFoundException, SQLException, LoginAlreadyExistsException, NameInvalidValueException, EmailInvalidFormatException, PeselLengthException, PeselSumControlNumberException, RightsNotSelectedExeception {
+    public void addNewUser() throws ClassNotFoundException, SQLException, LoginAlreadyExistsException, NameInvalidValueException, EmailInvalidFormatException, PeselLengthException, PeselSumControlNumberException, ComboBoxNotSelectedExeception {
 
         if (checkLogin(true) && checkName() && checkLastName() && checkNumberPhone() && checkEmail() && checkNumberPesel() && checkIsSelectedRights()) {
 
@@ -161,6 +161,7 @@ public class AddUserController {
                 pesel.clear();
             }
             JOptionPane.showMessageDialog(null, errorMsg, "", JOptionPane.ERROR_MESSAGE);
+            errorMsg = "<html><body width=300><h2>Błąd</h2>";
         }
 //////////////////////////////
 
@@ -310,12 +311,12 @@ public class AddUserController {
         }
         return true;
     }
-   private boolean checkIsSelectedRights()throws RightsNotSelectedExeception{
+   private boolean checkIsSelectedRights()throws ComboBoxNotSelectedExeception{
        try{
            if(boxRights.getSelectionModel().getSelectedItem().isEmpty()){
-               throw new RightsNotSelectedExeception("nie wybrano uprawnień użytkownika");
+               throw new ComboBoxNotSelectedExeception("nie wybrano uprawnień użytkownika");
            }
-       }catch(RightsNotSelectedExeception re){
+       }catch(ComboBoxNotSelectedExeception re){
            errorMsg += "<p>*Nie wybrano uprawnień dla użytkownika";
            return false;
        }
