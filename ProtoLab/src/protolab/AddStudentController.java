@@ -26,7 +26,7 @@ import protolab.exceptions.LoginAlreadyExistsException;
 import protolab.exceptions.NameInvalidValueException;
 import protolab.exceptions.PeselLengthException;
 import protolab.exceptions.PeselSumControlNumberException;
-import protolab.exceptions.RightsNotSelectedExeception;
+import protolab.exceptions.ComboBoxNotSelectedExeception;
 
 public class AddStudentController {
 
@@ -94,7 +94,7 @@ public class AddStudentController {
         }
     }
 
-    public void addNewUser() throws ClassNotFoundException, SQLException, LoginAlreadyExistsException, NameInvalidValueException, EmailInvalidFormatException, PeselLengthException, PeselSumControlNumberException, RightsNotSelectedExeception {
+    public void addNewUser() throws ClassNotFoundException, SQLException, LoginAlreadyExistsException, NameInvalidValueException, EmailInvalidFormatException, PeselLengthException, PeselSumControlNumberException, ComboBoxNotSelectedExeception {
 
         if (checkLogin(true) && checkName() && checkLastName() && checkNumberPhone() && checkEmail() && checkNumberPesel() ) {
 

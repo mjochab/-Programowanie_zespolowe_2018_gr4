@@ -7,10 +7,11 @@ package protolab.exceptions;
 
 /**
  *
- * @author domin
+ * @author Wojtek
  */
-public class RightsNotSelectedExeception extends Exception{
-    public RightsNotSelectedExeception(String s) {
+public class ReservationDatePickerIsEmptyException extends Exception{  
+
+    public ReservationDatePickerIsEmptyException(String s) {
          super(s);  
     }
-}
+    }

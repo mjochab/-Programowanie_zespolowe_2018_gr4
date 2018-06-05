@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -11,8 +12,8 @@
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="protolab.ListReservationController">
    <children>
       <Label layoutX="153.0" layoutY="28.0" text="Lista zarezerwowanych przedmiotów" />
-      <Button fx:id="delStudent" layoutX="118.0" layoutY="345.0" mnemonicParsing="false" onAction="#deleteReservation" text="Usuń rezerwacje" />
-      <Button layoutX="250.0" layoutY="345.0" mnemonicParsing="false" onAction="#Back" text="Powrót" />
+      <Button fx:id="delStudent" layoutX="23.0" layoutY="345.0" mnemonicParsing="false" onAction="#checkRightOnReservation" prefHeight="25.0" prefWidth="118.0" text="Usuń rezerwacje" />
+      <Button layoutX="433.0" layoutY="461.0" mnemonicParsing="false" onAction="#Back" text="Powrót" />
       <TableView fx:id="tableReservations" layoutX="11.0" layoutY="64.0" prefHeight="273.0" prefWidth="478.0">
         <columns>
           <TableColumn fx:id="resName" prefWidth="75.0" text="Imie" />
@@ -25,7 +26,11 @@
         </columns>
       </TableView>
 	        <Button fx:id="BTgeneratePDF" layoutX="23.0" layoutY="388.0" mnemonicParsing="false" onAction="#generatePDF" text="Generuj raport PDF" />
-			<Button fx:id="BTgeneratePdfStudent" layoutX="176.0" layoutY="388.0" mnemonicParsing="false" onAction="#generatePdfStudent" text="Generuj raport PDF dla zaznaczonego studenta" />
+			<Button fx:id="BTgeneratePdfStudent" layoutX="23.0" layoutY="425.0" mnemonicParsing="false" onAction="#generatePdfStudent" text="Generuj raport PDF dla zaznaczonego studenta" />
+      <DatePicker fx:id="dateCurrentPicker" layoutX="301.0" layoutY="345.0" />
+      <Label layoutX="186.0" layoutY="349.0" text="Rezerwacje z dnia:" />
+      <Button layoutX="301.0" layoutY="388.0" mnemonicParsing="false" onAction="#showCurrentReservations" text="Pokaż rezerwacje z dnia:" />
+      <Button layoutX="301.0" layoutY="425.0" mnemonicParsing="false" onAction="#loadReservations" text="Pokaż wszystkie rezerwacje" />
 
    </children>
    <effect>
