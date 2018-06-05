@@ -55,11 +55,11 @@ public class AddStudentController {
     private Button back;
     @FXML
     private Label loginLabel;
-    
+
     BaseConnection base = new BaseConnection();
     public Users user;
     String errorMsg = "<html><body width=300><h2>Błąd</h2>";
-    
+
     @FXML
     public void backMenu() throws ClassNotFoundException, SQLException {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("ListUsers.fxml"));
@@ -169,7 +169,7 @@ public class AddStudentController {
         }catch(NullPointerException nullE){
             if (writeErr) {
                  errorMsg += "<p>*Puste pole Login";
-            }  
+            }
             return false;
         } catch (LoginAlreadyExistsException loginE) {
             if (writeErr) {
