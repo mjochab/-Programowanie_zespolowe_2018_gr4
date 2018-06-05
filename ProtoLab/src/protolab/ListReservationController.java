@@ -37,6 +37,9 @@ import protolab.exceptions.ReservationDatePickerIsEmptyException;
  */
 public class ListReservationController {
 
+//    public ListReservationController(int idItem) {
+//        
+//    }
     BaseConnection base = new BaseConnection();
 
     private FXMLDocumentController mainController;
@@ -62,6 +65,10 @@ public class ListReservationController {
     private TableColumn<Reservations, Integer> resID;
     @FXML
     private DatePicker dateCurrentPicker;
+    @FXML
+    private Button BTgeneratePDF;
+    @FXML
+    private Button BTgeneratePdfStudent;
 
     @FXML
     public void generatePDF() throws ClassNotFoundException, SQLException, IOException, DocumentException {
@@ -113,6 +120,7 @@ public class ListReservationController {
         this.mainController = mainController;
         loadReservations();
         setDatePicker();
+        disableButtons(SessionService.getUserRights());
     }
 
     @FXML
@@ -248,7 +256,7 @@ public class ListReservationController {
             if (checkDatePickerIsBetween(dateCurrentPicker.getValue())) {
 
                 try {
-                    
+
                     ResList = FXCollections.observableArrayList();
                     LocalDate datePicker = dateCurrentPicker.getValue();
                     ResultSet rs = conn.createStatement().executeQuery("SELECT uzytkownicy.imie, uzytkownicy.nazwisko, przedmioty.Nazwa, rezerwacje.ilosc, rezerwacje.od_kiedy, rezerwacje.do_kiedy, rezerwacje.idRezerwacji "
@@ -258,7 +266,7 @@ public class ListReservationController {
                     while (rs.next()) {
                         ResList.add(new Reservations(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getInt(7)));
                     }
-                    
+
                 } catch (SQLException ex) {
                     System.out.println("Error" + ex);
                 }
@@ -326,6 +334,50 @@ public class ListReservationController {
             return false;
         }
         return true;
+    }
+
+    public void disableButtons(int idRights) {
+        if (idRights != 2) {
+            BTgeneratePDF.setDisable(true);
+            BTgeneratePdfStudent.setDisable(true);
+        }
+    }
+
+    public void checkRightOnReservation() throws ClassNotFoundException, SQLException {
+        int idRes = 0;
+        boolean canDeleteRaservation = true;
+        try {
+            idRes = tableReservations.getSelectionModel().getSelectedItem().getIdRez();
+        } catch (NullPointerException ex) {
+            JOptionPane.showMessageDialog(null, "Nie wybrano rezerwacji do usunięcia", "info", JOptionPane.INFORMATION_MESSAGE);
+        }
+        Connection conn = base.baseConnection();
+        String querry = ""
+                + "SELECT rezerwacje.ID_uzytkownika, uzytkownicy.ID_uprawnienia "
+                + "FROM uzytkownicy, rezerwacje "
+                + "WHERE rezerwacje.idRezerwacji = " + idRes + " "
+                + "AND rezerwacje.ID_uzytkownika = uzytkownicy.ID_uzytkownika";
+        ResultSet rs = conn.createStatement().executeQuery(querry);
+        rs.first();
+        // usuwanie własnych rezerwacji
+        if (rs.getInt(1) == SessionService.getUserID()) {   
+            deleteReservation();
+        }else{
+            canDeleteRaservation = false;
+        }
+        // usuwanie rezerwacji studenta przez admina lub szefa
+        if (rs.getInt(2) == 1 && SessionService.getUserRights() != 1) {
+            deleteReservation();
+        }else{
+            canDeleteRaservation = false;
+        }
+        //usuwanie rezerwacji szefa przez admina
+        if (rs.getInt(2) == 3 && SessionService.getUserRights() == 2) {
+            deleteReservation();
+        }
+        if(canDeleteRaservation == false){
+            JOptionPane.showMessageDialog(null, "Nie można usunąć danej rezerwacji. Zbyt małe uprawnienia.", "info", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     public void exit() {

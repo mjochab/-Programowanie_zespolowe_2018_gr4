@@ -118,7 +118,7 @@ public class AdminPanelController {
      * @throws IOException
      */
     @FXML
-    public void ListReservations() throws IOException, ClassNotFoundException, SQLException {
+    public void listReservations() throws IOException, ClassNotFoundException, SQLException {
 
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("ListReservation.fxml"));
 

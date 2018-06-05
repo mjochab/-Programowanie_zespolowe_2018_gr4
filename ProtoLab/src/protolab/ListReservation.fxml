@@ -12,7 +12,7 @@
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="protolab.ListReservationController">
    <children>
       <Label layoutX="153.0" layoutY="28.0" text="Lista zarezerwowanych przedmiotów" />
-      <Button fx:id="delStudent" layoutX="23.0" layoutY="345.0" mnemonicParsing="false" onAction="#deleteReservation" prefHeight="25.0" prefWidth="118.0" text="Usuń rezerwacje" />
+      <Button fx:id="delStudent" layoutX="23.0" layoutY="345.0" mnemonicParsing="false" onAction="#checkRightOnReservation" prefHeight="25.0" prefWidth="118.0" text="Usuń rezerwacje" />
       <Button layoutX="433.0" layoutY="461.0" mnemonicParsing="false" onAction="#Back" text="Powrót" />
       <TableView fx:id="tableReservations" layoutX="11.0" layoutY="64.0" prefHeight="273.0" prefWidth="478.0">
         <columns>

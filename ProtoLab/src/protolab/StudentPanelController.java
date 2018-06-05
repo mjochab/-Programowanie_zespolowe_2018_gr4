@@ -164,6 +164,23 @@ public class StudentPanelController {
         changePass.setMainController(mainController);
         mainController.setScreen(pane);
     }
+    
+    @FXML
+    public void listReservations() throws IOException, ClassNotFoundException, SQLException {
+
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("ListReservation.fxml"));
+
+        Pane pane = null;
+
+        try {
+            pane = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ListReservationController listReservationController = loader.getController();
+        listReservationController.setMainController(mainController);
+        mainController.setScreen(pane);
+    }
 
     @FXML
     public void exit() {
