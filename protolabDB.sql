@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 05 Cze 2018, 03:11
+-- Czas generowania: 05 Cze 2018, 11:00
 -- Wersja serwera: 10.1.31-MariaDB
 -- Wersja PHP: 7.2.4
 
@@ -66,12 +66,14 @@ CREATE TABLE `przedmioty` (
 INSERT INTO `przedmioty` (`ID_przedmiotu`, `Nazwa`, `id_rodzaj`, `Ilosc`, `Status`) VALUES
 (1, 'monitor', 1, 40, 'w magazynie'),
 (2, 'klawiatura', 1, 30, 'w magazynie'),
-(3, 'mysz komputerowa', 1, 15, 'w magazynie'),
+(3, 'mysz komputerowa', 1, 17, 'w magazynie'),
 (4, 'głośniki', 1, 25, 'w magazynie'),
 (5, 'drukarka', 1, 20, 'w magazynie'),
 (6, 'skaner', 1, 35, 'w magazynie'),
 (7, 'fax', 1, 50, 'w magazynie'),
-(8, 'drukarka3d', 1, 2, 'w magazynie');
+(8, 'drukarka3d', 1, 2, 'w magazynie'),
+(10, 'FilaFlex', 5, 3, 'w magazynie'),
+(11, 'klucz 13', 3, 2, 'w magazynie');
 
 -- --------------------------------------------------------
 
@@ -85,18 +87,19 @@ CREATE TABLE `rezerwacje` (
   `ID_przedmiotu` int(11) NOT NULL,
   `od_kiedy` date NOT NULL,
   `do_kiedy` date NOT NULL,
-  `ilosc` int(11) NOT NULL
+  `ilosc` int(11) NOT NULL,
+  `rezerwacja_counter` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
 -- Zrzut danych tabeli `rezerwacje`
 --
 
-INSERT INTO `rezerwacje` (`idRezerwacji`, `ID_uzytkownika`, `ID_przedmiotu`, `od_kiedy`, `do_kiedy`, `ilosc`) VALUES
-(2, 3, 7, '2018-05-22', '2018-05-25', 10),
-(3, 4, 2, '2018-05-22', '2018-05-23', 1),
-(4, 2, 4, '2018-05-22', '2018-05-23', 1),
-(5, 4, 6, '2018-05-22', '2018-05-23', 1);
+INSERT INTO `rezerwacje` (`idRezerwacji`, `ID_uzytkownika`, `ID_przedmiotu`, `od_kiedy`, `do_kiedy`, `ilosc`, `rezerwacja_counter`) VALUES
+(2, 3, 7, '2018-05-22', '2018-05-25', 10, 0),
+(3, 4, 2, '2018-05-22', '2018-05-23', 1, 0),
+(4, 2, 4, '2018-05-22', '2018-05-23', 1, 0),
+(5, 4, 6, '2018-05-22', '2018-05-23', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -115,7 +118,8 @@ CREATE TABLE `rodzaj_przedmiotu` (
 
 INSERT INTO `rodzaj_przedmiotu` (`id_rodzaj`, `nazwa_typu`) VALUES
 (1, 'sprzet komputerowy'),
-(2, 'urzadzenia agd');
+(2, 'urzadzenia agd'),
+(3, 'elektro-narzedzia');
 
 -- --------------------------------------------------------
 
@@ -226,7 +230,7 @@ ALTER TABLE `dane_logowania`
 -- AUTO_INCREMENT dla tabeli `przedmioty`
 --
 ALTER TABLE `przedmioty`
-  MODIFY `ID_przedmiotu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `ID_przedmiotu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT dla tabeli `rezerwacje`
@@ -238,7 +242,7 @@ ALTER TABLE `rezerwacje`
 -- AUTO_INCREMENT dla tabeli `rodzaj_przedmiotu`
 --
 ALTER TABLE `rodzaj_przedmiotu`
-  MODIFY `id_rodzaj` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_rodzaj` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT dla tabeli `uzytkownicy`
