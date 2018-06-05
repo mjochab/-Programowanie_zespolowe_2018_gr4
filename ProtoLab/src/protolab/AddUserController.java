@@ -28,7 +28,7 @@ import protolab.exceptions.PeselLengthException;
 import protolab.exceptions.PeselSumControlNumberException;
 import protolab.exceptions.RightsNotSelectedExeception;
 
-public class AddStudentController {
+public class AddUserController {
 
     private FXMLDocumentController mainController;
     /**
@@ -55,11 +55,23 @@ public class AddStudentController {
     private Button back;
     @FXML
     private Label loginLabel;
-    
+     @FXML
+    private ComboBox<String> boxRights = new ComboBox<>();
     BaseConnection base = new BaseConnection();
     public Users user;
     String errorMsg = "<html><body width=300><h2>Błąd</h2>";
-    
+    public void loadRights() throws SQLException, ClassNotFoundException{
+        Connection conn = base.baseConnection();
+        rights = FXCollections.observableArrayList();
+        ResultSet rs = conn.createStatement().executeQuery("SELECT uprawnienia.rodzajUprawnienia FROM uprawnienia");
+
+        while (rs.next()) {
+            rights.add(rs.getString(1));
+        }
+
+        boxRights.setItems(rights);
+    }
+
     @FXML
     public void backMenu() throws ClassNotFoundException, SQLException {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("ListUsers.fxml"));
@@ -78,6 +90,7 @@ public class AddStudentController {
 
     public void setMainController(FXMLDocumentController mainController) throws SQLException, ClassNotFoundException {
         this.mainController = mainController;
+        loadRights();
 
     }
 
@@ -96,7 +109,7 @@ public class AddStudentController {
 
     public void addNewUser() throws ClassNotFoundException, SQLException, LoginAlreadyExistsException, NameInvalidValueException, EmailInvalidFormatException, PeselLengthException, PeselSumControlNumberException, RightsNotSelectedExeception {
 
-        if (checkLogin(true) && checkName() && checkLastName() && checkNumberPhone() && checkEmail() && checkNumberPesel() ) {
+        if (checkLogin(true) && checkName() && checkLastName() && checkNumberPhone() && checkEmail() && checkNumberPesel() && checkIsSelectedRights()) {
 
             try {
                 ////
@@ -113,7 +126,7 @@ public class AddStudentController {
                 prstm.setLong(3, Long.parseLong(phone.getText()));
                 prstm.setString(4, email.getText());
                 prstm.setLong(5, Long.parseLong(pesel.getText()));
-                prstm.setInt(6, 1);
+                prstm.setInt(6, getIdRights(boxRights.getSelectionModel().getSelectedItem()));
                 prstm.executeUpdate();
                 prstm.close();
                 query = "INSERT INTO `dane_logowania` (`Login`, `Haslo`, `Pass_Counter`) VALUES ( ?, ?, '1');";
@@ -297,6 +310,22 @@ public class AddStudentController {
         }
         return true;
     }
-
+   private boolean checkIsSelectedRights()throws RightsNotSelectedExeception{
+       try{
+           if(new String(boxRights.getSelectionModel().getSelectedItem()).equals("")){
+               throw new RightsNotSelectedExeception("nie wybrano uprawnień użytkownika");
+           }
+       }catch(RightsNotSelectedExeception re){
+           errorMsg += "<p>*Nie wybrano uprawnień dla użytkownika";
+           return false;
+       }
+       return true;
+   }
+   public int getIdRights(String nameRights) throws ClassNotFoundException, SQLException{
+        Connection conn = base.baseConnection();
+        ResultSet rs = conn.createStatement().executeQuery("SELECT uprawnienia.ID_uprawnienia FROM uprawnienia WHERE uprawnienia.rodzajUprawnienia='"+nameRights+"'");
+        rs.first();
+        return rs.getInt(1);
+   }
 
 }

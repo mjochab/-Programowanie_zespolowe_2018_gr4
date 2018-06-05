@@ -143,7 +143,7 @@ public class ListStudentsController {
     }
 
     @FXML
-    public void registrationStudent() throws IOException {
+    public void registrationStudent() throws IOException, SQLException, ClassNotFoundException {
 
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("AddStudent.fxml"));
 

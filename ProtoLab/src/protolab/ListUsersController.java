@@ -68,28 +68,9 @@ public class ListUsersController {
     }
 
     @FXML
-    public void registrationAdmin() throws IOException {
+    public void registrationUser() throws IOException, SQLException, ClassNotFoundException {
 
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("AddAdmin.fxml"));
-
-        Pane pane = null;
-
-        try {
-            pane = loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        AddAdminController addAdminController = loader.getController();
-        addAdminController.setMainController(mainController);
-        mainController.setScreen(pane);
-
-    }
-
-    @FXML
-    public void registrationBoss() throws IOException {
-
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("AddBoss.fxml"));
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("AddUser.fxml"));
 
         Pane pane = null;
 
@@ -99,30 +80,14 @@ public class ListUsersController {
             e.printStackTrace();
         }
 
-        AddBossController addBoss = loader.getController();
-        addBoss.setMainController(mainController);
+        AddUserController addUserController = loader.getController();
+        addUserController.setMainController(mainController);
         mainController.setScreen(pane);
 
     }
 
-    @FXML
-    public void registrationStudent() throws IOException {
+   
 
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("AddStudent.fxml"));
-
-        Pane pane = null;
-
-        try {
-            pane = loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        AddStudentController addStudentController = loader.getController();
-        addStudentController.setMainController(mainController);
-        mainController.setScreen(pane);
-
-    }
 
     @FXML
     public void Back() throws IOException, ClassNotFoundException, SQLException {
@@ -153,16 +118,18 @@ public class ListUsersController {
             Connection conn = base.baseConnection();
             usersList = FXCollections.observableArrayList();
             ResultSet rs = conn.createStatement().executeQuery(""
-                    + "SELECT uzytkownicy.* ,uprawnienia.rodzajUprawnienia "
-                    + "FROM uzytkownicy, uprawnienia "
-                    + "WHERE uzytkownicy.ID_uprawnienia=uprawnienia.ID_uprawnienia ");
+                    + "SELECT uzytkownicy.ID_uzytkownika, uzytkownicy.ID_uprawnienia, uzytkownicy.imie, uzytkownicy.nazwisko,uzytkownicy.numerTel, uzytkownicy.email, uzytkownicy.pesel, uprawnienia.rodzajUprawnienia "
+                    + "FROM uzytkownicy,uprawnienia "
+                    + "WHERE uzytkownicy.ID_uprawnienia= uprawnienia.ID_uprawnienia");
             while (rs.next()) {
-                if (rs.getInt(2) != 2 && rs.getInt(1) != SessionService.getUserID()) {
+                if (rs.getInt(1) != SessionService.getUserID()) {
                     usersList.add(new Users(rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6), rs.getLong(7), rs.getString(8)));
                 }
             }
         } catch (SQLException ex) {
             System.out.println("Error" + ex);
+        }catch(Exception e){
+            System.err.println("Error"+e);
         }
 
         userName.setCellValueFactory(new PropertyValueFactory<>("Name"));
