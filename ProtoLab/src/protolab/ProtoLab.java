@@ -9,6 +9,8 @@ import javafx.stage.Stage;
 
 public class ProtoLab extends Application {
 
+    private static Stage pStage;
+
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
@@ -18,10 +20,16 @@ public class ProtoLab extends Application {
         stage.setScene(scene);
         stage.setTitle("Aplikacja ProtoLab");
         stage.show();
+
+        pStage = stage;
     }
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public static Stage getpStage() {
+        return pStage;
     }
 
 }
