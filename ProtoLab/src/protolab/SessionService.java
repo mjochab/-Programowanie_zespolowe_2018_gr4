@@ -35,8 +35,8 @@ public class SessionService {
     public static String getUsername() {
         return sessionUsername;
     }
-    public static void setUserSurname(String sessionUserSurname) {
-        sessionUserSurname=sessionUserSurname;
+    public static void setUserSurname(String UserSurname) {
+        sessionUserSurname=UserSurname;
     }
     public static String getUserSurname() {
         return sessionUserSurname;

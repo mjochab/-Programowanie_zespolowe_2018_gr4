@@ -20,6 +20,8 @@ import javafx.scene.layout.Pane;
 import protolabpdf.*;
 
 import com.itextpdf.text.*;
+import java.awt.Desktop;
+import java.io.File;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
@@ -84,6 +86,13 @@ public class ListReservationController {
         pdf.document.add(ProtoLabRaportPDF.setInfoTable(ProtoLabRaportPDF.setInfoCell("Nadawca", SessionService.getUsername() + " " + SessionService.getUserSurname(), " "), ProtoLabRaportPDF.setInfoCell("Odbiorca", "Prowadzący zajęcia", "M.O.")));
         pdf.document.add(pdf.setItemTable());
         pdf.document.close();
+            try {
+        File myFile = new File("raports/raport "+LocalDate.now()+".pdf");
+        Desktop.getDesktop().open(myFile);
+    } catch (IOException ex) {
+        // no application registered for PDFs
+    }
+        
 
     }
 
@@ -109,6 +118,15 @@ public class ListReservationController {
             pdf.document.add(ProtoLabRaportPDF.setInfoTable(ProtoLabRaportPDF.setInfoCell("Nadawca", SessionService.getUsername() + " " + SessionService.getUserSurname(), " "), ProtoLabRaportPDF.setInfoCell("Nadawca", "Zespół programistyczny", "Numer 4")));
             pdf.document.add(pdf.setItemTable());
             pdf.document.close();
+            
+            if (Desktop.isDesktopSupported()) {
+    try {
+        File myFile = new File("raports/students/raport "+name+" "+surname+" "+LocalDate.now()+".pdf");
+        Desktop.getDesktop().open(myFile);
+    } catch (IOException ex) {
+        // no application registered for PDFs
+    }
+}
         } catch (NullPointerException ne) {
             JOptionPane.showMessageDialog(null, "Nie wybrano elementu!", "info", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
