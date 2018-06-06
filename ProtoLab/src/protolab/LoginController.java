@@ -2,11 +2,16 @@ package protolab;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextField;
@@ -17,6 +22,7 @@ import protolab.SessionService;
 
 public class LoginController {
 
+    BaseConnection base = new BaseConnection();
     private FXMLDocumentController mainController;
     @FXML
     private TextField textLogin;
@@ -50,6 +56,8 @@ public class LoginController {
         } else {
             if (id > 0) {
                 setSession(id);
+                isReservationOn();
+                isReservationOff();
                 setWindow(SessionService.getUserRights());
             } else {
                 JOptionPane.showMessageDialog(null, "nie ma takiego użytkownika o takim loginie", "Exception", JOptionPane.ERROR_MESSAGE);
@@ -172,6 +180,61 @@ public class LoginController {
 
     public void exit() {
         Platform.exit();
+    }
+
+    public void isReservationOn() throws ClassNotFoundException, SQLException {
+        
+        Connection conn = base.baseConnection();
+        String querry = "SELECT rezerwacje.od_kiedy, rezerwacje.idRezerwacji, rezerwacje.ID_przedmiotu, przedmioty.Ilosc, rezerwacje.ilosc, rezerwacje.rezerwacja_counter "
+                + "FROM `rezerwacje`, przedmioty "
+                + "WHERE rezerwacje.do_kiedy <='" + Date.valueOf(LocalDate.now()) + "' "
+                + "AND przedmioty.ID_przedmiotu = rezerwacje.ID_przedmiotu";
+        ResultSet rs = conn.createStatement().executeQuery(querry);
+        PreparedStatement prstm1;
+        PreparedStatement prstm2;
+        try{
+        if(rs.isBeforeFirst()){
+        rs.first();
+        int itemNumberWarehouse;
+        do {
+            itemNumberWarehouse = rs.getInt(4) - rs.getInt(5);
+            if (rs.getBoolean(6) == false) {
+                prstm1 = conn.prepareStatement("UPDATE `przedmioty` SET `Ilosc` = '" + itemNumberWarehouse + "' WHERE przedmioty.ID_przedmiotu = " + rs.getInt(3) + " AND rezerwacje.rezerwacja_counter = 0");
+                prstm1.executeUpdate();
+                prstm1.close();
+            }
+            
+                prstm2 = conn.prepareStatement("UPDATE rezerwacje SET rezerwacja_counter = 1 WHERE rezerwacje.idRezerwacji = " + rs.getInt(2) + "");
+                prstm2.executeUpdate();
+                prstm2.close();
+            
+            itemNumberWarehouse = 0;
+        } while (rs.next());
+        }
+        }catch(NullPointerException ex){
+            System.out.println(ex);
+        }
+    }
+
+    public void isReservationOff() throws ClassNotFoundException, SQLException {
+        
+        Connection conn = base.baseConnection();
+        try{
+        String querry = "SELECT rezerwacje.do_kiedy, rezerwacje.idRezerwacji FROM rezerwacje WHERE rezerwacje.do_kiedy <='" + Date.valueOf(LocalDate.now().plusDays(1)) + "'";
+        ResultSet rs = conn.createStatement().executeQuery(querry);
+        PreparedStatement prstm;
+        if(rs.isBeforeFirst()){
+            
+        
+        while (rs.next()){
+            prstm = conn.prepareStatement("DELETE FROM rezerwacje WHERE rezerwacje.idRezerwacji = " + rs.getInt(2) + "");
+            prstm.executeUpdate();
+            prstm.close();
+        } 
+        }
+        }catch(NullPointerException ex){
+            System.out.println(ex);
+        }
     }
 
     public void setMainController(FXMLDocumentController mainController) {

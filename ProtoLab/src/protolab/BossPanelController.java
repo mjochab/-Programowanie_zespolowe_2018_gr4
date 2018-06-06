@@ -123,6 +123,22 @@ public class BossPanelController {
     }
 
     @FXML
+    public void doReservation() throws IOException, ClassNotFoundException, SQLException {
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("MakeReservation.fxml"));
+
+        Pane pane = null;
+
+        try {
+            pane = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        MakeReservationController reservationController = loader.getController();
+        reservationController.setMainController(mainController);
+        mainController.setScreen(pane);
+    }
+    
+    @FXML
     public void changeMyPasswd() {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("ChangePasswd.fxml"));
 

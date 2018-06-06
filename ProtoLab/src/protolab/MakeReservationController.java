@@ -84,7 +84,10 @@ public class MakeReservationController implements Initializable {
         }
         checkDate();
     }
-
+    @FXML
+    public void getItemFromStudentPanel(String itemName){
+        boxItem.setValue(itemName);
+    }
     @FXML
     private void toStudentPanel(ActionEvent event) throws ClassNotFoundException, SQLException {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("StudentPanel.fxml"));
@@ -300,6 +303,7 @@ public class MakeReservationController implements Initializable {
                         prstm.setBoolean(6, false);
                         prstm.executeUpdate();
                         prstm.close();
+                        JOptionPane.showMessageDialog(null, "Dokonano rezerwacji", "", JOptionPane.INFORMATION_MESSAGE);
                     } catch (Exception sql) {
                         System.out.println(sql);
                         errorMsg += "<p>*" + sql;
@@ -351,7 +355,9 @@ public class MakeReservationController implements Initializable {
                 canRaservation = false;
             }
         }
+        if(canRaservation == false){
         JOptionPane.showMessageDialog(null, unAbleDays, "", JOptionPane.INFORMATION_MESSAGE);
+        }
         unAbleDays = "<html><body width=400><h2>Nie można zarezerwować w dniach:</h2>";
         return canRaservation;
     }
