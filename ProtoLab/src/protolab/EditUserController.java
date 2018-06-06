@@ -32,7 +32,7 @@ import protolab.exceptions.LoginAlreadyExistsException;
 import protolab.exceptions.NameInvalidValueException;
 import protolab.exceptions.PeselLengthException;
 import protolab.exceptions.PeselSumControlNumberException;
-import protolab.exceptions.RightsNotSelectedExeception;
+import protolab.exceptions.ComboBoxNotSelectedExeception;
 
 public class EditUserController implements Initializable {
 
@@ -69,12 +69,15 @@ public class EditUserController implements Initializable {
         Connection conn = base.baseConnection();
         rights = FXCollections.observableArrayList();
         ResultSet rs = conn.createStatement().executeQuery("SELECT uprawnienia.rodzajUprawnienia FROM uprawnienia");
+        ResultSet rs2 = conn.createStatement().executeQuery("SELECT uzytkownicy.ID_uprawnienia from uzytkownicy where  uzytkownicy.pesel=" + user.getPesel());
 
         while (rs.next()) {
             rights.add(rs.getString(1));
         }
 
         boxRights.setItems(rights);
+        rs2.first();
+        boxRights.getSelectionModel().select(rs2.getInt(1)-1);
     }
 
     public void loadLoginUser() throws ClassNotFoundException {
@@ -108,7 +111,7 @@ public class EditUserController implements Initializable {
     }
 
     @FXML
-    private void saveChanges(ActionEvent event) throws ClassNotFoundException, SQLException, NameInvalidValueException, EmailInvalidFormatException, RightsNotSelectedExeception {
+    private void saveChanges(ActionEvent event) throws ClassNotFoundException, SQLException, NameInvalidValueException, EmailInvalidFormatException, ComboBoxNotSelectedExeception {
         if (checkName() && checkLastName() && checkNumberPhone() && checkEmail() && checkIsSelectedRights() ) {
 
             try {
@@ -247,12 +250,13 @@ public class EditUserController implements Initializable {
         return true;
     }
 
-    private boolean checkIsSelectedRights() throws RightsNotSelectedExeception {
+    
+    private boolean checkIsSelectedRights() throws  ComboBoxNotSelectedExeception{
         try {
             if (boxRights.getSelectionModel().getSelectedItem().isEmpty()) {
-                throw new RightsNotSelectedExeception("nie wybrano uprawnień użytkownika");
+                throw new  ComboBoxNotSelectedExeception("nie wybrano uprawnień użytkownika");
             }
-        } catch (RightsNotSelectedExeception re) {
+        } catch (ComboBoxNotSelectedExeception re) {
             errorMsg += "<p>*Nie wybrano uprawnień dla użytkownika";
             return false;
         }
