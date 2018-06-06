@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="protolab.MakeReservationController">
+   <children>
+      <ComboBox fx:id="boxItem" layoutX="203.0" layoutY="130.0" prefWidth="150.0" promptText="Przedmiot" />
+      <DatePicker fx:id="dateFrom" layoutX="191.0" layoutY="222.0" promptText="Od:" />
+      <DatePicker fx:id="dateTo" layoutX="191.0" layoutY="260.0" promptText="Do" />
+      <Button layoutX="203.0" layoutY="325.0" mnemonicParsing="false" onAction="#makeReservation" text="Zarezerwuj" />
+      <Button layoutX="301.0" layoutY="325.0" mnemonicParsing="false" onAction="#toStudentPanel" text="Anuluj" />
+      <TextField fx:id="TextNumber" layoutX="204.0" layoutY="175.0" promptText="Ilość" />
+      <Label fx:id="labelFrom" layoutX="136.0" layoutY="226.0" text="Od" />
+      <Label fx:id="labelTo" layoutX="136.0" layoutY="264.0" text="Do" />
+   </children>
+</AnchorPane>

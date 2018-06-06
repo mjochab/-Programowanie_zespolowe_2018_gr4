@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="protolab.ListUsersController">
+    <children>
+        <Label layoutX="187.0" layoutY="26.0" text="Konta Użytkowników" />
+        <Button layoutX="14.0" layoutY="347.0" mnemonicParsing="false" onAction="#registrationUser" prefHeight="31.0" prefWidth="139.0" text="Dodaj użytkownika" />
+        <Button fx:id="delStudent" layoutX="159.0" layoutY="347.0" mnemonicParsing="false" onAction="#deleteUser" prefHeight="31.0" prefWidth="152.0" text="Usuń zaznaczonego" />
+        <Button layoutX="410.0" layoutY="448.0" mnemonicParsing="false" onAction="#Back" prefHeight="25.0" prefWidth="60.0" text="Powrót" />
+        <TableView fx:id="tableUsers" layoutX="15.0" layoutY="80.0" prefHeight="251.0" prefWidth="471.0">
+            <columns>
+                <TableColumn fx:id="userName" prefWidth="75.0" text="Imie" />
+                <TableColumn fx:id="userSurname" prefWidth="75.0" text="Nazwisko" />
+                <TableColumn fx:id="userTel" prefWidth="84.0" text="Tel." />
+                <TableColumn fx:id="userEmail" prefWidth="65.0" text="Email" />
+                <TableColumn fx:id="userPesel" prefWidth="101.0" text="Pesel" />
+                <TableColumn fx:id="userRank" prefWidth="70.0" text="Ranga" />
+            </columns>
+        </TableView>
+        <Button layoutX="410.0" layoutY="406.0" mnemonicParsing="false" onAction="#loadUsers" text="Odśwież" />
+        <Button fx:id="editUser" layoutX="318.0" layoutY="347.0" mnemonicParsing="false" onAction="#editUser" prefHeight="31.0" prefWidth="152.0" text="Edytuj użytkownika" />
+        <Button fx:id="passwdResetBt" layoutX="15.0" layoutY="387.0" mnemonicParsing="false" onAction="#passwdReset" prefHeight="31.0" prefWidth="192.0" text="Reset hasło użytkownika" />
+    </children>
+    <effect>
+        <InnerShadow blurType="TWO_PASS_BOX" color="#34782d">
+            <input>
+                <Glow />
+            </input>
+        </InnerShadow>
+    </effect>
+</Pane>

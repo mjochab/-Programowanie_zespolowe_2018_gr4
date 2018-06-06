@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="protolab.ChangePasswdController">
+   <children>
+      <Button layoutX="47.0" layoutY="440.0" mnemonicParsing="false" onAction="#checkPasswd" text="Ok" />
+      <Button layoutX="89.0" layoutY="440.0" mnemonicParsing="false" onAction="#cancel" text="Anuluj" />
+      <PasswordField fx:id="passwdField" layoutX="178.0" layoutY="181.0" />
+      <PasswordField fx:id="passwdField2" layoutX="178.0" layoutY="229.0" />
+      <Label layoutX="51.0" layoutY="186.0" text="Podaj nowe hasło:" />
+      <Label layoutX="33.0" layoutY="234.0" text="Powtórz nowe hasło:" />
+      <Label layoutX="192.0" layoutY="39.0" text="Zmiana hasła">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
+      <Label layoutX="39.0" layoutY="295.0" text="Nowe Hasło powinno:" />
+      <Label layoutX="38.0" layoutY="316.0" text="* składać się z minimum 8 znaków," />
+      <Label layoutX="37.0" layoutY="337.0" text="* zawierać przynajmniej jedną cyfrę," />
+      <Label layoutX="37.0" layoutY="358.0" text="* zawierać przynajmniej jedną małą i jedną dużą literę," />
+      <PasswordField fx:id="oldPasswdField" layoutX="178.0" layoutY="113.0" />
+      <Label layoutX="53.0" layoutY="118.0" text="Podaj stare hasło:" />
+      <Label layoutX="36.0" layoutY="379.0" text="* różnić się od starego hasła." />
+   </children>
+   <effect>
+      <InnerShadow blurType="TWO_PASS_BOX" color="#34782d">
+         <input>
+            <Glow />
+         </input>
+      </InnerShadow>
+   </effect>
+</Pane>

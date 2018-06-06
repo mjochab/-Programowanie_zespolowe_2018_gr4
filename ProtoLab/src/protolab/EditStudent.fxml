@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="protolab.EditStudentController">
+   <children>
+      <TextField fx:id="name" layoutX="140.0" layoutY="125.0" />
+      <TextField fx:id="lastName" layoutX="140.0" layoutY="160.0" />
+      <TextField fx:id="pesel" layoutX="140.0" layoutY="195.0" />
+      <TextField fx:id="phone" layoutX="141.0" layoutY="230.0" />
+      <TextField fx:id="email" layoutX="140.0" layoutY="265.0" />
+      <Label layoutX="63.0" layoutY="129.0" text="Imię" />
+      <Label layoutX="63.0" layoutY="164.0" text="Nazwisko" />
+      <Label layoutX="61.0" layoutY="199.0" text="Pesel" />
+      <Label layoutX="64.0" layoutY="234.0" text="Numer tel." />
+      <Label layoutX="64.0" layoutY="269.0" text="Email" />
+      <Button fx:id="save" layoutX="387.0" layoutY="337.0" mnemonicParsing="false" onAction="#saveChanges" text="Zapisz edycję" />
+      <Button fx:id="back" layoutX="509.0" layoutY="337.0" mnemonicParsing="false" onAction="#back" text="Powrót" />
+      <Text layoutX="215.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Edycja studenta">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

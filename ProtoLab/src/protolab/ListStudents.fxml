@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="protolab.ListStudentsController">
+   <children>
+      <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0">
+         <children>
+            <Label layoutX="204.0" layoutY="26.0" text="Konta Studentów" />
+            <Button fx:id="addStudent" layoutX="18.0" layoutY="370.0" mnemonicParsing="false" onAction="#registrationStudent" text="Dodaj Studenta" />
+            <Button fx:id="delStudent" layoutX="149.0" layoutY="370.0" mnemonicParsing="false" onAction="#deleteStudent" text="Usuń zaznaczonego" />
+            <Button layoutX="418.0" layoutY="446.0" mnemonicParsing="false" onAction="#Back" text="Powrót" />
+            <TableView fx:id="tableUsers" layoutX="14.0" layoutY="89.0" prefHeight="259.0" prefWidth="471.0">
+               <columns>
+                  <TableColumn fx:id="userName" prefWidth="75.0" text="Imie" />
+                  <TableColumn fx:id="userSurname" prefWidth="75.0" text="Nazwisko" />
+                  <TableColumn fx:id="userTel" prefWidth="112.0" text="Tel." />
+                  <TableColumn fx:id="userEmail" prefWidth="93.0" text="Email" />
+                  <TableColumn fx:id="userPesel" prefWidth="115.0" text="Pesel" />
+               </columns>
+            </TableView>
+            <Button layoutX="409.0" layoutY="409.0" mnemonicParsing="false" onAction="#loadUsers" text="Odśwież" />
+            <Button fx:id="editStudent" layoutX="308.0" layoutY="370.0" mnemonicParsing="false" onAction="#editStudent" prefHeight="31.0" prefWidth="141.0" text="Edytuj Studenta" />
+            <Button fx:id="passwdResetBt" layoutX="18.0" layoutY="409.0" mnemonicParsing="false" onAction="#passwdReset" text="Resetuj hasło użytkownika" />
+         </children>
+         <effect>
+            <InnerShadow blurType="TWO_PASS_BOX" color="#34782d">
+               <input>
+                  <Glow />
+               </input>
+            </InnerShadow>
+         </effect>
+      </Pane>
+   </children>
+</Pane>

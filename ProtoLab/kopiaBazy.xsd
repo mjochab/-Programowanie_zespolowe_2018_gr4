@@ -1,0 +1,108 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="kopiaBazy">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="rodzajePrzedmiotow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="rodzajPrzedmiotu" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:byte" name="idRodzaj"/>
+                    <xs:element type="xs:string" name="nazwaTypu"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="przedmioty">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="przedmiot" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:byte" name="idPrzedmiotu"/>
+                    <xs:element type="xs:string" name="nazwa"/>
+                    <xs:element type="xs:byte" name="idRodzaj"/>
+                    <xs:element type="xs:byte" name="ilosc"/>
+                    <xs:element type="xs:string" name="status"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="uzytkownicy">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="uzytkownik" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:int" name="idUzytkownika"/>
+                    <xs:element type="xs:int" name="idUprawnienia"/>
+                    <xs:element type="xs:string" name="imie"/>
+                    <xs:element type="xs:string" name="nazwisko"/>
+                    <xs:element name="numerTel">
+					<xs:simpleType>
+					<xs:restriction base="xs:string">
+					<xs:minLength value="9"/>
+      <xs:maxLength value="9"/>
+	  <xs:pattern value="[0-9]{9}"/>
+					</xs:restriction>
+					</xs:simpleType>
+					</xs:element>
+                    <xs:element type="xs:string" name="email"/>
+                    <xs:element name="pesel">
+					<xs:simpleType>
+					<xs:restriction base="xs:string">
+					<xs:minLength value="11"/>
+      <xs:maxLength value="11"/>
+	  <xs:pattern value="[0-9]{11}"/>
+					</xs:restriction>
+					</xs:simpleType>
+					</xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="rezerwacje">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="rezerwacja" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:int" name="idRezerwacji"/>
+                    <xs:element type="xs:int" name="idUzytkownika"/>
+                    <xs:element type="xs:int" name="idPrzedmiotu"/>
+                    <xs:element type="xs:dateTime" name="odKiedy"/>
+                    <xs:element type="xs:dateTime" name="doKiedy"/>
+                    <xs:element type="xs:int" name="ilosc"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="daneLogowania">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="konto" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:int" name="idKonta"/>
+                    <xs:element type="xs:string" name="login"/>
+                    <xs:element type="xs:string" name="haslo"/>
+                    <xs:element type="xs:int" name="passCounter"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
