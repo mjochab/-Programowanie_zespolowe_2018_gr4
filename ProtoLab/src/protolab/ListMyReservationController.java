@@ -67,10 +67,10 @@ public class ListMyReservationController {
     private TableColumn<Reservations, Integer> resID;
     @FXML
     private DatePicker dateCurrentPicker;
-    @FXML
-    private Button BTgeneratePDF;
-    @FXML
-    private Button BTgeneratePdfStudent;
+//    @FXML
+//    private Button BTgeneratePDF;
+//    @FXML
+//    private Button BTgeneratePdfStudent;
 
     
 
@@ -78,7 +78,7 @@ public class ListMyReservationController {
         this.mainController = mainController;
         loadReservations();
         setDatePicker();
-        disableButtons(SessionService.getUserRights());
+        
     }
 
     @FXML
@@ -86,8 +86,8 @@ public class ListMyReservationController {
         try {
             String querry = "SELECT uzytkownicy.imie, uzytkownicy.nazwisko, przedmioty.Nazwa, rezerwacje.ilosc, rezerwacje.od_kiedy, rezerwacje.do_kiedy, rezerwacje.idRezerwacji "
                     + "FROM rezerwacje, uzytkownicy, przedmioty "
-                    + "WHERE uzytkownicy.ID_uzytkownika = rezerwacje.ID_uzytkownika and przedmioty.ID_przedmiotu = rezerwacje.ID_przedmiotu"
-                    + "and rezerwacje.ID_uzytkownika="+SessionService.getUserID();
+                    + "WHERE uzytkownicy.ID_uzytkownika = rezerwacje.ID_uzytkownika and przedmioty.ID_przedmiotu = rezerwacje.ID_przedmiotu "
+                    + "AND rezerwacje.ID_uzytkownika='"+SessionService.getUserID()+"'";
             Connection conn = base.baseConnection();
             ResList = FXCollections.observableArrayList();
             ResultSet rs = conn.createStatement().executeQuery(querry);
@@ -96,6 +96,8 @@ public class ListMyReservationController {
             }
         } catch (SQLException ex) {
             System.out.println("Error" + ex);
+        }catch(Exception e){
+            
         }
         resName.setCellValueFactory(new PropertyValueFactory<>("Name"));
         resSurname.setCellValueFactory(new PropertyValueFactory<>("Surname"));
@@ -225,7 +227,7 @@ public class ListMyReservationController {
                     ResultSet rs = conn.createStatement().executeQuery("SELECT uzytkownicy.imie, uzytkownicy.nazwisko, przedmioty.Nazwa, rezerwacje.ilosc, rezerwacje.od_kiedy, rezerwacje.do_kiedy, rezerwacje.idRezerwacji "
                             + "FROM rezerwacje, uzytkownicy, przedmioty "
                             + "WHERE uzytkownicy.ID_uzytkownika = rezerwacje.ID_uzytkownika "
-                            + "and przedmioty.ID_przedmiotu = rezerwacje.ID_przedmiotu and rezerwacje.ID_uzytkownika="+SessionService.getUserID()
+                            + "and przedmioty.ID_przedmiotu = rezerwacje.ID_przedmiotu and rezerwacje.ID_uzytkownika='"+SessionService.getUserID()+"'"
                             + " AND rezerwacje.od_kiedy <=  '" + Date.valueOf(dateCurrentPicker.getValue()) + "' AND rezerwacje.do_kiedy >= '" + Date.valueOf(dateCurrentPicker.getValue()) + "'");
                     while (rs.next()) {
                         ResList.add(new Reservations(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getInt(7)));
@@ -300,12 +302,7 @@ public class ListMyReservationController {
         return true;
     }
 
-    public void disableButtons(int idRights) {
-        if (idRights != 2) {
-            BTgeneratePDF.setDisable(true);
-            BTgeneratePdfStudent.setDisable(true);
-        }
-    }
+
 
     public void checkRightOnReservation() throws ClassNotFoundException, SQLException {
         int idRes = 0;
