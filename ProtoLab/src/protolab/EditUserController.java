@@ -132,7 +132,7 @@ public class EditUserController implements Initializable {
                 Statement stmnt = conn.createStatement();
                 int editStudent = stmnt.executeUpdate(query);
                 editStudent = ps.executeUpdate();
-
+                JOptionPane.showMessageDialog(null, "Pomyślnie zaktualizowano informacje o użytkowniku", "", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
             }
