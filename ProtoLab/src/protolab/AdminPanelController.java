@@ -1,6 +1,7 @@
 package protolab;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -42,7 +43,7 @@ import javax.xml.validation.Validator;
  *
  * @author Winnicki Kamil
  */
-public class AdminPanelController {
+public class AdminPanelController extends DatabaseTestingAbstractClass{
 
     BaseConnection base = new BaseConnection();
     private FXMLDocumentController mainController;
@@ -89,12 +90,17 @@ public class AdminPanelController {
         tablePrzedmioty.setItems(itemList);
         lblWelcome.setText("Witamy " + SessionService.getUsername());
     }
-
+@FXML
+public void makeDumpDB() throws ClassNotFoundException, SQLException, FileNotFoundException{
+     AdminPanelController ad= new AdminPanelController();
+     ad.createDb();
+}
     /**
      * metoda uruchamiajaca okno listy użytkowników
      *
      * @throws IOException
      */
+    
     @FXML
     public void windowListUsers() throws IOException, ClassNotFoundException, SQLException {
 

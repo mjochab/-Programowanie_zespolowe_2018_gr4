@@ -29,10 +29,10 @@ import java.util.List;
  */
 public abstract class DatabaseTestingAbstractClass {
 
-    private static final String XML_PATH = "../../regmedtests _no_id_factory.sql";
+    private static final String XML_PATH = "../../protolabdb.sql";
     private static final String DB_LOGIN = "root";
     private static final String DB_PASSWORD = "";
-    private static final String DB_NAME = "regmedIntegrationTests";    //You shouldn't change it.
+    private static final String DB_NAME = "protolabdb";    //You shouldn't change it.
 
     /**
      * Creating new database.
