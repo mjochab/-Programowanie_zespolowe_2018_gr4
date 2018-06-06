@@ -304,6 +304,7 @@ public class MakeReservationController implements Initializable {
                         prstm.executeUpdate();
                         prstm.close();
                         JOptionPane.showMessageDialog(null, "Dokonano rezerwacji", "", JOptionPane.INFORMATION_MESSAGE);
+                        
                     } catch (Exception sql) {
                         System.out.println(sql);
                         errorMsg += "<p>*" + sql;

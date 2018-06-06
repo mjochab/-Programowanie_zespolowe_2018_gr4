@@ -37,7 +37,7 @@ import protolab.exceptions.ReservationDatePickerIsEmptyException;
  * @ -20,16 +29,62 @@ import javafx.scene.layout.Pane;
  * @author Pc
  */
-public class ListReservationController {
+public class ListMyReservationController {
 
 //    public ListReservationController(int idItem) {
 //        
@@ -72,66 +72,7 @@ public class ListReservationController {
     @FXML
     private Button BTgeneratePdfStudent;
 
-    @FXML
-    public void generatePDF() throws ClassNotFoundException, SQLException, IOException, DocumentException {
-
-        ProtoLabRaportPDF pdf = new ProtoLabRaportPDF();
-
-        pdf.rs = pdf.executeDefaultQuery();
-        pdf.rs.first();
-        pdf.savePdf();
-        pdf.document = pdf.setDocumentInfo(pdf.document, "autor", SessionService.getUsername() + " " + SessionService.getUserSurname(), "cos", "cos");
-        pdf.document.open();
-        pdf.document.add(pdf.setHeaderTab());
-        pdf.document.add(ProtoLabRaportPDF.setInfoTable(ProtoLabRaportPDF.setInfoCell("Nadawca", SessionService.getUsername() + " " + SessionService.getUserSurname(), " "), ProtoLabRaportPDF.setInfoCell("Odbiorca", "Prowadzący zajęcia", "M.O.")));
-        pdf.document.add(pdf.setItemTable());
-        pdf.document.close();
-        try {
-            File myFile = new File("raports/raport " + LocalDate.now() + ".pdf");
-            Desktop.getDesktop().open(myFile);
-        } catch (IOException ex) {
-            // no application registered for PDFs
-        }
-
-    }
-
-    @FXML
-    public void generatePdfStudent() throws DocumentException, IOException, ClassNotFoundException, SQLException {
-        ProtoLabRaportPDF pdf = new ProtoLabRaportPDF();
-        try {
-            Connection conn = base.baseConnection();
-            Reservations res = tableReservations.getSelectionModel().getSelectedItem();
-            String name = res.getName();
-            String surname = res.getSurname();
-            String querry = "SELECT uzytkownicy.ID_uzytkownika FROM uzytkownicy WHERE uzytkownicy.imie = '" + name + "' AND uzytkownicy.nazwisko= '" + surname + "'";
-            ResultSet rc = conn.createStatement().executeQuery(querry);
-            int idStudent;
-            rc.first();
-            idStudent = rc.getInt(1);
-            pdf.rs = pdf.executeStudentQuery(idStudent);
-            pdf.rs.first();
-            pdf.savePdfStudent(pdf.rs);
-            pdf.document = pdf.setDocumentInfo(pdf.document, SessionService.getUsername() + " " + SessionService.getUserSurname(), "cos ", "cos", "cos");
-            pdf.document.open();
-            pdf.document.add(pdf.setHeaderTab());
-            pdf.document.add(ProtoLabRaportPDF.setInfoTable(ProtoLabRaportPDF.setInfoCell("Nadawca", SessionService.getUsername() + " " + SessionService.getUserSurname(), " "), ProtoLabRaportPDF.setInfoCell("Nadawca", "Zespół programistyczny", "Numer 4")));
-            pdf.document.add(pdf.setItemTable());
-            pdf.document.close();
-            if (Desktop.isDesktopSupported()) {
-                try {
-                    File myFile = new File("raports/students/raport " + name + " " + surname + " " + LocalDate.now() + ".pdf");
-                    Desktop.getDesktop().open(myFile);
-                } catch (IOException ex) {
-                    // no application registered for PDFs
-                }
-            }
-
-        } catch (NullPointerException ne) {
-            JOptionPane.showMessageDialog(null, "Nie wybrano elementu!", "info", JOptionPane.INFORMATION_MESSAGE);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
+    
 
     public void setMainController(FXMLDocumentController mainController) throws ClassNotFoundException, SQLException {
         this.mainController = mainController;
@@ -145,7 +86,8 @@ public class ListReservationController {
         try {
             String querry = "SELECT uzytkownicy.imie, uzytkownicy.nazwisko, przedmioty.Nazwa, rezerwacje.ilosc, rezerwacje.od_kiedy, rezerwacje.do_kiedy, rezerwacje.idRezerwacji "
                     + "FROM rezerwacje, uzytkownicy, przedmioty "
-                    + "WHERE uzytkownicy.ID_uzytkownika = rezerwacje.ID_uzytkownika and przedmioty.ID_przedmiotu = rezerwacje.ID_przedmiotu";
+                    + "WHERE uzytkownicy.ID_uzytkownika = rezerwacje.ID_uzytkownika and przedmioty.ID_przedmiotu = rezerwacje.ID_przedmiotu"
+                    + "and rezerwacje.ID_uzytkownika="+SessionService.getUserID();
             Connection conn = base.baseConnection();
             ResList = FXCollections.observableArrayList();
             ResultSet rs = conn.createStatement().executeQuery(querry);
@@ -282,7 +224,8 @@ public class ListReservationController {
                     LocalDate datePicker = dateCurrentPicker.getValue();
                     ResultSet rs = conn.createStatement().executeQuery("SELECT uzytkownicy.imie, uzytkownicy.nazwisko, przedmioty.Nazwa, rezerwacje.ilosc, rezerwacje.od_kiedy, rezerwacje.do_kiedy, rezerwacje.idRezerwacji "
                             + "FROM rezerwacje, uzytkownicy, przedmioty "
-                            + "WHERE uzytkownicy.ID_uzytkownika = rezerwacje.ID_uzytkownika and przedmioty.ID_przedmiotu = rezerwacje.ID_przedmiotu"
+                            + "WHERE uzytkownicy.ID_uzytkownika = rezerwacje.ID_uzytkownika "
+                            + "and przedmioty.ID_przedmiotu = rezerwacje.ID_przedmiotu and rezerwacje.ID_uzytkownika="+SessionService.getUserID()
                             + " AND rezerwacje.od_kiedy <=  '" + Date.valueOf(dateCurrentPicker.getValue()) + "' AND rezerwacje.do_kiedy >= '" + Date.valueOf(dateCurrentPicker.getValue()) + "'");
                     while (rs.next()) {
                         ResList.add(new Reservations(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getInt(7)));

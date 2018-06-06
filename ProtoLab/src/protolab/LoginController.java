@@ -211,8 +211,8 @@ public class LoginController {
             itemNumberWarehouse = 0;
         } while (rs.next());
         }
-        }catch(NullPointerException ex){
-            System.out.println(ex);
+        }catch(Exception ex){
+          
         }
     }
 
@@ -232,8 +232,8 @@ public class LoginController {
             prstm.close();
         } 
         }
-        }catch(NullPointerException ex){
-            System.out.println(ex);
+        }catch(Exception ex){
+           
         }
     }
 

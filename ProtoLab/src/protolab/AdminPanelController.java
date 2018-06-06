@@ -1,7 +1,7 @@
 package protolab;
 
 import java.io.File;
-import java.io.FileNotFoundException;
+//import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -23,6 +23,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
+import javax.swing.JOptionPane;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import org.xml.sax.SAXException;
@@ -43,7 +44,7 @@ import javax.xml.validation.Validator;
  *
  * @author Winnicki Kamil
  */
-public class AdminPanelController extends DatabaseTestingAbstractClass{
+public class AdminPanelController{
 
     BaseConnection base = new BaseConnection();
     private FXMLDocumentController mainController;
@@ -90,11 +91,7 @@ public class AdminPanelController extends DatabaseTestingAbstractClass{
         tablePrzedmioty.setItems(itemList);
         lblWelcome.setText("Witamy " + SessionService.getUsername());
     }
-@FXML
-public void makeDumpDB() throws ClassNotFoundException, SQLException, FileNotFoundException{
-     AdminPanelController ad= new AdminPanelController();
-     ad.createDb();
-}
+
     /**
      * metoda uruchamiajaca okno listy użytkowników
      *
@@ -274,7 +271,32 @@ public void makeDumpDB() throws ClassNotFoundException, SQLException, FileNotFou
             alert.showAndWait();
         }
     }
+    
+     @FXML
+    public void editTheWarehouse() throws IOException, ClassNotFoundException, SQLException {
 
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("EditItem.fxml"));
+
+        Pane pane = null;
+        
+        Items item = null;
+
+        try {
+            item = tablePrzedmioty.getSelectionModel().getSelectedItem();
+            pane = loader.load();
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+        if (item != null) {
+
+            EditItemController editItem = loader.getController();
+            editItem.setItem(item);
+            editItem.setMainController(mainController);
+            mainController.setScreen(pane);
+        } else {
+            JOptionPane.showMessageDialog(null, "Nie wybrano użytkownika do edycji", "info", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
     @FXML
     public void bazaExport() throws ClassNotFoundException, SQLException, JAXBException {
         System.out.println("export bazy");

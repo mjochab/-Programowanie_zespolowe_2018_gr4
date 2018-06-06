@@ -61,6 +61,21 @@ public class StudentPanelController {
      * @throws SQLException
      */
     @FXML
+    public void showMyReservations() throws ClassNotFoundException, SQLException{
+                 FXMLLoader loader = new FXMLLoader(this.getClass().getResource("ListMyReservation.fxml"));
+
+        Pane pane = null;
+
+        try {
+            pane = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ListMyReservationController studentsController = loader.getController();
+        studentsController.setMainController(mainController);
+        mainController.setScreen(pane);
+    }
+    @FXML
     public void loadItems() throws ClassNotFoundException, SQLException {
         try {
             Connection conn = base.baseConnection();
